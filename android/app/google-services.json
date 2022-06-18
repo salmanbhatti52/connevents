@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "674336596318",
+    "project_id": "connevents-d9973",
+    "storage_bucket": "connevents-d9973.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674336596318:android:a9828606a751bd54f46fcf",
+        "android_client_info": {
+          "package_name": "com.connevents.apps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674336596318-68aaokfonvn2bijp6bl0b5lpjrb2trfc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.connevents.apps",
+            "certificate_hash": "3a277c3720a5572e7cef5437dfe64fb3e44df120"
+          }
+        },
+        {
+          "client_id": "674336596318-u3bd3lmh150b87p0qdpmdkprd4ucfprb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.connevents.apps",
+            "certificate_hash": "8034df526afe121d11aa9adae901718f01c8ef82"
+          }
+        },
+        {
+          "client_id": "674336596318-72c2vdenoef68tk0fckjk3ph7jbg67nr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDbc-spLYgy7VWVLZAtOvO-RBCeZEVJ2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674336596318-72c2vdenoef68tk0fckjk3ph7jbg67nr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "674336596318-8ug77mqkefgrbktq3g2vaa78p09j3t26.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.connevent.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
