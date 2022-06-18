@@ -43,7 +43,7 @@ class _HomePageEventsState extends State<HomePageEvents> {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.only(top:10.0),
+        padding: const EdgeInsets.only(top:11.0),
         child: ListView.builder(
             shrinkWrap: true,
             padding: EdgeInsets.zero,
