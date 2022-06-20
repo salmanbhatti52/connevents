@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
   bool isEvent=false;
   bool isBusiness=false;
   DateTime today=DateTime.now();
-  var userCurrentLocation;
+  //var userCurrentLocation;
   Future<EventTagsModel>? futureEventTagsModel;
   List<TagsData> listOfTags = [];
   bool isVisibleTags=false;
@@ -263,26 +263,29 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-  Future getUserLocation({lat, long}) async {
-      var currentLocation;
-      try{
-        // AppData().userLocation=UserLocation();
-        currentLocation = await  Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-        userCurrentLocation=currentLocation;
-        print(userCurrentLocation.latitude);
-        print(userCurrentLocation.longitude);
-        placeMark= await placemarkFromCoordinates(userCurrentLocation.latitude, userCurrentLocation.longitude);
-        AppData().userLocation    =  UserLocation(latitude: userCurrentLocation.latitude, longitude: userCurrentLocation.longitude,address: "${placeMark!.first.subLocality} ${placeMark!.first.locality}");
-        print("Location is this ${AppData().userLocation!.address}");
-        setState(() {});
-    }
-    catch(e){
-      print("i am here");
-      print(e.toString());
-    }
-         // }
-
-  }
+  // Future getUserLocation({lat, long}) async {
+  //     var currentLocation;
+  //
+  //     var permission  = await Geolocator.requestPermission();
+  //
+  //     try{
+  //       // AppData().userLocation=UserLocation();
+  //       currentLocation = await  Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+  //       userCurrentLocation=currentLocation;
+  //       print(userCurrentLocation.latitude);
+  //       print(userCurrentLocation.longitude);
+  //       placeMark= await placemarkFromCoordinates(userCurrentLocation.latitude, userCurrentLocation.longitude);
+  //       AppData().userLocation    =  UserLocation(latitude: userCurrentLocation.latitude, longitude: userCurrentLocation.longitude,address: "${placeMark!.first.subLocality} ${placeMark!.first.locality}");
+  //       print("Location is this ${AppData().userLocation!.address}");
+  //       setState(() {});
+  //   }
+  //   catch(e){
+  //     print("i am here");
+  //     print(e.toString());
+  //   }
+  //        // }
+  //
+  // }
 
   Future likeEventPost(num eventPostId) async {
    openLoadingDialog(context, 'loading');
@@ -317,7 +320,7 @@ class _HomePageState extends State<HomePage> {
 }
 
   Future<bool>  getEventSearchBarFilter({bool isReFresh=false}) async {
-    await getUserLocation();
+    //await getUserLocation();
     bool isData = false;
     if(isReFresh) {
       eventCurrentOffset=0;
@@ -329,8 +332,8 @@ class _HomePageState extends State<HomePage> {
       }
     }
       response = await DioService.post('event_search_bar_filter', {
-        if(userCurrentLocation !=null)   "userLat":userCurrentLocation.latitude,
-        if(userCurrentLocation !=null)        "userLong":userCurrentLocation.longitude,
+        if( AppData().userLocation !=null)   "userLat": AppData().userLocation!.latitude,
+        if( AppData().userLocation !=null)        "userLong": AppData().userLocation!.longitude,
         'offset': eventCurrentOffset.toString(),
         'userId':AppData().userdetail!.users_id,
         'searchFilter' : search
@@ -420,7 +423,7 @@ class _HomePageState extends State<HomePage> {
 }
 
   Future<bool>  getNearbyBusiness({bool isReFresh=false}) async {
-   await getUserLocation();
+   //await getUserLocation();
     bool isData = false;
     if(isReFresh) {
       businessCurrentOffset=0;
@@ -432,10 +435,10 @@ class _HomePageState extends State<HomePage> {
       }
     }
     response = await DioService.post('business_search_filter', {
-      if(userCurrentLocation !=null)
-      "userLat":userCurrentLocation.latitude,
-      if(userCurrentLocation !=null)
-     "userLong":userCurrentLocation.longitude,
+      if( AppData().userLocation !=null)
+      "userLat": AppData().userLocation!.latitude,
+      if( AppData().userLocation !=null)
+     "userLong": AppData().userLocation!.longitude,
       'userId':AppData().userdetail!.users_id,
       'offset': businessCurrentOffset.toString(),
       if(city.isNotEmpty) "cityFilter": city,
@@ -473,7 +476,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<bool>  getEvents({bool isReFresh=false}) async {
-   await getUserLocation();
+  // await getUserLocation();
     bool isData = false;
     if(isReFresh) {
       eventCurrentOffset=0;
@@ -486,8 +489,8 @@ class _HomePageState extends State<HomePage> {
     }
     if(isEvent) {
     response = await DioService.post('event_search_filter', {
-      if(userCurrentLocation !=null)   "userLat":userCurrentLocation.latitude,
-      if(userCurrentLocation !=null)        "userLong":userCurrentLocation.longitude,
+      if( AppData().userLocation !=null)   "userLat": AppData().userLocation!.latitude,
+      if( AppData().userLocation !=null)        "userLong": AppData().userLocation!.longitude,
       'offset': eventCurrentOffset.toString(),
       'userId':AppData().userdetail!.users_id,
 
@@ -497,10 +500,10 @@ class _HomePageState extends State<HomePage> {
   }
    else {
     response = await DioService.post('event_search_filter', {
-      if(userCurrentLocation !=null)
-      "userLat":userCurrentLocation.latitude,
-      if(userCurrentLocation !=null)
-     "userLong":userCurrentLocation.longitude,
+      if( AppData().userLocation !=null)
+      "userLat": AppData().userLocation!.latitude,
+      if( AppData().userLocation !=null)
+     "userLong": AppData().userLocation!.longitude,
       'userId':AppData().userdetail!.users_id,
       'offset': eventCurrentOffset.toString(),
       if(city.isNotEmpty) "cityFilter": city,

@@ -6,6 +6,7 @@ import 'package:connevents/mixins/data.dart';
 import 'package:connevents/pages/organizerPortfolio/followers-list-page.dart';
 import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/provider/provider-data.dart';
+import 'package:connevents/services/location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -23,6 +24,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
    await AppData.initiate();
+   await GetPosition.initiate();
    cameras = await availableCameras();
    //FirebaseDynamicLinkService.initDynamicLinks();
    await OneSignal.shared.setAppId("3502caf3-e7b3-4352-a53e-a1e13ebe2cd0");
