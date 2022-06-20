@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/user-model.dart';
-import 'package:connevents/pages/basicMenu/basicMenuPage.dart';
 import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
@@ -317,6 +316,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               if(val!.isNotEmpty  && newPassword.text.isEmpty && confirmPassword.text.isEmpty){
                                 return "Please Input New Password or Confirm Password";
                               }
+                              return null;
                           },
                             onSaved: (val) =>setState(() => currentPassword= val!),
                             obscureText: isCurrentPasswordObscure,

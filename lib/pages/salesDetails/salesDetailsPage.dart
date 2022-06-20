@@ -3,7 +3,6 @@ import 'package:connevents/models/ticket-sale-info-model.dart';
 import 'package:connevents/pages/editEvent/editcreate/editCreatePage.dart';
 import 'package:connevents/pages/salesDetails/salesDetailsPageAlerts.dart';
 import 'package:connevents/services/dio-service.dart';
-import 'package:connevents/utils/date-time.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';

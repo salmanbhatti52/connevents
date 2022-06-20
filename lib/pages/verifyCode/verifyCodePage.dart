@@ -2,7 +2,6 @@ import 'package:connevents/pages/resetPassword/resetPasswordPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../../variables/globalVariables.dart';
 import 'package:flutter/material.dart';

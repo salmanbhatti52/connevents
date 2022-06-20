@@ -1,7 +1,6 @@
 import 'package:connevents/models/event-address-model.dart';
 import 'package:connevents/models/event-dummy-ticket.dart';
 import 'package:connevents/models/event-type-model.dart';
-import 'package:connevents/pages/eventGallery/eventGalleryPage.dart';
 import 'package:connevents/pages/organizerPortfolio/organizer-event-gallery.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/services/event-type-service.dart';

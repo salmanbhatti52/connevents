@@ -186,20 +186,18 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
          showErrorToast("You have to select smaller than event Start Time");
       }
       }
-      else if(picked!=null){
-           setState(() {
-          selectedEventStartTime = picked;
-          print(selectedEventStartTime);
-          _hour = selectedEventStartTime!.hour.toString();
-          _minute = selectedEventStartTime!.minute.toString();
-          _time = _hour! + ' : ' + _minute!;
-          event.eventStartTime = _time!;
-          event.eventStartTime = formatDate(DateTime(
-              2019, 08, 1, selectedEventStartTime!.hour, selectedEventStartTime!.minute),
-              [hh, ':', nn, am]).toString();
-        });
+      else         setState(() {
+        selectedEventStartTime = picked;
+        print(selectedEventStartTime);
+        _hour = selectedEventStartTime!.hour.toString();
+        _minute = selectedEventStartTime!.minute.toString();
+        _time = _hour! + ' : ' + _minute!;
+        event.eventStartTime = _time!;
+        event.eventStartTime = formatDate(DateTime(
+            2019, 08, 1, selectedEventStartTime!.hour, selectedEventStartTime!.minute),
+            [hh, ':', nn, am]).toString();
+      });
 
-    }
     }
         else{
       showErrorToast("You have to select First Event Start Date & End Date");

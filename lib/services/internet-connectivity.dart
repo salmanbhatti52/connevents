@@ -13,7 +13,7 @@ mixin InternetConnectivity {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       result = await _connectivity.checkConnectivity();
-    } on PlatformException catch (e) {
+    } on PlatformException {
      // developer.log('Couldn\'t check connectivity status', error: e);
       return;
     }

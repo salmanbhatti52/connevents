@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,23 +16,27 @@ class EventImagePicker extends StatefulWidget {
 }
 
 class _EventImagePickerState extends State<EventImagePicker> {
-  File? _image;
+  CroppedFile? _image;
 
 
    Future  _cropImage(String imagePath) async {
-    File? croppedFile = await ImageCropper().cropImage(
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: imagePath,
-        aspectRatio: CropAspectRatio(ratioX: 4,ratioY: 3),
-        androidUiSettings: AndroidUiSettings(
-        toolbarTitle: 'Cropper',
-        toolbarColor: Colors.deepOrange,
-        toolbarWidgetColor: Colors.white,
-        hideBottomControls: true,
-        lockAspectRatio: true),
-        iosUiSettings: IOSUiSettings(
-        title: 'Cropper',
-        hidesNavigationBar: true
-        ));
+        uiSettings:[
+          AndroidUiSettings(
+              initAspectRatio: CropAspectRatioPreset.ratio4x3,
+              toolbarTitle: 'Cropper',
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              hideBottomControls: true,
+              lockAspectRatio: false),
+          IOSUiSettings(
+              showActivitySheetOnDone: false,
+              resetAspectRatioEnabled: false,
+              title: 'Cropper',
+              hidesNavigationBar: true
+          )
+        ]);
         if (croppedFile != null) {
             setState(() {
               _image = croppedFile;
@@ -94,7 +97,7 @@ class _EventImagePickerState extends State<EventImagePicker> {
                       // setState(() {
                       //   this._image = File(image.path);
                       // });
-                      widget.onImagePicked!(this._image!);
+                      widget.onImagePicked!(File(this._image!.path));
                     }
                   },
                   child: Container(
@@ -137,7 +140,7 @@ class _EventImagePickerState extends State<EventImagePicker> {
                       ],
                       image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: FileImage(this._image!)
+                          image: FileImage(File(this._image!.path))
                       )
                   ),
                   child: Align(

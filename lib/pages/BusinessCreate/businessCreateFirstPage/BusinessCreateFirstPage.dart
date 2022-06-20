@@ -5,7 +5,6 @@ import 'package:connevents/models/event-address-model.dart';
 import 'package:connevents/pages/BusinessCreate/businessCreateSecondPage/business-create-second-page.dart';
 import 'package:connevents/pages/Dashboard/eventDashboard/eventDashboardPage.dart';
 import 'package:connevents/services/dio-service.dart';
-import 'package:connevents/utils/detect-link.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/business-first-page-text.dart';
@@ -36,7 +35,7 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
   List<File>  imagePath=[];
   List<Asset> listOfImages = [];
   String pickedImage="";
-  File? imageFile;
+  CroppedFile? imageFile;
   List<BusinessType> businessTypeList = [];
   BusinessType? businessType;
   String baseCOde='';
@@ -45,19 +44,23 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
 
 
    Future  _cropImage(String imagePath) async {
-    File? croppedFile = await ImageCropper().cropImage(
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: imagePath,
-        aspectRatio: CropAspectRatio(ratioX: 4,ratioY: 3),
-        androidUiSettings: AndroidUiSettings(
-        toolbarTitle: 'Cropper',
-        toolbarColor: Colors.deepOrange,
-        toolbarWidgetColor: Colors.white,
-        hideBottomControls: true,
-        lockAspectRatio: true),
-        iosUiSettings: IOSUiSettings(
-        title: 'Cropper',
-        hidesNavigationBar: true
-        ));
+        uiSettings:[
+          AndroidUiSettings(
+              initAspectRatio: CropAspectRatioPreset.ratio4x3,
+              toolbarTitle: 'Cropper',
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              hideBottomControls: true,
+              lockAspectRatio: false),
+          IOSUiSettings(
+              showActivitySheetOnDone: false,
+              resetAspectRatioEnabled: false,
+              title: 'Cropper',
+              hidesNavigationBar: true
+          )
+        ]);
         if (croppedFile != null) {
             setState(() {
               imageFile = croppedFile;
@@ -97,7 +100,7 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
       if (i==0) {
         if(!imagePath.asMap().containsKey(0)){
           await _cropImage(file.path);
-          imagePath.add(imageFile!);
+          imagePath.add(File(imageFile!.path));
           //imagePath.add(file);
           final bytes = await file.readAsBytes();
           business.firstImage = base64Encode(bytes);
@@ -110,7 +113,7 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
       print("first");
       if(!imagePath.asMap().containsKey(1)){
         await _cropImage(file.path);
-        imagePath.add(imageFile!);
+        imagePath.add(File(imageFile!.path));
        // imagePath.add(file);
         final bytes2 = await file.readAsBytes();
         business.secondImage = base64Encode(bytes2);
@@ -123,7 +126,7 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
       print("helooo");
       if(!imagePath.asMap().containsKey(2)){
         await _cropImage(file.path);
-        imagePath.add(imageFile!);
+        imagePath.add(File(imageFile!.path));
         // imagePath.add(file);
         final bytes3 = await file.readAsBytes();
         business.thirdImage = base64Encode(bytes3);
@@ -135,7 +138,7 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
         print("helooo");
         if(!imagePath.asMap().containsKey(3)){
           await _cropImage(file.path);
-          imagePath.add(imageFile!);
+          imagePath.add(File(imageFile!.path));
           // imagePath.add(file);
           final bytes4 = await file.readAsBytes();
           business.fourthImage = base64Encode(bytes4);
@@ -148,7 +151,7 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
         print("helooo");
         if(!imagePath.asMap().containsKey(4)){
           await _cropImage(file.path);
-          imagePath.add(imageFile!);
+          imagePath.add(File(imageFile!.path));
           // imagePath.add(file);
           final bytes5 = await file.readAsBytes();
           business.fifthImage = base64Encode(bytes5);
@@ -160,7 +163,7 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
       if (i==5) {
         if(!imagePath.asMap().containsKey(5)){
           await _cropImage(file.path);
-          imagePath.add(imageFile!);
+          imagePath.add(File(imageFile!.path));
           // imagePath.add(file);
           final bytes6 = await file.readAsBytes();
           business.sixthImage = base64Encode(bytes6);

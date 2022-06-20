@@ -1,15 +1,7 @@
-import 'package:camera/camera.dart';
-import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/checked-in-event-detail-model.dart';
 import 'package:connevents/models/peek-model.dart';
-import 'package:connevents/Camera-Pages/camera-screen.dart';
-import 'package:connevents/pages/eventPeeks/pick-video.dart';
-import 'package:connevents/services/dio-service.dart';
-import 'package:connevents/utils/loading-dialog.dart';
-import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
 
 class SideMenu extends StatefulWidget {
   Function(bool isshown) isShown;

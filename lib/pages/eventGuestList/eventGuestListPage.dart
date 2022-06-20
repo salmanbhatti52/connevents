@@ -1,14 +1,11 @@
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/event-guest-list-model.dart';
 import 'package:connevents/pages/eventGuestList/eventGuestListDetail.dart';
-import 'package:connevents/pages/ticket/checkInTicketPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/connevent-appbar.dart';
-import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class EventGuestListPage extends StatefulWidget {
   const EventGuestListPage({Key? key}) : super(key: key);

@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/checked-in-event-detail-model.dart';
 import 'package:connevents/models/create-event-model.dart';
@@ -6,8 +5,6 @@ import 'package:connevents/models/peek-model.dart';
 import 'package:connevents/pages/eventComments/eventCommentsPageFunctions.dart';
 import 'package:connevents/pages/eventPeeks/Event-Peeks-Detail.dart';
 import 'package:connevents/Camera-Pages/camera-screen.dart';
-import 'package:connevents/pages/eventPeeks/camera.dart';
-import 'package:connevents/pages/eventPeeks/pick-video.dart';
 import 'package:connevents/pages/eventPeeks/side-menu/comment-section.dart';
 import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/services/dio-service.dart';
@@ -16,7 +13,6 @@ import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
 
 int peekUniqueId=0;
 class EventPeeks extends StatefulWidget {

@@ -1,13 +1,11 @@
 import 'package:connevents/models/create-event-model.dart';
-import 'package:connevents/pages/eventDetails/eventDetailsPage.dart';
-import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class FirebaseDynamicLinkService{
 
   static Future<String> createDynamicLink(bool short,EventDetail eventDetail) async {
     String linkMessage= "https://connevents.page.link";
+    FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
     final DynamicLinkParameters parameters=DynamicLinkParameters(
         uriPrefix: linkMessage,
@@ -20,7 +18,7 @@ class FirebaseDynamicLinkService{
 
     Uri url;
     // if(short){
-       final ShortDynamicLink shortDynamicLink=await parameters.buildShortLink();
+       final ShortDynamicLink shortDynamicLink=await dynamicLinks.buildShortLink(parameters);
            url=shortDynamicLink.shortUrl;
            print("bilal");
            print(url);
@@ -33,28 +31,25 @@ class FirebaseDynamicLinkService{
 
   }
 
-
-  static void initDynamicLinks() async {
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData? dynamicLink) async{
-        //  print("deep Link ${eventDetail.toString()}");
-          final Uri deepLink=dynamicLink!.link;
-
-          var isEventDetail=deepLink.pathSegments.contains('eventDetail');
-            if(isEventDetail){
-              String id=deepLink.queryParameters['event_post_id']!;
-              if(deepLink!=null){
-               // CustomNavigator.navigateTo(context, EventDetailsPage(event: eventDetail));
-                print("deep Link ${dynamicLink.toString()}");
-              }
-            }
-
-        },
-        onError: (OnLinkErrorException e) async{
-          print("I am here");
-          print(e.message);
-        }
-    );
-  }
+  //
+  // static void initDynamicLinks() async {
+  //   FirebaseDynamicLinks.instance.onLink(
+  //       onSuccess: (PendingDynamicLinkData? dynamicLink) async{
+  //       //  print("deep Link ${eventDetail.toString()}");
+  //         final Uri deepLink=dynamicLink!.link;
+  //
+  //         var isEventDetail=deepLink.pathSegments.contains('eventDetail');
+  //           if(isEventDetail){
+  //             String id=deepLink.queryParameters['event_post_id']!;
+  //             print("deep Link ${dynamicLink.toString()}");
+  //           }
+  //
+  //       },
+  //       onError: (OnLinkErrorException e) async{
+  //         print("I am here");
+  //         print(e.message);
+  //       }
+  //   );
+  // }
 
 }

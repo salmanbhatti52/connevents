@@ -6,6 +6,8 @@ part of 'event-tags-service.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _EventTagsService implements EventTagsService {
   _EventTagsService(this._dio, {this.baseUrl}) {
     baseUrl ??= 'https://connevents.com/app/api/';

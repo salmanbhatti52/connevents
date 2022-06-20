@@ -5,7 +5,6 @@ import 'package:connevents/pages/selectCategories/selectCategoriesPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/const.dart';
 import 'package:connevents/utils/loading-dialog.dart';
-import 'package:connevents/widgets/confirmation-dialog.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';

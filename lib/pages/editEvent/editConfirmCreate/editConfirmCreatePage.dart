@@ -388,27 +388,27 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                     widget.event.refundable == 1 ? Icon(Icons.check, color: globalGreen) : Icon(Icons.close, color: Colors.red,),
                   ],
                 ),
-               if(widget.event.eventTicketType=='Paid')
-                SizedBox(height: padding),
-                if(widget.event.eventTicketType=='Paid')
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text('Table Service', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
-                        SizedBox(width: padding,),
-                        GestureDetector(
-                            onTap: (){
-                               Navigator.of(context).pop(widget.event);
-                               Navigator.of(context).pop();
-                            },
-                            child: SvgPicture.asset('assets/icons/editPencil1.svg', width: 16,)),
-                      ],
-                    ),
-                    widget.event.tableService==0 ? Icon(Icons.close, color: Colors.red,) : Icon(Icons.check, color: globalGreen),
-                  ],
-                ),
+               // if(widget.event.eventTicketType=='Paid')
+               //  SizedBox(height: padding),
+               //  if(widget.event.eventTicketType=='Paid')
+               //  Row(
+               //    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               //    children: [
+               //      Row(
+               //        children: [
+               //          Text('Table Service', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
+               //          SizedBox(width: padding,),
+               //          GestureDetector(
+               //              onTap: (){
+               //                 Navigator.of(context).pop(widget.event);
+               //                 Navigator.of(context).pop();
+               //              },
+               //              child: SvgPicture.asset('assets/icons/editPencil1.svg', width: 16,)),
+               //        ],
+               //      ),
+               //      widget.event.tableService==0 ? Icon(Icons.close, color: Colors.red,) : Icon(Icons.check, color: globalGreen),
+               //    ],
+               //  ),
                 if(widget.event.eventTicketType=='Paid')
                 SizedBox(height: padding * 2),
                 if(widget.event.eventTicketType=='Paid')

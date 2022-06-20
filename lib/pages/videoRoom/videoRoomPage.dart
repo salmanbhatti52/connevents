@@ -1,5 +1,4 @@
 import 'package:connevents/pages/videoRoom/allowPopUp.dart';
-import 'package:connevents/pages/videoRoom/endingLiveAlert.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/profile-image-picker.dart';
 import 'package:flutter/material.dart';

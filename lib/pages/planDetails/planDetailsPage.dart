@@ -1,6 +1,5 @@
 import 'package:connevents/pages/paymentCards/paymentCardsPage.dart';
 import 'package:connevents/variables/globalVariables.dart';
-import 'package:connevents/variables/sharingModels.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

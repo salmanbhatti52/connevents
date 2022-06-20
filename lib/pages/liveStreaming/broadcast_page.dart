@@ -4,15 +4,12 @@ import 'package:agora_rtm/agora_rtm.dart';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/live-streaming-message-model.dart';
 import 'package:connevents/pages/liveStreaming/alert-box/member-left-alert.dart';
-import 'package:connevents/pages/salesDetails/salesDetailsPageAlerts.dart';
-import 'package:connevents/pages/videoRoom/allowPopUp.dart';
 import 'package:connevents/pages/videoRoom/endingLiveAlert.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/const.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/profile-image-picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
@@ -384,8 +381,9 @@ class _BroadcastPageState extends State<BroadcastPage> {
 
     //showErrorToast('Warning ${warningCode}');
     //  log('Warning ${warningCode}');
-    },  streamMessage: (int uid, int streamId, String data) {
-      _showMyDialog(uid, streamId, data);
+    },  streamMessage: (int uid, int streamId,  data) {
+      /// change for 2.10
+      _showMyDialog(uid, streamId, data.toString());
       log('streamMessage $uid $streamId $data');
     },
         streamMessageError: (int uid, int streamId, ErrorCode error, int missed, int cached) {
@@ -395,11 +393,11 @@ class _BroadcastPageState extends State<BroadcastPage> {
              await rtcChannel!.renewToken(token);
             },
         error: (errorCode) {
-      log('Error here ${errorCode}');
+      log('Error here $errorCode');
      // showErrorToast('Error here ${errorCode}');
     }, joinChannelSuccess: (channel, uid, elapsed) {
      // showErrorToast("join ${channel} ${uid} ${elapsed}");
-      log('joinChannelSuccess ${channel} ${uid} ${elapsed}');
+      log('joinChannelSuccess $channel $uid $elapsed');
       setState(() {
         isJoined = true;
       });
@@ -560,7 +558,7 @@ class _BroadcastPageState extends State<BroadcastPage> {
                      child: TextButton(
                        onPressed: () async {
                         if(AppData().userdetail!.users_id==widget.userId){
-                          await _channel!.sendMessage(AgoraRtmMessage.fromText("${AppData().userdetail!.profile_picture ?? "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ..i&docid=AOz9-XMe1ixZJM&w=1601&h=664&q=image&ved=2ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ"}," +  "${joinedUser}," + "Shifted to Audience"));
+                          await _channel!.sendMessage(AgoraRtmMessage.fromText("${AppData().userdetail!.profile_picture ?? "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ..i&docid=AOz9-XMe1ixZJM&w=1601&h=664&q=image&ved=2ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ"}," +  "$joinedUser," + "Shifted to Audience"));
                           joinedUser="";
                           setState((){});
                         }
@@ -783,7 +781,8 @@ class _BroadcastPageState extends State<BroadcastPage> {
     print("list2.toList()");
     print(_users.length);
     print("list2.toList()");
-    _users.forEach((int uid) => list.add(RtcRemoteView.SurfaceView(uid: uid)));
+    /// change for 2.10
+    _users.forEach((int uid) => list.add(RtcRemoteView.SurfaceView(uid: uid,channelId: widget.channelName)));
     // print("list.toList()");
     // print(list.toList());
     // print("list here");
@@ -1303,10 +1302,10 @@ class _BroadcastPageState extends State<BroadcastPage> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Receive from uid:${uid}'),
+          title: Text('Receive from uid:$uid'),
           content: SingleChildScrollView(
           child: ListBody(
-          children: <Widget>[Text('StreamId ${streamId}:${data}')],
+          children: <Widget>[Text('StreamId $streamId:$data')],
             ),
           ),
           actions: <Widget>[

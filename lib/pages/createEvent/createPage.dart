@@ -13,7 +13,6 @@ import 'package:connevents/services/event-tags-service.dart';
 import 'package:connevents/services/event-type-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
-import 'package:connevents/widgets/connevent-appbar.dart';
 import 'package:connevents/widgets/connevents-textfield.dart';
 import 'package:connevents/widgets/create-container.dart';
 import 'package:connevents/widgets/create-page-text.dart';
@@ -23,14 +22,11 @@ import 'package:connevents/widgets/drop-down-container.dart';
 import 'package:connevents/widgets/event-video-picker.dart';
 import 'package:connevents/widgets/image-container.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../BusinessCreate/businessCreateFirstPage/BusinessCreateFirstPage.dart';
 
@@ -49,7 +45,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
   String selectedSegment = 'Events';
   List<Asset> images = [];
   Dio dio = Dio();
-  File? imageFile;
+  CroppedFile? imageFile;
 
   bool isEdit=false;
   EventTypeList? listOfEventType;
@@ -58,32 +54,33 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
   Future<EventTagsModel>? futureEventTagsModel;
   int totalImages = 3;
 
-  List<File> imagePath = [];
+  List<String> imagePath = [];
   List<Asset> listOfImages = [];
   TextEditingController tagText=TextEditingController();
 
 
 
 
-
-
    Future  _cropImage(String imagePath) async {
-    File? croppedFile = await ImageCropper().cropImage(
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: imagePath,
-        // aspectRatio: CropAspectRatio(ratioX: 4,ratioY: 3),
-        androidUiSettings: AndroidUiSettings(
+        uiSettings:[
+         AndroidUiSettings(
         initAspectRatio: CropAspectRatioPreset.ratio4x3,
-        toolbarTitle: 'Cropper',
-        toolbarColor: Colors.deepOrange,
-        toolbarWidgetColor: Colors.white,
-        hideBottomControls: true,
-        lockAspectRatio: false),
-        iosUiSettings: IOSUiSettings(
-        showActivitySheetOnDone: false,
-        resetAspectRatioEnabled: false,
-        title: 'Cropper',
-        hidesNavigationBar: true
-        ));
+            toolbarTitle: 'Cropper',
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            hideBottomControls: true,
+            lockAspectRatio: false),
+             IOSUiSettings(
+               showActivitySheetOnDone: false,
+               resetAspectRatioEnabled: false,
+               title: 'Cropper',
+               hidesNavigationBar: true
+               )
+            ]);
+        // aspectRatio: CropAspectRatio(ratioX: 4,ratioY: 3),
+
         if (croppedFile != null) {
             setState(() {
               imageFile = croppedFile;
@@ -122,7 +119,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
           final tempFile = File("${(await getTemporaryDirectory()).path}/${resultList[i].name}");
           final file = await tempFile.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
            await _cropImage(file.path);
-           imagePath.add(imageFile!);
+           imagePath.add(imageFile!.path);
 
           if (i==0) {
           final bytes = await imageFile!.readAsBytes();
@@ -266,7 +263,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                               height: 160,
                               child: Stack(
                                 children: [
-                                 Image.file(imagePath[0],width: 200, height: 305,fit: BoxFit.cover),
+                                 Image.file(File(imagePath[0]),width: 200, height: 305,fit: BoxFit.cover),
                                    Positioned(
                                       top: 2,
                                       right: -2,
@@ -310,7 +307,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                              height: 160,
                              child: Stack(
                                children: [
-                                Image.file(imagePath[1],width: 200, height: 305,fit: BoxFit.cover),
+                                Image.file(File(imagePath[1]),width: 200, height: 305,fit: BoxFit.cover),
                                  Positioned(
                                   top: 2,
                                   right: -2,
@@ -352,7 +349,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                          SizedBox( height: 160,
                              child: Stack(
                                children: [
-                                 Image.file(imagePath[2],width: 200, height: 305,fit: BoxFit.cover),
+                                 Image.file(File(imagePath[2]),width: 200, height: 305,fit: BoxFit.cover),
                                   Positioned(
                                     top: 2,
                                     right: -2,

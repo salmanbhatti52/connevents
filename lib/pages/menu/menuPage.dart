@@ -16,7 +16,6 @@ import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:connevents/widgets/notification-button.dart';
 import 'package:connevents/widgets/profile-image-picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_svg/svg.dart';
 

@@ -15,7 +15,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/src/provider.dart';
 import '../../pages/home/homePage.dart';
 import '../../pages/menu/menuPage.dart';
 import '../../pages/message/messagePage.dart';
@@ -37,6 +36,8 @@ class _TabsPageState extends State<TabsPage> {
 
   bool _canExit=false;
   int messages=0;
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+
 
   Future checkSubscription() async {
     try{
@@ -95,21 +96,15 @@ class _TabsPageState extends State<TabsPage> {
       });
   }
   void initDynamicLinks() async {
-     FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData? dynamicLink) async{
-          final Uri deepLink=dynamicLink!.link;
-          if(deepLink!=null){
-            handleMyLink(deepLink);
-
-            showSuccessToast("deep Link  shahzaib ${dynamicLink.toString()}");
-            print("deep Link  shahzaib ${dynamicLink.toString()}");
-          }
-        },
-        onError: (OnLinkErrorException e) async{
-          print("I am here");
-          print(e.message);
-        }
-    );
+    dynamicLinks.onLink.listen((dynamicLinkData) {
+          final Uri deepLink=dynamicLinkData.link;
+          handleMyLink(deepLink);
+//          showSuccessToast("deep Link  shahzaib ${dynamicLinkData.toString()}");
+          print("deep Link  shahzaib ${dynamicLinkData.toString()}");
+        }).onError((handleError)  {
+            print('onLink error');
+            print(handleError.message);
+    });
   }
 
 

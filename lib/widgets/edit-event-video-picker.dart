@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:dio/src/form_data.dart';
 import 'package:dio/src/multipart_file.dart';

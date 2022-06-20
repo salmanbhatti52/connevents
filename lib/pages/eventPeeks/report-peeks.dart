@@ -1,5 +1,4 @@
 import 'package:connevents/mixins/data.dart';
-import 'package:connevents/models/comments-model.dart';
 import 'package:connevents/models/peek-model.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';

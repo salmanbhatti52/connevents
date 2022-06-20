@@ -374,27 +374,27 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                   ],
                 ),
                 SizedBox(height: padding),
-                if(!event.isFreeEvent && !event.isNotMyEvent)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text('Table Service', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
-                        SizedBox(width: padding,),
-                        GestureDetector(
-                            onTap: (){
-                               Navigator.of(context).pop(widget.event);
-                               Navigator.of(context).pop();
-                            },
-                            child: SvgPicture.asset('assets/icons/editPencil1.svg', width: 16,)),
-                      ],
-                    ),
-                    widget.event.tableService==0 ? Icon(Icons.close, color: Colors.red,) : Icon(Icons.check, color: globalGreen),
-                  ],
-                ),
-                if(!event.isFreeEvent && !event.isNotMyEvent)
-                SizedBox(height: padding * 2),
+                // if(!event.isFreeEvent && !event.isNotMyEvent)
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Row(
+                //       children: [
+                //         Text('Table Service', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
+                //         SizedBox(width: padding,),
+                //         GestureDetector(
+                //             onTap: (){
+                //                Navigator.of(context).pop(widget.event);
+                //                Navigator.of(context).pop();
+                //             },
+                //             child: SvgPicture.asset('assets/icons/editPencil1.svg', width: 16,)),
+                //       ],
+                //     ),
+                //     widget.event.tableService==0 ? Icon(Icons.close, color: Colors.red,) : Icon(Icons.check, color: globalGreen),
+                //   ],
+                // ),
+                // if(!event.isFreeEvent && !event.isNotMyEvent)
+                // SizedBox(height: padding * 2),
                 if(!event.isFreeEvent && !event.isNotMyEvent)
                 Row(
                   children: [

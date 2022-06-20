@@ -1,4 +1,3 @@
-import 'package:connevents/models/category-model.dart';
 import 'package:connevents/models/cities-model.dart';
 import 'package:connevents/utils/const.dart';
 import 'package:retrofit/retrofit.dart';

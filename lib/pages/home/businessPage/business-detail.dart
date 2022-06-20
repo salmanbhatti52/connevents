@@ -220,7 +220,7 @@ class _BusinessDetailsPageState extends State<BusinessDetailsPage> {
                                                        maxLines: isReadMore ? null : 3,
                                                        style: gilroyRegular, softWrap: true)
                                             ),
-                                            if(widget.business!.description!=null &&   widget.business!.description.length > 150)
+                                            if(widget.business!.description.length > 150)
                                             Positioned(
                                               right:0,
                                               bottom:0,

@@ -4,7 +4,6 @@ import 'package:connevents/pages/rewards/rewardsDetailsPageAlerts.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RewardsPage extends StatefulWidget {

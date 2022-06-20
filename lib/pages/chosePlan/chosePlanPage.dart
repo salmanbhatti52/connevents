@@ -1,7 +1,6 @@
 import 'package:connevents/pages/planDetails/planDetailsPage.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/variables/sharingModels.dart';
-import 'package:connevents/widgets/connevent-appbar.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

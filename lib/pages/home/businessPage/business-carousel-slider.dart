@@ -1,8 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/models/image-videos-model.dart';
-import 'package:connevents/pages/home/photo-preview.dart';
-import 'package:connevents/pages/home/video-player.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';

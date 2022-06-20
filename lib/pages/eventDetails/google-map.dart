@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/create-event-model.dart';

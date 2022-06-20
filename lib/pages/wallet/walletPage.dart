@@ -1,5 +1,4 @@
 import 'package:connevents/mixins/data.dart';
-import 'package:connevents/models/bank-detail-model.dart';
 import 'package:connevents/models/my-earning-model.dart';
 import 'package:connevents/models/user-concash-model.dart';
 import 'package:connevents/pages/wallet/Add-Bank-Account-Page.dart';
@@ -9,9 +8,7 @@ import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:connevents/widgets/earning-button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -162,7 +159,7 @@ class _WalletPageState extends State<WalletPage> {
                           ),
                           SizedBox(height: padding),
                           EarningButton(image: 'paypal.svg',title: 'ADD PAYPAL',onPressed: ()async{
-                            CustomNavigator.navigateTo(context, PayPalPayment(onFinish: (number)async{
+                            CustomNavigator.navigateTo(context, PayPalPaymentPage(onFinish: (number)async{
                               print("order id"+ number);
                             },));
                           }),

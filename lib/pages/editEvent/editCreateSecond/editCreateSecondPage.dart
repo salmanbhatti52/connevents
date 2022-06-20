@@ -145,17 +145,16 @@ class _EditCreateSecondPageState extends State<EditCreateSecondPage> {
 
     }
     else {
-      if (picked != null)
-        setState(() {
-          editSelectedStartTime = picked;
-          _hour = editSelectedStartTime!.hour.toString();
-          _minute = editSelectedStartTime!.minute.toString();
-          _time = _hour! + ' : ' + _minute!;
-          eventDetail.eventStartTime = _time!;
-          eventDetail.eventStartTime = formatDate(
-              DateTime(2019, 08, 1, editSelectedStartTime!.hour, editSelectedStartTime!.minute),
-              [hh, ':', nn, am]).toString();
-        });
+      setState(() {
+        editSelectedStartTime = picked;
+        _hour = editSelectedStartTime!.hour.toString();
+        _minute = editSelectedStartTime!.minute.toString();
+        _time = _hour! + ' : ' + _minute!;
+        eventDetail.eventStartTime = _time!;
+        eventDetail.eventStartTime = formatDate(
+            DateTime(2019, 08, 1, editSelectedStartTime!.hour, editSelectedStartTime!.minute),
+            [hh, ':', nn, am]).toString();
+      });
     }
 
     }

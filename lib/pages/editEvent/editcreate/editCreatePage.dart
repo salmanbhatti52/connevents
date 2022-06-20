@@ -18,9 +18,7 @@ import 'package:connevents/widgets/custom-tag-container.dart';
 import 'package:connevents/widgets/event-image-picker.dart';
 import 'package:connevents/widgets/event-video-picker.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:permission_handler/permission_handler.dart';
 

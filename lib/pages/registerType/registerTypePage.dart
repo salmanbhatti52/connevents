@@ -5,7 +5,6 @@ import 'package:connevents/models/user-model.dart';
 import 'package:connevents/pages/landing/landingPage.dart';
 import 'package:connevents/pages/login/loginPage.dart';
 import 'package:connevents/pages/register/registerPage.dart';
-import 'package:connevents/pages/selectCategories/selectCategoriesPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/const.dart';
 import 'package:connevents/utils/loading-dialog.dart';

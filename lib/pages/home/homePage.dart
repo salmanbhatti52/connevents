@@ -18,7 +18,6 @@ import 'package:connevents/pages/home/home-header/city-dialog-page.dart';
 import 'package:connevents/pages/home/home-page-events.dart';
 import 'package:connevents/pages/home/no-result-available-message.dart';
 import 'package:connevents/pages/home/show-search-bar.dart';
-import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/provider/provider-data.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/services/event-tags-service.dart';
@@ -32,7 +31,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/src/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -242,36 +240,44 @@ class _HomePageState extends State<HomePage> {
       }
     }
 
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+  }
+
+
   Future getUserLocation({lat, long}) async {
-      // LocationPermission permission;
-      //  permission = await Geolocator.checkPermission();
-      //  print(permission.toString());
-      //       if (permission == LocationPermission.denied) {
-      //        print("Check Permission");
-      //        permission = await Geolocator.requestPermission();
-      //        print("Check Permission");
-      //        isServiceEnabled=false;
-      //        AppData().userLocation= UserLocation();
-      //        setState(() {});
-      //  }
-      //     else{
-      //       print("hyyyyyyyyyyyyyy");
-      //     }
-          var currentLocation;
-          // if(isServiceEnabled){
+      var currentLocation;
       try{
-        AppData().userLocation=UserLocation();
-        currentLocation = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+        // AppData().userLocation=UserLocation();
+        currentLocation = await  Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
         userCurrentLocation=currentLocation;
         print(userCurrentLocation.latitude);
         print(userCurrentLocation.longitude);
         placeMark= await placemarkFromCoordinates(userCurrentLocation.latitude, userCurrentLocation.longitude);
         AppData().userLocation    =  UserLocation(latitude: userCurrentLocation.latitude, longitude: userCurrentLocation.longitude,address: "${placeMark!.first.subLocality} ${placeMark!.first.locality}");
         print("Location is this ${AppData().userLocation!.address}");
-
         setState(() {});
     }
     catch(e){
+      print("i am here");
       print(e.toString());
     }
          // }
@@ -309,8 +315,6 @@ class _HomePageState extends State<HomePage> {
     showSuccessToast(e.toString());
   }
 }
-
-
 
   Future<bool>  getEventSearchBarFilter({bool isReFresh=false}) async {
     await getUserLocation();
@@ -360,9 +364,6 @@ class _HomePageState extends State<HomePage> {
     }
     return isData;
   }
-
-
-
 
 
   void getEventsTags() async {
@@ -489,6 +490,7 @@ class _HomePageState extends State<HomePage> {
       if(userCurrentLocation !=null)        "userLong":userCurrentLocation.longitude,
       'offset': eventCurrentOffset.toString(),
       'userId':AppData().userdetail!.users_id,
+
     if(tagsList.length > 0)       "tagsFilter":tagsList
     });
     setState(() =>isEvent=false);
@@ -511,6 +513,8 @@ class _HomePageState extends State<HomePage> {
 
 
   }
+
+   print(response);
 
   if (response['status'] == 'success') {
     var event = response['data'] as List;

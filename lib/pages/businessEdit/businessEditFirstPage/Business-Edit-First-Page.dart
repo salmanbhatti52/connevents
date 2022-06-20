@@ -5,21 +5,18 @@ import 'package:connevents/models/event-address-model.dart';
 import 'package:connevents/pages/Dashboard/eventDashboard/eventDashboardPage.dart';
 import 'package:connevents/pages/businessEdit/businessEditSecondPage/business-edit-second-page.dart';
 import 'package:connevents/services/dio-service.dart';
-import 'package:connevents/utils/detect-link.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/business-first-page-text.dart';
 import 'package:connevents/widgets/connevent-appbar.dart';
 import 'package:connevents/widgets/connevent-button.dart';
 import 'package:connevents/widgets/connevents-textfield.dart';
-import 'package:connevents/widgets/create-page-text.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:connevents/widgets/event-image-picker.dart';
 import 'package:connevents/widgets/event-video-picker.dart';
 import 'package:connevents/widgets/upload-logo-picker.dart';
 import 'package:flutter/material.dart';
 import 'package:connevents/models/business-create-model.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class BusinessEditFirstPage extends StatefulWidget {

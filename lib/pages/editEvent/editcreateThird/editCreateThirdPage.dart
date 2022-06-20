@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/models/dress-code-model.dart';
-import 'package:connevents/models/event-tags-model.dart';
-import 'package:connevents/pages/confirmCreate/confirmCreatePage.dart';
 import 'package:connevents/pages/editEvent/editConfirmCreate/editConfirmCreatePage.dart';
 import 'package:connevents/utils/const.dart';
 import 'package:connevents/utils/date-time.dart';
@@ -161,20 +159,19 @@ late  EventDetail event;
         } else  {
           showErrorToast("Sales End Time should be greater than Start Time");
          }
-      }else if(picked!=null){
-       print(selectedEndTime);
-       setState(() {
-        selectedEndTime = picked;
-        _hour = selectedEndTime.hour.toString();
-        _minute = selectedEndTime.minute.toString();
-        _time = _hour! + ' : ' + _minute!;
-        event.salesEndTime = _time!;
+      }else     print(selectedEndTime);
+     setState(() {
+      selectedEndTime = picked;
+      _hour = selectedEndTime.hour.toString();
+      _minute = selectedEndTime.minute.toString();
+      _time = _hour! + ' : ' + _minute!;
+      event.salesEndTime = _time!;
 
-        event.salesEndTime = formatDate(
-            DateTime(2019, 08, 1, selectedEndTime.hour, selectedEndTime.minute),
-            [hh, ':', nn, am]).toString();
-      });
-      }
+      event.salesEndTime = formatDate(
+          DateTime(2019, 08, 1, selectedEndTime.hour, selectedEndTime.minute),
+          [hh, ':', nn, am]).toString();
+    });
+
     }
   }
 

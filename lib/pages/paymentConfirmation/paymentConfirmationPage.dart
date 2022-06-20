@@ -6,11 +6,7 @@ import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
-import 'package:connevents/widgets/tbl-service-container.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 
 class PaymentConfirmationPage extends StatefulWidget {
   String regularController;

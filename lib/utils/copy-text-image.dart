@@ -11,7 +11,7 @@ import 'package:path_provider/path_provider.dart';
  static Future copyFile() async {
    print("hellloooo");
     final path = await _localPath;
-    Clipboard.setData(new ClipboardData(text: "content://${_localPath}/assets/logo.png"));
+    Clipboard.setData(new ClipboardData(text: "content://$_localPath/assets/logo.png"));
     return path;
   }
 

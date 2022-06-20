@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 
+
 class EmojisPickerPage extends StatefulWidget {
   Function(String emoji) emoji;
    EmojisPickerPage({Key? key,required this.emoji}) : super(key: key);
@@ -41,8 +42,7 @@ class _EmojisPickerPageState extends State<EmojisPickerPage> {
           enableSkinTones: true,
           showRecentsTab: true,
           recentsLimit: 28,
-          noRecentsText: "No Recents",
-          noRecentsStyle: const TextStyle(fontSize: 20, color: Colors.black26),
+          noRecents: Text("No Recents",style: TextStyle(fontSize: 20, color: Colors.black26),),
           tabIndicatorAnimDuration: kTabScrollDuration,
           categoryIcons: const CategoryIcons(),
           buttonMode: ButtonMode.MATERIAL

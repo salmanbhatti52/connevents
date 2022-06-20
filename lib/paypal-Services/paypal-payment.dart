@@ -1,20 +1,18 @@
-import 'package:connevents/mixins/data.dart';
 import 'package:connevents/paypal-Services/payPal-services.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:http/http.dart' as http;
 
-class PayPalPayment extends StatefulWidget {
+class PayPalPaymentPage extends StatefulWidget {
   final Function onFinish;
 
 
-  const PayPalPayment({Key? key,required this.onFinish}) : super(key: key);
+  const PayPalPaymentPage({Key? key,required this.onFinish}) : super(key: key);
 
   @override
-  State<PayPalPayment> createState() => _PayPalPaymentState();
+  State<PayPalPaymentPage> createState() => _PayPalPaymentPageState();
 }
 
-class _PayPalPaymentState extends State<PayPalPayment> {
+class _PayPalPaymentPageState extends State<PayPalPaymentPage> {
   GlobalKey<ScaffoldState> _scaffoldKey=  GlobalKey<ScaffoldState>();
   
   PayPalServices services= PayPalServices();
@@ -44,13 +42,11 @@ class _PayPalPaymentState extends State<PayPalPayment> {
          print("i am here");
          print(res);
         print("i am here");
-         if(res!=null){
-           setState(() {
-             checkOutUrl=res['approvalUrl']!;
-             executeUrl=res['executeUrl']!;
+         setState(() {
+           checkOutUrl=res['approvalUrl']!;
+           executeUrl=res['executeUrl']!;
 
-           });
-         }
+         });
 
       }
       catch(e){

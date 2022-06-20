@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/chat-model.dart';
 import 'package:connevents/pages/messageDetails/messageDetailsPage.dart';
-import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';

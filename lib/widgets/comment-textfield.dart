@@ -1,8 +1,5 @@
-import 'dart:io';
 
-import 'package:connevents/pages/emojisPicker/emojis-picker.dart';
 import 'package:connevents/variables/globalVariables.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 
 class EventCommentTextField extends StatelessWidget {

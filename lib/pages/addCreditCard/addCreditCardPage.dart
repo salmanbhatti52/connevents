@@ -1,7 +1,6 @@
 
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/add-card.dart';
-import 'package:connevents/pages/paymentMethods/paymentMethodsPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/services/stripe-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';

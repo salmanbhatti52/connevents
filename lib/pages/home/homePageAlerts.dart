@@ -1,15 +1,10 @@
-import 'package:connevents/models/category-model.dart';
 import 'package:connevents/models/event-type-model.dart';
 import 'package:connevents/pages/createEvent/createPage.dart';
-import 'package:connevents/pages/searchResults/searchResultsPage.dart';
-import 'package:connevents/services/category-service.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/services/event-type-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
-import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class SelectCategories extends StatefulWidget {
   @override
@@ -363,173 +358,173 @@ class _LocationSearchAlertState extends State<LocationSearchAlert> {
 
 //  THIRD ALERT
 
-class CalendarAlert extends StatelessWidget {
-  // CalendarController _controller ;
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    DateTime _date = DateTime.now();
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      // elevation: 3,
-      backgroundColor: Colors.transparent,
-      child: contentBox(context, size, _date),
-    );
-  }
-
-  contentBox(context, size, _date) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Center(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 30),
-              width: size.width,
-              padding: EdgeInsets.all(11.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                border: Border.all(color: globalGreen),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.transparent,
-                    offset: Offset(0, 2),
-                    blurRadius: 1,
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  TableCalendar(
-                    calendarFormat: CalendarFormat.month,
-                    calendarStyle: CalendarStyle(
-                      weekendTextStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: Colors.black,
-                        // height: 1.3333333333333333,
-                      ),
-                      // renderDaysOfWeek: true,
-                      markersMaxCount: 20,
-                      outsideTextStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: Colors.black,
-                      ),
-                      todayTextStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: const Color(0xff000000),
-                      ),
-                    ),
-                    daysOfWeekStyle: DaysOfWeekStyle(
-                      weekdayStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                      weekendStyle: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    ),
-                    headerStyle: HeaderStyle(
-                      titleTextStyle: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontSize: 18,
-                        color: const Color(0xff000000),
-                        height: 1.3333333333333333,
-                      ),
-                      leftChevronIcon: Icon(
-                        Icons.keyboard_arrow_left,
-                        size: 25,
-                        color: Colors.black,
-                      ),
-                      formatButtonTextStyle: TextStyle(color: Colors.blue),
-                      rightChevronIcon: Icon(
-                        Icons.keyboard_arrow_right,
-                        size: 25,
-                        color: Colors.black,
-                      ),
-                      formatButtonVisible: false,
-                    ),
-                    currentDay: DateTime.now(),
-                    firstDay: DateTime.utc(2010, 10, 16),
-                    lastDay: DateTime.utc(2030, 3, 14),
-                    focusedDay: DateTime.now(),
-                    calendarBuilders: CalendarBuilders(
-                      selectedBuilder: (context, date, events) => Container(
-                        margin: const EdgeInsets.all(10.0),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: globalGreen,
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: Text(
-                          _date.day.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: const Color(0xff000000),
-                          ),
-                        ),
-                      ),
-                      todayBuilder: (context, _date, events) => Container(
-                        height: 25,
-                        width: 25,
-                        margin: const EdgeInsets.all(10.0),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Text(
-                          _date.day.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: Colors.white,
-                            // height: 1.3333333333333333,
-                          ),
-                        ),
-                      ),
-                    ),
-                    // calendarController: _controller,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: RaisedButton(
-                        textColor: Colors.white,
-                        color: globalGreen,
-                        child: Text("GO",
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800)),
-                        onPressed: () {
-                          Navigator.pop(context);
-                          CustomNavigator.navigateTo(context, SearchResultsPage());
-
-                          // Navigator.pushNamed(context, '/searchResults');
-                        },
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(25.0),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-
-
-
-}
+// class CalendarAlert extends StatelessWidget {
+//   // CalendarController _controller ;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     Size size = MediaQuery.of(context).size;
+//     DateTime _date = DateTime.now();
+//     return Dialog(
+//       shape: RoundedRectangleBorder(
+//         borderRadius: BorderRadius.circular(20),
+//       ),
+//       // elevation: 3,
+//       backgroundColor: Colors.transparent,
+//       child: contentBox(context, size, _date),
+//     );
+//   }
+//
+//   contentBox(context, size, _date) {
+//     return SingleChildScrollView(
+//       child: Column(
+//         children: <Widget>[
+//           Center(
+//             child: Container(
+//               margin: EdgeInsets.symmetric(vertical: 30),
+//               width: size.width,
+//               padding: EdgeInsets.all(11.0),
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.circular(20.0),
+//                 border: Border.all(color: globalGreen),
+//                 color: Colors.white,
+//                 boxShadow: [
+//                   BoxShadow(
+//                     color: Colors.transparent,
+//                     offset: Offset(0, 2),
+//                     blurRadius: 1,
+//                   ),
+//                 ],
+//               ),
+//               child: Column(
+//                 children: [
+//                   TableCalendar(
+//                     calendarFormat: CalendarFormat.month,
+//                     calendarStyle: CalendarStyle(
+//                       weekendTextStyle: TextStyle(
+//                         fontWeight: FontWeight.w600,
+//                         fontSize: 12,
+//                         color: Colors.black,
+//                         // height: 1.3333333333333333,
+//                       ),
+//                       // renderDaysOfWeek: true,
+//                       markersMaxCount: 20,
+//                       outsideTextStyle: TextStyle(
+//                         fontWeight: FontWeight.w600,
+//                         fontSize: 12,
+//                         color: Colors.black,
+//                       ),
+//                       todayTextStyle: TextStyle(
+//                         fontWeight: FontWeight.w600,
+//                         fontSize: 12,
+//                         color: const Color(0xff000000),
+//                       ),
+//                     ),
+//                     daysOfWeekStyle: DaysOfWeekStyle(
+//                       weekdayStyle: TextStyle(
+//                         fontWeight: FontWeight.w600,
+//                         fontSize: 16,
+//                         color: Colors.black,
+//                       ),
+//                       weekendStyle: TextStyle(
+//                         fontWeight: FontWeight.w600,
+//                         fontSize: 16,
+//                         color: Colors.black,
+//                       ),
+//                     ),
+//                     headerStyle: HeaderStyle(
+//                       titleTextStyle: TextStyle(
+//                         fontWeight: FontWeight.w800,
+//                         fontSize: 18,
+//                         color: const Color(0xff000000),
+//                         height: 1.3333333333333333,
+//                       ),
+//                       leftChevronIcon: Icon(
+//                         Icons.keyboard_arrow_left,
+//                         size: 25,
+//                         color: Colors.black,
+//                       ),
+//                       formatButtonTextStyle: TextStyle(color: Colors.blue),
+//                       rightChevronIcon: Icon(
+//                         Icons.keyboard_arrow_right,
+//                         size: 25,
+//                         color: Colors.black,
+//                       ),
+//                       formatButtonVisible: false,
+//                     ),
+//                     currentDay: DateTime.now(),
+//                     firstDay: DateTime.utc(2010, 10, 16),
+//                     lastDay: DateTime.utc(2030, 3, 14),
+//                     focusedDay: DateTime.now(),
+//                     calendarBuilders: CalendarBuilders(
+//                       selectedBuilder: (context, date, events) => Container(
+//                         margin: const EdgeInsets.all(10.0),
+//                         alignment: Alignment.center,
+//                         decoration: BoxDecoration(
+//                           color: globalGreen,
+//                           borderRadius: BorderRadius.circular(30.0),
+//                         ),
+//                         child: Text(
+//                           _date.day.toString(),
+//                           style: TextStyle(
+//                             fontWeight: FontWeight.w600,
+//                             fontSize: 12,
+//                             color: const Color(0xff000000),
+//                           ),
+//                         ),
+//                       ),
+//                       todayBuilder: (context, _date, events) => Container(
+//                         height: 25,
+//                         width: 25,
+//                         margin: const EdgeInsets.all(10.0),
+//                         alignment: Alignment.center,
+//                         decoration: BoxDecoration(
+//                             color: Colors.red,
+//                             borderRadius: BorderRadius.circular(15)),
+//                         child: Text(
+//                           _date.day.toString(),
+//                           style: TextStyle(
+//                             fontWeight: FontWeight.w600,
+//                             fontSize: 12,
+//                             color: Colors.white,
+//                             // height: 1.3333333333333333,
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     // calendarController: _controller,
+//                   ),
+//                   Align(
+//                     alignment: Alignment.bottomRight,
+//                     child: Padding(
+//                       padding: const EdgeInsets.only(right: 10.0),
+//                       child: RaisedButton(
+//                         textColor: Colors.white,
+//                         color: globalGreen,
+//                         child: Text("GO",
+//                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800)),
+//                         onPressed: () {
+//                           Navigator.pop(context);
+//                           CustomNavigator.navigateTo(context, SearchResultsPage());
+//
+//                           // Navigator.pushNamed(context, '/searchResults');
+//                         },
+//                         shape: new RoundedRectangleBorder(
+//                           borderRadius: new BorderRadius.circular(25.0),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+//
+//
+//
+//
+// }

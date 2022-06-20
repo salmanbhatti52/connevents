@@ -1,9 +1,4 @@
-import 'package:connevents/models/create-event-model.dart';
-import 'package:connevents/pages/tabs/tabsPage.dart';
-import 'package:connevents/services/dio-service.dart';
-import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
-import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
 
 class DownloadDialogAlert extends StatefulWidget {

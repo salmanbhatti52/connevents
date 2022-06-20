@@ -5,7 +5,6 @@ import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderConfirmationPage extends StatefulWidget {
   final String? planType;

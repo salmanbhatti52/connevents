@@ -4,8 +4,6 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/pages/bookRoom/bookRoomPageALert.dart';
 import 'package:connevents/services/dio-service.dart';
-import 'package:connevents/utils/const.dart';
-import 'package:connevents/utils/date-time.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:date_format/date_format.dart';
@@ -208,7 +206,7 @@ class _BookRoomPageState extends State<BookRoomPage> {
     //   }
     // }
     // else{
-    if((picked!=null && pickedStartDate!=null && pickedEndDate!=null )){
+    if((pickedStartDate!=null && pickedEndDate!=null )){
        // if(toDouble(picked) > toDouble(selectedEndTime!)){
        //   return  showErrorToast("Start Time Should be smaller than End Time");
        // }

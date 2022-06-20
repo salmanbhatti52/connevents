@@ -2,13 +2,10 @@ import 'dart:math';
 
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/event-guest-list-model.dart';
-import 'package:connevents/pages/eventGuestList/eventGuestListPage.dart';
-import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/pages/ticket/ticketPageAlerts.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
-import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

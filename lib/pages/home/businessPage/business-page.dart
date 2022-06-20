@@ -9,7 +9,6 @@ import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:connevents/widgets/profile-image-picker.dart';
 import 'package:connevents/widgets/report-business-dialog.dart';
-import 'package:connevents/widgets/report-event-dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:permission_handler/permission_handler.dart';

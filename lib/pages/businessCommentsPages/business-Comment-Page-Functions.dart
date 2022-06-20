@@ -1,5 +1,4 @@
 import 'package:connevents/mixins/data.dart';
-import 'package:connevents/pages/messageDetails/messageDetailsPage.dart';
 import 'package:connevents/pages/reportComment/reportCommentPage.dart';
 import 'package:connevents/pages/reportComment/reportReplyPage.dart';
 import 'package:connevents/widgets/custom-navigator.dart';

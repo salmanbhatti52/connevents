@@ -54,7 +54,7 @@ class LiveStreamingScheduledAlert extends StatelessWidget {
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text("Your Meeting Scheduled Time is ${liveDate} ${liveTime}", textAlign: TextAlign.center,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                  child: Text("Your Meeting Scheduled Time is $liveDate $liveTime", textAlign: TextAlign.center,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
                 ),
 
         ],

@@ -2,13 +2,11 @@ import 'dart:io';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:dio/src/form_data.dart';
 import 'package:dio/src/multipart_file.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class EventVideoPicker extends StatefulWidget {

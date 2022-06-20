@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/checked-in-event-detail-model.dart';
-import 'package:connevents/models/peek-model.dart';
 import 'package:connevents/pages/Dashboard/eventDashboard/eventDashboardPage.dart';
 import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/services/_config.dart';
@@ -12,7 +11,6 @@ import 'package:connevents/widgets/connevent-appbar.dart';
 import 'package:connevents/widgets/connevent-button.dart';
 import 'package:connevents/widgets/connevents-textfield.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
@@ -176,6 +174,7 @@ class _PickVideoState extends State<PickVideo> {
                           return "Please Enter Description";
                           else if(val.length > 50)
                           return "You can't write more than 50 words";
+                        return null;
                         },
                       maxLines: 4,
                     ),

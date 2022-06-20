@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'model.dart';
 
 part 'check-user-subscription.g.dart';
 

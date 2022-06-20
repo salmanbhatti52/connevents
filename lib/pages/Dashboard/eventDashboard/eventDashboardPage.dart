@@ -1,15 +1,12 @@
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/event-address-model.dart';
 import 'package:connevents/models/event-dummy-ticket.dart';
-import 'package:connevents/models/event-guest-list-model.dart';
 import 'package:connevents/models/event-type-model.dart';
 import 'package:connevents/models/ticket-history-model.dart';
 import 'package:connevents/pages/home/no-result-available-message.dart';
 import 'package:connevents/pages/salesDetails/salesDetailsPage.dart';
-import 'package:connevents/pages/ticket/checkInTicketPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/services/event-type-service.dart';
-import 'package:connevents/utils/fonts.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';

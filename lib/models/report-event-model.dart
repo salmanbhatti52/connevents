@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'model.dart';
 part 'report-event-model.g.dart';
 
 @JsonSerializable(includeIfNull: false)

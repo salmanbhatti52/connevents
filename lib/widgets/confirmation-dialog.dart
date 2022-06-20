@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 typedef ConfirmationAction<T> = FutureOr<T> Function();
 typedef ConfirmationDialogBuilder = Widget Function(BuildContext);

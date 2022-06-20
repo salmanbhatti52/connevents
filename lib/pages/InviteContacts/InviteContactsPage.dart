@@ -9,8 +9,6 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sms/flutter_sms.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/src/provider.dart';
 
 class InviteContactsPage extends StatefulWidget {
   EventDetail? eventDetail;

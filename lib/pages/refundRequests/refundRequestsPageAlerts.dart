@@ -1,10 +1,7 @@
-import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/refund-request.dart';
-import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
-import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
 
 class AcceptRefundAlert extends StatefulWidget {

@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Widget circularImageLoader(BuildContext context, Widget widget, ImageChunkEvent? event){
@@ -10,9 +9,8 @@ Widget circularImageLoader(BuildContext context, Widget widget, ImageChunkEvent?
             value: event.cumulativeBytesLoaded / event.expectedTotalBytes!
         ),
       );
-    } else if (widget != null) {
-      return widget;
-    } return CircularProgressIndicator(
+    } else    return widget;
+ return CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation(Colors.black),
     );
   }

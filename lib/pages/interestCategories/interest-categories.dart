@@ -3,7 +3,6 @@ import 'package:connevents/models/event-type-model.dart';
 import 'package:connevents/models/specific-user-category-model.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../variables/globalVariables.dart';
 import 'package:flutter/material.dart';

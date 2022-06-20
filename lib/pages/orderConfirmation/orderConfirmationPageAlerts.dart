@@ -1,6 +1,4 @@
-import 'package:connevents/pages/chosePlan/chosePlanPage.dart';
 import 'package:connevents/pages/tabs/tabsPage.dart';
-import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
 

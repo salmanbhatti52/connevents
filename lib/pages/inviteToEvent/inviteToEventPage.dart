@@ -1,10 +1,7 @@
-import 'dart:io';
 
 import 'package:connevents/dynamicLink/dynamic-link.dart';
 import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/pages/InviteContacts/InviteContactsPage.dart';
-import 'package:connevents/utils/copy-text-image.dart';
-import 'package:connevents/utils/copy-text-image.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +31,7 @@ class _InviteToEventPageState extends State<InviteToEventPage> {
   Future copyFile() async {
     print("hellloooo");
     final path = await _localPath;
-    Clipboard.setData(new ClipboardData(text: "content://${_localPath}/logo.png"));
+    Clipboard.setData(new ClipboardData(text: "content://$_localPath/logo.png"));
     return path;
   }
 

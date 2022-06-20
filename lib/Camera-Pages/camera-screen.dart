@@ -1,10 +1,7 @@
 import 'dart:async';
 
-import 'package:connevents/Camera-Pages/camera-view.dart';
 import 'package:connevents/models/checked-in-event-detail-model.dart';
 import 'package:connevents/pages/eventPeeks/pick-video.dart';
-import 'package:connevents/widgets/custom-navigator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:camera/camera.dart';

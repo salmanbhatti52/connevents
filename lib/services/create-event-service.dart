@@ -1,4 +1,3 @@
-import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/utils/const.dart';
 import 'package:retrofit/retrofit.dart';
 import '_config.dart';

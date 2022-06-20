@@ -1,13 +1,10 @@
 import 'package:connevents/mixins/data.dart';
-import 'package:connevents/models/forgot-password-model.dart';
 import 'package:connevents/models/user-model.dart';
 import 'package:connevents/pages/verifyCode/verifyCodePage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/const.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
-import 'package:connevents/widgets/simple-form.dart';
-import 'package:connevents/widgets/waiting_dialog.dart';
 import 'package:dio/dio.dart';
 
 import '../../variables/globalVariables.dart';

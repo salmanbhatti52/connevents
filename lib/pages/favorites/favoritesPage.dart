@@ -18,7 +18,6 @@ import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/connevent-appbar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:connevents/models/business-create-model.dart';

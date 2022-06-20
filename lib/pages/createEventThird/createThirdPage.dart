@@ -173,19 +173,18 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                event.salesStartTime = formatDate(DateTime(2019, 08, 1, createSelectedStartTime!.hour, createSelectedStartTime!.minute), [hh, ':', nn, am]).toString();
              });
              }
-         } else if (picked != null) {
-           setState(() {
-             createSelectedStartTime = picked;
-             _hour = createSelectedStartTime!.hour.toString();
-             _minute = createSelectedStartTime!.minute.toString();
-             _time = _hour! + ' : ' + _minute!;
-             event.salesStartTime = _time!;
-             event.salesStartTime = formatDate(DateTime(
-                 2019, 08, 1, createSelectedStartTime!.hour,
-                 createSelectedStartTime!.minute),
-                 [hh, ':', nn, am]).toString();
-           });
-         }
+         } else         setState(() {
+           createSelectedStartTime = picked;
+           _hour = createSelectedStartTime!.hour.toString();
+           _minute = createSelectedStartTime!.minute.toString();
+           _time = _hour! + ' : ' + _minute!;
+           event.salesStartTime = _time!;
+           event.salesStartTime = formatDate(DateTime(
+               2019, 08, 1, createSelectedStartTime!.hour,
+               createSelectedStartTime!.minute),
+               [hh, ':', nn, am]).toString();
+         });
+
        }
        else
          showErrorToast("Please select First Sales Start  & End Date");

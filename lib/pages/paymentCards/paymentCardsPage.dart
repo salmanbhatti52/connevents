@@ -7,13 +7,11 @@ import 'package:connevents/models/purchase-api.dart';
 import 'package:connevents/pages/addCard/addCardPage.dart';
 import 'package:connevents/pages/orderConfirmation/orderConfirmationPage.dart';
 import 'package:connevents/services/dio-service.dart';
-import 'package:connevents/services/stripe-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:pay/pay.dart';
@@ -252,10 +250,10 @@ class _PaymentCardsPageState extends State<PaymentCardsPage> {
                   ),
                 ),
               ),
-              ElevatedButton.icon(
-                onPressed:(){
-                buyProduct(PurchaseApi.products.first);
-              }, icon: Icon(Icons.golf_course), label: Text("InApp Purchase")),
+              // ElevatedButton.icon(
+              //   onPressed:(){
+              //   buyProduct(PurchaseApi.products.first);
+              // }, icon: Icon(Icons.golf_course), label: Text("InApp Purchase")),
 
 
               SizedBox(height: padding),

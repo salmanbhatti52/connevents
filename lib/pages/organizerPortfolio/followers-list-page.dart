@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/follower-model.dart';
 import 'package:connevents/services/_config.dart';
@@ -7,7 +6,6 @@ import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/profile-image-picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:connevents/models/create-event-model.dart';
 import 'package:permission_handler/permission_handler.dart';

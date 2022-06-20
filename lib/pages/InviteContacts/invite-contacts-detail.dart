@@ -63,7 +63,7 @@ class _InviteContactsDetailState extends State<InviteContactsDetail> {
                      leading: (widget.contact.avatar != null && widget.contact.avatar!.isNotEmpty)
                          ? CircleAvatar(backgroundImage: MemoryImage(widget.contact.avatar!))
                          : CircleAvatar(
-                       child: Text(widget.contact.initials()), backgroundColor: Theme.of(context).accentColor,
+                       child: Text(widget.contact.initials()), backgroundColor: Theme.of(context).colorScheme.secondary,
                      ),
                      title: widget.contact.displayName != null ?
                      Text(widget.contact.displayName!, style: TextStyle(color: globalBlack, fontSize: 18)) :
