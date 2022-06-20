@@ -24,7 +24,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
    await AppData.initiate();
-  await GetPosition.initiate();
+   await GetPosition.initiate();
    cameras = await availableCameras();
    //FirebaseDynamicLinkService.initDynamicLinks();
    await OneSignal.shared.setAppId("3502caf3-e7b3-4352-a53e-a1e13ebe2cd0");
