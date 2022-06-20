@@ -82,7 +82,6 @@ class _HomePageState extends State<HomePage> {
   bool isEvent=false;
   bool isBusiness=false;
   DateTime today=DateTime.now();
-  //var userCurrentLocation;
   Future<EventTagsModel>? futureEventTagsModel;
   List<TagsData> listOfTags = [];
   bool isVisibleTags=false;
@@ -265,9 +264,6 @@ class _HomePageState extends State<HomePage> {
 
   // Future getUserLocation({lat, long}) async {
   //     var currentLocation;
-  //
-  //     var permission  = await Geolocator.requestPermission();
-  //
   //     try{
   //       // AppData().userLocation=UserLocation();
   //       currentLocation = await  Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
@@ -320,7 +316,7 @@ class _HomePageState extends State<HomePage> {
 }
 
   Future<bool>  getEventSearchBarFilter({bool isReFresh=false}) async {
-    //await getUserLocation();
+    // await getUserLocation();
     bool isData = false;
     if(isReFresh) {
       eventCurrentOffset=0;
@@ -332,8 +328,8 @@ class _HomePageState extends State<HomePage> {
       }
     }
       response = await DioService.post('event_search_bar_filter', {
-        if( AppData().userLocation !=null)   "userLat": AppData().userLocation!.latitude,
-        if( AppData().userLocation !=null)        "userLong": AppData().userLocation!.longitude,
+        if(AppData().userLocation !=null)   "userLat":AppData().userLocation!.latitude,
+        if(AppData().userLocation !=null)        "userLong":AppData().userLocation!.longitude,
         'offset': eventCurrentOffset.toString(),
         'userId':AppData().userdetail!.users_id,
         'searchFilter' : search
@@ -423,7 +419,7 @@ class _HomePageState extends State<HomePage> {
 }
 
   Future<bool>  getNearbyBusiness({bool isReFresh=false}) async {
-   //await getUserLocation();
+   // await getUserLocation();
     bool isData = false;
     if(isReFresh) {
       businessCurrentOffset=0;
@@ -435,10 +431,10 @@ class _HomePageState extends State<HomePage> {
       }
     }
     response = await DioService.post('business_search_filter', {
-      if( AppData().userLocation !=null)
-      "userLat": AppData().userLocation!.latitude,
-      if( AppData().userLocation !=null)
-     "userLong": AppData().userLocation!.longitude,
+      if(AppData().userLocation !=null)
+      "userLat":AppData().userLocation!.latitude,
+      if(AppData().userLocation !=null)
+     "userLong":AppData().userLocation!.longitude,
       'userId':AppData().userdetail!.users_id,
       'offset': businessCurrentOffset.toString(),
       if(city.isNotEmpty) "cityFilter": city,
@@ -476,7 +472,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<bool>  getEvents({bool isReFresh=false}) async {
-  // await getUserLocation();
+   //await getUserLocation();
     bool isData = false;
     if(isReFresh) {
       eventCurrentOffset=0;
@@ -489,8 +485,8 @@ class _HomePageState extends State<HomePage> {
     }
     if(isEvent) {
     response = await DioService.post('event_search_filter', {
-      if( AppData().userLocation !=null)   "userLat": AppData().userLocation!.latitude,
-      if( AppData().userLocation !=null)        "userLong": AppData().userLocation!.longitude,
+      if(AppData().userLocation !=null)   "userLat":AppData().userLocation!.latitude,
+      if(AppData().userLocation !=null)        "userLong":AppData().userLocation!.longitude,
       'offset': eventCurrentOffset.toString(),
       'userId':AppData().userdetail!.users_id,
 
@@ -500,10 +496,10 @@ class _HomePageState extends State<HomePage> {
   }
    else {
     response = await DioService.post('event_search_filter', {
-      if( AppData().userLocation !=null)
-      "userLat": AppData().userLocation!.latitude,
-      if( AppData().userLocation !=null)
-     "userLong": AppData().userLocation!.longitude,
+      if(AppData().userLocation !=null)
+      "userLat":AppData().userLocation!.latitude,
+      if(AppData().userLocation !=null)
+     "userLong":AppData().userLocation!.longitude,
       'userId':AppData().userdetail!.users_id,
       'offset': eventCurrentOffset.toString(),
       if(city.isNotEmpty) "cityFilter": city,

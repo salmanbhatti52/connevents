@@ -2,10 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.connevents.apps</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string></string>
+	<string>Connevents</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -17,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -55,10 +59,10 @@
 	<string>This app requires contacts access to invite a users from your contacts</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app uses your location to show events and business to users</string>
+	<key>NSLocationUsageDescription</key>
+	<string>This app uses your location to show events and business to users</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app uses your location to show events and business to users</string>
-	<key>NSLocationUsageDescription</key>
-    <string>This app uses your location to show events and business to users</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This App Requires Microphone For video Calling</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -89,10 +93,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>BGTaskSchedulerPermittedIdentifiers</key>
-	<array>
-		<string>com.connevents.apps</string>
-	</array>
-
 </dict>
 </plist>
