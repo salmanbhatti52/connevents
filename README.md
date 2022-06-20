@@ -1,6 +1,6 @@
-# connevents
+# Connevents
 
-A new Flutter application.
+A Evemt creation and management application.
 
 ## Getting Started
 
