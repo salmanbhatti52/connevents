@@ -39,6 +39,7 @@ class _TabsPageState extends State<TabsPage> {
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
 
+
   Future checkSubscription() async {
     try{
       var response = await DioService.post('check_user_subscription', {"userId": AppData().userdetail!.users_id
@@ -96,15 +97,26 @@ class _TabsPageState extends State<TabsPage> {
       });
   }
   void initDynamicLinks() async {
-    dynamicLinks.onLink.listen((dynamicLinkData) {
-          final Uri deepLink=dynamicLinkData.link;
-          handleMyLink(deepLink);
+   // showErrorToast("I am here");
+    final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri deepLink = data!.link;
+    if(deepLink !=null){
+      handleMyLink(deepLink);
+    }else{
+      dynamicLinks.onLink.listen((dynamicLinkData) {
+        final Uri deepLink=dynamicLinkData.link;
+        handleMyLink(deepLink);
 //          showSuccessToast("deep Link  shahzaib ${dynamicLinkData.toString()}");
-          print("deep Link  shahzaib ${dynamicLinkData.toString()}");
-        }).onError((handleError)  {
-            print('onLink error');
-            print(handleError.message);
-    });
+       // showErrorToast("deep Link  shahzaib ${dynamicLinkData.toString()}");
+        print("deep Link  shahzaib ${dynamicLinkData.toString()}");
+      }).onError((handleError)  {
+       // print('onLink error');
+     //   showErrorToast(handleError.message);
+        print(handleError.message);
+      });
+    }
+
+
   }
 
 

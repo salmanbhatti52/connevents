@@ -29,6 +29,7 @@ class StripeService {
         )
     );
   }
+
   static Future<StripeTransactionResponse> payWithCard({required String amount, required String currency}) async {
     try {
       var paymentMethod = await StripePayment.paymentRequestWithCardForm(
@@ -59,6 +60,7 @@ class StripeService {
       );
     }
   }
+
   static Future<Map<String,dynamic>?> createPaymentIntent(String amount, String currency)async{
 
     try{
