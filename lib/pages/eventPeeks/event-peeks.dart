@@ -211,35 +211,37 @@ class _EventPeeksState extends State<EventPeeks> {
           ),
         ],
       ) :
-          Center(
-              child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(height:MediaQuery.of(context).size.height*0.16),
-                Image.asset('assets/peeks.png'),
-                SizedBox(height:MediaQuery.of(context).size.height*0.05),
-                Text("The more you Peeks you share, the \n more fun it gets for everyone",textAlign:TextAlign.center,style:TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color:Color(0xff13A34C))),
-               SizedBox(height:MediaQuery.of(context).size.height*0.11),
-                GestureDetector(
-                   onTap: () async {
-                     if(checkedInEventDetail.isNotEmpty){
-                       CustomNavigator.navigateTo(context, CameraScreen(checkedInEventDetail));
-                        //-----------------------------------------------------------
-                      //  final video = await ImagePicker().pickVideo(
-                      //     preferredCameraDevice: CameraDevice.rear,
-                      //     source: ImageSource.camera, maxDuration: Duration(seconds: 10));
-                      // if (video != null) {
-                      //    CustomNavigator.navigateTo(context, PickVideo(videoPath: video.path,checkInEventDetail: checkedInEventDetail)) ;
-                      //   }else{
-                      //   print("Cancel Video");
-                      // }
-                     }else{
-                       showErrorToast("You have to check In First");
-                       }
-                   },
-                   child: SvgPicture.asset("assets/peeksButton.svg",color: Colors.grey.shade700)),
-            ],
-          )
+          SingleChildScrollView(
+            child: Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height:MediaQuery.of(context).size.height*0.16),
+                  Image.asset('assets/peeks.png'),
+                  SizedBox(height:MediaQuery.of(context).size.height*0.05),
+                  Text("The more you Peeks you share, the \n more fun it gets for everyone",textAlign:TextAlign.center,style:TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color:Color(0xff13A34C))),
+                 SizedBox(height:MediaQuery.of(context).size.height*0.11),
+                  GestureDetector(
+                     onTap: () async {
+                       if(checkedInEventDetail.isNotEmpty){
+                         CustomNavigator.navigateTo(context, CameraScreen(checkedInEventDetail));
+                          //-----------------------------------------------------------
+                        //  final video = await ImagePicker().pickVideo(
+                        //     preferredCameraDevice: CameraDevice.rear,
+                        //     source: ImageSource.camera, maxDuration: Duration(seconds: 10));
+                        // if (video != null) {
+                        //    CustomNavigator.navigateTo(context, PickVideo(videoPath: video.path,checkInEventDetail: checkedInEventDetail)) ;
+                        //   }else{
+                        //   print("Cancel Video");
+                        // }
+                       }else{
+                         showErrorToast("You have to check In First");
+                         }
+                     },
+                     child: SvgPicture.asset("assets/peeksButton.svg",color: Colors.grey.shade700)),
+              ],
+            )
+            ),
           )
     );
   }

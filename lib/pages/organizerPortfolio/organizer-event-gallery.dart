@@ -8,6 +8,7 @@ import 'package:connevents/pages/eventGallery/showGalleryVideo.dart';
 import 'package:connevents/pages/eventLibrary/allow-upload-item-alert.dart';
 import 'package:connevents/pages/eventLibrary/camera-gallery-picker-alert.dart';
 import 'package:connevents/pages/home/no-result-available-message.dart';
+import 'package:connevents/pages/myportfolio/gallery-picker-alert.dart';
 import 'package:connevents/pages/organizerPortfolio/followers-list-page.dart';
 import 'package:connevents/services/_config.dart';
 import 'package:connevents/services/dio-service.dart';
@@ -209,7 +210,7 @@ class _OrganizerEventGalleryPageState extends State<OrganizerEventGalleryPage> {
     await  showDialog(
         context: context,
         builder: (BuildContext context) {
-          return CameraGalleryPickerAlert(
+          return GalleryPickerAlert(
             fileType:(val){
               fileType=val;
               setState(() {});

@@ -87,7 +87,7 @@ class _BookRoomPageState extends State<BookRoomPage> {
         "channelName":meetingCode
       });
     Navigator.of(context).pop();
-    print(response);
+ showErrorToast(response);
     if (response['status'] == 'success') {
           showDialog(
           context: context,
