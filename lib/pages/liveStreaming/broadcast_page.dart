@@ -588,6 +588,7 @@ class _BroadcastPageState extends State<BroadcastPage> {
             // ),
             //_buildInfoList(),
             //_toolbar(),
+             if(widget.isBroadcaster)
              _changingStream(),
              _cancelStreaming(),
           ],

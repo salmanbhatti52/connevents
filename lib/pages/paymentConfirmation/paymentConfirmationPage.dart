@@ -3,10 +3,12 @@ import 'package:connevents/models/purchased-ticket.dart';
 import 'package:connevents/models/transaction-detail-model.dart';
 import 'package:connevents/pages/ticket/refundTicketPage.dart';
 import 'package:connevents/services/dio-service.dart';
+import 'package:connevents/services/stripe-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 class PaymentConfirmationPage extends StatefulWidget {
   String regularController;
@@ -37,7 +39,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   Widget build(BuildContext context) {
 
    connEventFees= (0.5+  (((widget.transactionDetailModel.regularPurchasedTicket!.amount+  widget.transactionDetailModel.earlyBirdPurchasedTicket!.amount   + widget.transactionDetailModel.vipPurchasedTicket!.amount)/100) * 1.5) );
-   if(widget.transactionDetailModel.paymentType=="Card"){
+   if(widget.transactionDetailModel.paymentType=="Card" ||  widget.transactionDetailModel.paymentType=="Google"){
       var temp  =(widget.transactionDetailModel.regularPurchasedTicket!.amount+  widget.transactionDetailModel.earlyBirdPurchasedTicket!.amount  + widget.transactionDetailModel.vipPurchasedTicket!.amount) + connEventFees;
          stripeFees =     ((temp/100)*2.9) + 0.3;
    }
@@ -208,7 +210,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                     ),
                      ),
 
-                    if(widget.transactionDetailModel.paymentType=="Card")
+                    if(widget.transactionDetailModel.paymentType=="Card" || widget.transactionDetailModel.paymentType=="Google")
                     Padding(
                       padding: const EdgeInsets.only(left:12.0),
                       child: Container(
@@ -328,9 +330,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                     child: TextButton(
                       onPressed: () async{
                         var response;
-                        try{
-                        openLoadingDialog(context,"buying");
+                       // try{
+
                         if(widget.transactionDetailModel.paymentType=="Conncash"){
+                          openLoadingDialog(context,"buying");
                          response  = await DioService.post('user_purchase_tickets_conncash', {
                          "eventPostId":  widget.transactionDetailModel.eventPostId,
                          "usersId":      widget.transactionDetailModel.usersId,
@@ -349,7 +352,37 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                         //  'tblTenPplService':widget.isTableFor10People ? 'yes': 'no',
                      });
                      }
+                        else if(widget.transactionDetailModel.paymentType=="Google"){
+                          print(totalAmount);
+                          print("I am here");
+                       Token token   =await StripeService.handleNativePayment(context, '0');
+                        print(token.card!.toJson());
+                        print(token.card!.number);
+                        print(token.card!.name);
+                         if(token!=null) {
+                           openLoadingDialog(context,"buying");
+                           response  = await DioService.post('user_purchase_tickets_google_pay', {
+                             "eventPostId":  widget.transactionDetailModel.eventPostId,
+                             "userId":      widget.transactionDetailModel.usersId,
+                             "expiryMonths": token.card!.expMonth,
+                             "expiryYears": token.card!.expYear,
+                             "token" : token.tokenId,
+                             "totalAmount":    totalAmount.toStringAsFixed(2),
+                             "stripeFees":     stripeFees,
+                             "conneventFees":  connEventFees,
+                             if(widget.transactionDetailModel.discount!=null)
+                               "discount": widget.transactionDetailModel.discount,
+                             "cardId":        token.card!.cardId,
+                             "paymentType":    widget.transactionDetailModel.paymentType,
+                             "purchasedTickets":  widget.transactionDetailModel.purchasedTickets,
+                           });
+                         }
+                           else{
+                             showErrorToast("Something Went Wrong. Please try Again");
+                         }
+                        }
                       else{
+                        openLoadingDialog(context,"buying");
                         print(widget.transactionDetailModel.toJson());
                          response  = await DioService.post('user_purchase_tickets_card', {
                          "eventPostId":  widget.transactionDetailModel.eventPostId,
@@ -391,11 +424,12 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                             Navigator.of(context).pop();
                             showErrorToast(response['message']);
                       }
-                        }
-                        catch(e){
-                        print(response);
-                        Navigator.of(context).pop();
-                        }
+                        // }
+                        // catch(e){
+                        // print(response);
+                        // print("heloooooooooooooooo");
+                        // Navigator.of(context).pop();
+                        // }
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: globalGreen,

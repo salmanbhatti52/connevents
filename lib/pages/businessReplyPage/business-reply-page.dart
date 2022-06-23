@@ -2,6 +2,7 @@ import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/business-comment-model.dart';
 import 'package:connevents/models/business-create-model.dart';
 import 'package:connevents/pages/businessCommentsPages/business-Comment-Page-Functions.dart';
+import 'package:connevents/pages/eventComments/eventCommentsPageFunctions.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';

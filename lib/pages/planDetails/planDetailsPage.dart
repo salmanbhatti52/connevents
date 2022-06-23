@@ -50,17 +50,16 @@ class _PlanDetailsPageState extends State<PlanDetailsPage> {
     print('num is: $num');
     print('plan is: ${plans[num]}');
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top,
+      backgroundColor: Colors.black,
+      body: Container(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/imgs/handsbg.png'),
+            fit: BoxFit.cover,
           ),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/imgs/handsbg.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
+        ),
+        child: SingleChildScrollView(
           child: Column(
             children: [
               Row(
@@ -196,6 +195,7 @@ class _PlanDetailsPageState extends State<PlanDetailsPage> {
                         ),
                       ),
                     ),
+
                   ],
                 ),
               ),

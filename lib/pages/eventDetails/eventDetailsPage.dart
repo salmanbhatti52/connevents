@@ -314,7 +314,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                                   },
                                                   child: Container(
                                                       color:globallightbg,
-                                                      child: Text(!isReadMore ?  "..See more"  : "Less more",style:TextStyle(color:globalGreen,fontWeight: FontWeight.bold)))),
+                                                      child: Text(!isReadMore ?  "..See more"  : "See less",style:TextStyle(color:globalGreen,fontWeight: FontWeight.bold)))),
                                             )
                                           ],
                                         ),

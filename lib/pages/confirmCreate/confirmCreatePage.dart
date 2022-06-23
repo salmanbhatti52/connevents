@@ -448,7 +448,7 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(widget.event.dressCodeData!.dressCode.toString(), style: TextStyle(color: globalBlack, fontSize: 14, fontWeight: FontWeight.w600,),),
-                    Icon(Icons.circle, color: Colors.red,),
+                    Icon(Icons.circle, color:widget.event.dressCodeColor!=null ? Color(int.parse(widget.event.dressCodeColor!)):null ),
                   ],
                 ),
                 if(!event.isFreeEvent && !event.isNotMyEvent)

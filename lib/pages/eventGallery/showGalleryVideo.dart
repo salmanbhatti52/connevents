@@ -40,8 +40,8 @@ class _ShowGalleryVideoScreenState extends State<ShowGalleryVideoScreen> {
         IconButton(onPressed: (){
             final action = CupertinoActionSheet(
            actions: <Widget>[
-   CupertinoActionSheetAction(
-           child: Text("Delete Video", style: TextStyle(color: Colors.blue, fontSize: 18, fontWeight: FontWeight.w500,),),
+             CupertinoActionSheetAction(
+             child: Text("Delete Video", style: TextStyle(color: Colors.blue, fontSize: 18, fontWeight: FontWeight.w500,),),
              isDefaultAction: true,
              onPressed: ()async{
                 openLoadingDialog(context, "deleting");

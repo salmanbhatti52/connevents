@@ -5,6 +5,7 @@ import 'package:connevents/pages/eventComments/eventCommentsPage.dart';
 import 'package:connevents/pages/eventDetails/eventDetailsPage.dart';
 import 'package:connevents/pages/eventPeeks/event-peeks.dart';
 import 'package:connevents/pages/home/parse-media.dart';
+import 'package:connevents/pages/home/event-preview-screen.dart';
 import 'package:connevents/pages/liveStreaming/alert-box/live-streaming-scheduled-alert.dart';
 import 'package:connevents/pages/liveStreaming/alert-box/meeting-started-alert.dart';
 import 'package:connevents/pages/liveStreaming/broadcast_page.dart';
@@ -63,112 +64,111 @@ class _HomePageEventsState extends State<HomePageEvents> {
                       ),
                       child: Column(
                         children: [
-                      GestureDetector(
-                           onTap:() async{
-                           await   CustomNavigator.navigateTo(context, EventCommentsPage(event: event,images: parseMedia(event)));
-                             setState(() {});
-                           },
-                            child: Stack(
-                              children: [
-                                CarouselSlider(
-                                  items: parseMedia(event).map((i) {
-                                    return Builder(
-                                      builder: (BuildContext context) {
-                                        return Stack(
-                                          children: [
-                                            Container(
-                                              width: double.infinity,
-                                              child: Image.network(
-                                                i.attachment,fit: BoxFit.cover,
-                                                loadingBuilder: (context, child, loadingProgress) => (loadingProgress  == null) ?
-                                                child : Center(child: CircularProgressIndicator()),
-                                                errorBuilder : (context, error, stackTrace) =>
-                                                 Center(
-                                                 child: Text("No Image Available",style:TextStyle(fontSize:18))
-                                             ),
-                                      )
-                                            ),
-                                            if(i.type=="video")
-                                            Center(child: Icon(Icons.play_arrow_rounded,color: Colors.white,size:100))
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  }).toList(),
-                                  options: CarouselOptions(
-                                      height: 170.0,
-                                      viewportFraction: 1,
-                                      enlargeCenterPage: false,
-                                      enableInfiniteScroll: true,
-                                      autoPlay: false,
-                                      onPageChanged: (index, reason) {
-                                        setState(() {
-                                          currentSlide = index;
-                                        });
-                                      }),
-                                ),
-                                Positioned.fill(
-                                  child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: parseMedia(event).map((url) {
-                                        int index = parseMedia(event).indexOf(url);
-                                        return Container(
-                                          width: 7.0,
-                                          height: 7.0,
-                                          margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.white, width: 1),
-                                            shape: BoxShape.circle,
-                                            color: currentSlide == index ? Colors.white : Colors.grey,
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: IconButton(
-                                    onPressed: () =>widget.onTapFavourite!(event.isFavourite!,event.eventPostId!),
-                                    icon: SvgPicture.asset(event.isFavourite=="true" ?   'assets/icons/favYellow.svg' : 'assets/icons/Fav.svg',width: 40)),
-                                ),
-                                 if(AppData().userdetail!.users_id != event.usersId) Positioned(
-                                   top: 5,
-                                   left: 5,
-                                   child: PopupMenuButton(
-                                      child: Center(
-                                      child: Icon(Icons.more_vert,color:Colors.green)),
-                                      shape: RoundedRectangleBorder(
-                                       borderRadius: BorderRadius.all(
-                                         Radius.circular(6.0),
-                                    ),
-                                    ),
-                                      onSelected: (value){
-                                      if(value==1)
-                                      showDialog(context: context,builder:(ctx)=> ReportEventDialog(eventPostId: event.eventTypeId));
-                                      print(value.toString());
+                      Stack(
+                        children: [
+                          CarouselSlider(
+                            items: parseMedia(event).map((i) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return GestureDetector(
+                                    onTap:() {
+                                      CustomNavigator.navigateTo(context, EventPreviewScreen(imageUrls: parseMedia(event),imageData: parseMedia(event).firstWhere((element) => element.attachment==i.attachment),eventDetail: event));
                                     },
-                                    itemBuilder: (context) => [
-                                      PopupMenuItem(
-                                        height:20,
-                                        padding: EdgeInsets.zero,
-                                        value: 1,
-                                        child: Container(
-                                            width: MediaQuery.of(context).size.width/3.6,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left:2.0),
-                                              child: Center(child: Text('Report Event',style:TextStyle(fontSize: 17))),
-                                            ))),
-                                    ]
-                                  )
-                                ),
-                              ],
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          width: double.infinity,
+                                          child: Image.network(
+                                            i.attachment,fit: BoxFit.cover,
+                                            loadingBuilder: (context, child, loadingProgress) => (loadingProgress  == null) ?
+                                            child : Center(child: CircularProgressIndicator()),
+                                            errorBuilder : (context, error, stackTrace) =>
+                                             Center(
+                                             child: Text("No Image Available",style:TextStyle(fontSize:18))
+                                         ),
+                                )
+                                        ),
+                                        if(i.type=="video")
+                                        Center(child: Icon(Icons.play_arrow_rounded,color: Colors.white,size:100))
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            }).toList(),
+                            options: CarouselOptions(
+                                height: 170.0,
+                                viewportFraction: 1,
+                                enlargeCenterPage: false,
+                                enableInfiniteScroll: true,
+                                autoPlay: false,
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    currentSlide = index;
+                                  });
+                                }),
+                          ),
+                          Positioned.fill(
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: parseMedia(event).map((url) {
+                                  int index = parseMedia(event).indexOf(url);
+                                  return Container(
+                                    width: 7.0,
+                                    height: 7.0,
+                                    margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.white, width: 1),
+                                      shape: BoxShape.circle,
+                                      color: currentSlide == index ? Colors.white : Colors.grey,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                           ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: IconButton(
+                              onPressed: () =>widget.onTapFavourite!(event.isFavourite!,event.eventPostId!),
+                              icon: SvgPicture.asset(event.isFavourite=="true" ?   'assets/icons/favYellow.svg' : 'assets/icons/Fav.svg',width: 40)),
+                          ),
+                           if(AppData().userdetail!.users_id != event.usersId) Positioned(
+                             top: 5,
+                             left: 5,
+                             child: PopupMenuButton(
+                                child: Center(
+                                child: Icon(Icons.more_vert,color:Colors.green)),
+                                shape: RoundedRectangleBorder(
+                                 borderRadius: BorderRadius.all(
+                                   Radius.circular(6.0),
+                              ),
+                              ),
+                                onSelected: (value){
+                                if(value==1)
+                                showDialog(context: context,builder:(ctx)=> ReportEventDialog(eventPostId: event.eventTypeId));
+                                print(value.toString());
+                              },
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  height:20,
+                                  padding: EdgeInsets.zero,
+                                  value: 1,
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width/3.6,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left:2.0),
+                                        child: Center(child: Text('Report Event',style:TextStyle(fontSize: 17))),
+                                      ))),
+                              ]
+                            )
+                          ),
+                        ],
+                      ),
                        if(event.dressCodeColor !=null)
                         Divider(color: Color(int.parse(event.dressCodeColor!)), thickness: 8, height: 8),
                           Container(
@@ -318,7 +318,7 @@ class _HomePageEventsState extends State<HomePageEvents> {
                                     "userName": AppData().userdetail!.user_name.toString()
                                   });
 
-                                  Navigator.of(context).pop();
+                                Navigator.of(context).pop();
                                 final  statusCamera  =  await _handleCameraAndMic(Permission.camera);
                                  final statusMicrophone =    await _handleCameraAndMic(Permission.microphone);
                                   //  CustomNavigator.navigateTo(context, VideoRoomPage());

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:connevents/models/business-create-model.dart';
 
-import 'business-photo-view.dart';
+import 'business-preview-screen.dart';
 import 'business-video-screen.dart';
 
 class BusinessSliderPage extends StatefulWidget {
@@ -28,10 +28,7 @@ class _BusinessSliderPageState extends State<BusinessSliderPage> {
               items: widget.images!.map((i) {
                 return GestureDetector(
                     onTap: (){
-                      if(i.type=="image")
-                        CustomNavigator.navigateTo(context, BusinessImageScreen(image: i.attachment,business: widget.business!));
-                      else
-                        CustomNavigator.navigateTo(context, BusinessShowVideo(video:i.media,business: widget.business!,thumbNail: i.attachment));
+                      CustomNavigator.navigateTo(context, BusinessPreviewScreen(imageUrls: widget.images!,imageData: widget.images!.firstWhere((element) => element.attachment==i.attachment),business: widget.business!));
                     },
                   child: Builder(
                     builder: (BuildContext context) {

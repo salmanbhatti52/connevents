@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:stripe_payment/stripe_payment.dart';
 
@@ -15,7 +17,7 @@ class StripeService {
   static String apiBase = 'https://api.stripe.com/v1';
   static String paymentApiUrl = '$apiBase/payment_intents';
   // Todo: Test
-  static String secret = 'sk_test_51Jd7p8KKitfWkXX41zlXpUTZtirbsrmDo9NK16jhNb0xDWxwYHu9wI184X950hYpCDxePdERvoUvtC1GhE38nvgh004wfNZ1QK';
+  static String secret = 'sk_test_51JY9vkEfkXLPApKvck7DWJIC8gMHRPWKu86ePWkEGC6BjPyBHV2hgOHFUjRGw7JoSoch1XotMgVvXmcyNkE4wpNT00qNlOaO6L';
   static Map<String, String> headers = {
     'Authorization': 'Bearer ${StripeService.secret}',
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -23,7 +25,7 @@ class StripeService {
   static init() {
     StripePayment.setOptions(
         StripeOptions(
-        publishableKey: "pk_test_51Jd7p8KKitfWkXX45bQUGt47Aw7vsNTBrBufqCjci6Fm4VDy4f1RDnddDERJUNJqzPCwNfcyeTqkKPL4vAYI33WV00GepwDG5a",
+        publishableKey: "pk_test_51JY9vkEfkXLPApKvmWeEhcJaeIU1V4OvKD57NNmb8FkMKDPQM0M7U2QFYOxcASsdHVfBMQSyZ8stEUaCHqGdjXmZ00869vn7PH",
             merchantId: "Test",
             androidPayMode: 'test'
         )
@@ -78,6 +80,52 @@ class StripeService {
     return null;
 
   }
+
+
+
+
+ static Future<Token> handleNativePayment(BuildContext context, String amountInStr) async {
+
+   Token token;
+    // I used environment configurations for ANDROID_PAY_MODE, use "test" in test mode
+    // and uses "production" in production mode
+    StripePayment.setOptions(StripeOptions(
+        publishableKey: "pk_test_51JY9vkEfkXLPApKvmWeEhcJaeIU1V4OvKD57NNmb8FkMKDPQM0M7U2QFYOxcASsdHVfBMQSyZ8stEUaCHqGdjXmZ00869vn7PH",
+        merchantId: "Test",
+        androidPayMode: 'test'
+    ));
+
+     token = await StripePayment.paymentRequestWithNativePay(
+      androidPayOptions: AndroidPayPaymentRequest(
+        totalPrice: amountInStr,
+        currencyCode: 'USD',
+      ),
+      applePayOptions: ApplePayPaymentOptions(
+        countryCode: 'USA',
+        currencyCode: 'USD',
+        items: [
+          ApplePayItem(
+            type: 'final',
+            label: 'one time',
+            amount: amountInStr,
+          )
+        ],
+      ),
+    );
+
+   // await StripePayment.completeNativePayRequest();
+   return token;
+  }
+
+  // _buildSnackBar(BuildContext context, String content, Color color) {
+  //   final snackBar = SnackBar(
+  //     content: Text(content),
+  //     backgroundColor: color,
+  //   );
+  //   Scaffold.of(context).showSnackBar(snackBar);
+  // }
+
+
 
 
 

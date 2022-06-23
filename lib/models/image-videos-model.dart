@@ -16,8 +16,8 @@ factory ImageVideo.fromJson(json) => _$ImageVideoFromJson(json);
 @JsonSerializable(includeIfNull: false)
 class ImageData extends BaseModelHive{
   String attachment;
-String type;
-String media;
+  String type;
+  String media;
 
 ImageData({this.attachment="",this.media="",this.type=""});
 

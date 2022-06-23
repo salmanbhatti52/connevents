@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/pages/businessCommentsPages/business-Comment-Page.dart';
 import 'package:connevents/pages/home/businessPage/business-detail.dart';
+import 'package:connevents/pages/home/businessPage/business-preview-screen.dart';
 import 'package:connevents/pages/home/parse-media.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
@@ -79,18 +80,17 @@ class _NearbyBusinessPageState extends State<NearbyBusinessPage> {
                 ),
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap:() async {
-                        await  CustomNavigator.navigateTo(context, BusinessCommentsPage(business: business,images: businessParseMedia(business)));
-                        setState(() {});
-                      },
-                      child: Stack(
-                        children: [
-                          CarouselSlider(
-                            items: businessParseMedia(business).map((i) {
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return Stack(
+                    Stack(
+                      children: [
+                        CarouselSlider(
+                          items: businessParseMedia(business).map((i) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return GestureDetector(
+                                  onTap:()  {
+                                    CustomNavigator.navigateTo(context, BusinessPreviewScreen(imageUrls: businessParseMedia(business),imageData: businessParseMedia(business).firstWhere((element) => element.attachment==i.attachment),business:business));
+                                  },
+                                  child: Stack(
                                     children: [
                                       Container(
                                           width: double.infinity,
@@ -106,101 +106,101 @@ class _NearbyBusinessPageState extends State<NearbyBusinessPage> {
                                       if(i.type=="video")
                                         Center(child: Icon(Icons.play_arrow_rounded,color: Colors.grey,size:100))
                                     ],
-                                  );
-                                },
-                              );
-                            }).toList(),
-                            options: CarouselOptions(
-                                height: 170.0,
-                                viewportFraction: 1,
-                                enlargeCenterPage: false,
-                                enableInfiniteScroll: true,
-                                autoPlay: false,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    currentSlide = index;
-                                  });
-                                }),
-                          ),
-                          Positioned.fill(
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: businessParseMedia(business).map((url) {
-                                  int index = businessParseMedia(business).indexOf(url);
-                                  return Container(
-                                    width: 7.0,
-                                    height: 7.0,
-                                    margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.white, width: 1),
-                                      shape: BoxShape.circle,
-                                      color: currentSlide == index ? Colors.white : Colors.grey,
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                          options: CarouselOptions(
+                              height: 170.0,
+                              viewportFraction: 1,
+                              enlargeCenterPage: false,
+                              enableInfiniteScroll: true,
+                              autoPlay: false,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  currentSlide = index;
+                                });
+                              }),
+                        ),
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: businessParseMedia(business).map((url) {
+                                int index = businessParseMedia(business).indexOf(url);
+                                return Container(
+                                  width: 7.0,
+                                  height: 7.0,
+                                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.white, width: 1),
+                                    shape: BoxShape.circle,
+                                    color: currentSlide == index ? Colors.white : Colors.grey,
+                                  ),
+                                );
+                              }).toList(),
                             ),
                           ),
+                        ),
+                        Positioned(
+                            top: 5,
+                            right: 5,
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffF3960B),
+                                  borderRadius: BorderRadius.circular(50)
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("${business.discount}%",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold)),
+                                  Text("DISCOUNT",style: TextStyle(color: Colors.white,fontSize: 6)),
+                                ],
+                              ),
+                            )
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: IconButton(
+                              onPressed: () =>widget.onTapFavourite!(business.isFavourite,business.businessId!),
+                              icon: SvgPicture.asset(business.isFavourite  ?   'assets/icons/favYellow.svg' : 'assets/icons/Fav.svg',width: 40)),
+                        ),
+
+                        if(AppData().userdetail!.users_id != business.usersId)
                           Positioned(
                               top: 5,
-                              right: 5,
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    color: Color(0xffF3960B),
-                                    borderRadius: BorderRadius.circular(50)
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("${business.discount}%",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold)),
-                                    Text("DISCOUNT",style: TextStyle(color: Colors.white,fontSize: 6)),
-                                  ],
-                                ),
+                              left: 5,
+                              child: PopupMenuButton(
+                                  child: Center(
+                                      child: Icon(Icons.more_vert,color:Colors.green)),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(6.0),
+                                        ),
+                                  ),
+                                  onSelected: (value){
+                                    if(value==1)
+                                      showDialog(context: context,builder:(ctx)=> ReportBusinessDialog(businessId : business.businessId!));
+                                    print(value.toString());
+                                  },
+                                  itemBuilder: (context) => [
+                                    PopupMenuItem(
+                                        height:20,
+                                        padding: EdgeInsets.only(left:18,top: 0,bottom: 0),
+                                        value: 1,
+                                        child: Container(
+                                            width: MediaQuery.of(context).size.width/3,
+                                            child: Center(child: Text('Report Business',style:TextStyle(fontSize: 17))))),
+                                  ]
                               )
                           ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: IconButton(
-                                onPressed: () =>widget.onTapFavourite!(business.isFavourite,business.businessId!),
-                                icon: SvgPicture.asset(business.isFavourite  ?   'assets/icons/favYellow.svg' : 'assets/icons/Fav.svg',width: 40)),
-                          ),
-
-                          if(AppData().userdetail!.users_id != business.usersId)
-                            Positioned(
-                                top: 5,
-                                left: 5,
-                                child: PopupMenuButton(
-                                    child: Center(
-                                        child: Icon(Icons.more_vert,color:Colors.green)),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(6.0),
-                                          ),
-                                    ),
-                                    onSelected: (value){
-                                      if(value==1)
-                                        showDialog(context: context,builder:(ctx)=> ReportBusinessDialog(businessId : business.businessId!));
-                                      print(value.toString());
-                                    },
-                                    itemBuilder: (context) => [
-                                      PopupMenuItem(
-                                          height:20,
-                                          padding: EdgeInsets.only(left:18,top: 0,bottom: 0),
-                                          value: 1,
-                                          child: Container(
-                                              width: MediaQuery.of(context).size.width/3,
-                                              child: Center(child: Text('Report Business',style:TextStyle(fontSize: 17))))),
-                                    ]
-                                )
-                            ),
-                        ],
-                      ),
+                      ],
                     ),
                     Container(
                       padding: EdgeInsets.all(padding / 2),

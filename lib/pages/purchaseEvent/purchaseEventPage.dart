@@ -2557,6 +2557,7 @@ class _PurchaseEventPageState extends State<PurchaseEventPage> {
                                     print(transactionDetailModel.purchasedTickets.toList());
 
                                     CustomNavigator.navigateTo(context, PaymentMethodsPage(
+                                      fromMenu: false,
                                       discountPercent: discountAmount,
                                       amount: amount,
                                       earlyBirdController: earlyBirdController.text,

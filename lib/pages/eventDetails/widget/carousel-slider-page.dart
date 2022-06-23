@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/models/image-videos-model.dart';
-import 'package:connevents/pages/home/photo-preview.dart';
+import 'package:connevents/pages/home/event-preview-screen.dart';
 import 'package:connevents/pages/home/video-player.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
@@ -30,12 +30,13 @@ class _CarouselSliderEventPageState extends State<CarouselSliderEventPage> {
           children: [
             CarouselSlider(
               items: widget.images!.map((i) {
+
                 return GestureDetector(
                     onTap: (){
-                      if(i.type=="image")
-                        CustomNavigator.navigateTo(context, ImageScreen(image: i.attachment,eventDetail: widget.event!));
-                        else
-                        CustomNavigator.navigateTo(context, ShowVideo(video:i.media,eventDetail: widget.event!,thumbNail: i.attachment));
+                      // if(i.type=="image")
+                        CustomNavigator.navigateTo(context, EventPreviewScreen(imageUrls: widget.images!,imageData: widget.images!.firstWhere((element) => element.attachment==i.attachment),eventDetail: widget.event!));
+                         //else
+                        //CustomNavigator.navigateTo(context, ShowVideo(video:i.media,eventDetail: widget.event!,thumbNail: i.attachment));
                     },
                   child: Builder(
                     builder: (BuildContext context) {

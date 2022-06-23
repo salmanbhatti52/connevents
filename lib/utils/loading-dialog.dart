@@ -1,3 +1,4 @@
+import 'package:connevents/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -27,29 +28,12 @@ Widget container(Widget textField)
 
 openLoadingDialog(BuildContext context, String text) {
   showDialog(
+    barrierColor: Colors.transparent,
       context: context,
       barrierDismissible: false,
       builder: (context) {
         return Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            width: 120,
-            height: 50,
-            //padding: EdgeInsets.only(left:20),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 1,valueColor: AlwaysStoppedAnimation(Colors.black))),
-                  SizedBox(width: 15),
-                  Text('loading',style:TextStyle(color: Colors.black,fontWeight: FontWeight.normal,fontSize: 14,decoration: TextDecoration.none),)
-                ]),
-          ),
+          child: spinKit
         );
       }
   );

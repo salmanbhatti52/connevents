@@ -8,6 +8,7 @@ import 'package:connevents/pages/addCreditCard/addCreditCardPage.dart';
 import 'package:connevents/pages/menu/menuPage.dart';
 import 'package:connevents/pages/paymentConfirmation/paymentConfirmationPage.dart';
 import 'package:connevents/services/dio-service.dart';
+import 'package:connevents/services/stripe-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/connevent-appbar.dart';
@@ -20,6 +21,7 @@ import 'package:pay/pay.dart';
 
 class PaymentMethodsPage extends StatefulWidget {
   String regularController;
+  bool fromMenu;
   String vipController;
   String earlyBirdController;
   String skippingLineController;
@@ -32,7 +34,7 @@ class PaymentMethodsPage extends StatefulWidget {
   final bool isPay;
   final TransactionDetailModel? transactionDetailModel;
   final EventDetail?  event;
-   PaymentMethodsPage({Key? key,this.amount=0, this.skippingLineController="",this.vipController="",this.discountPercent=0.0,this.regularController="",this.earlyBirdController="",this.isTableFor4People = false,this.isTableFor8People = false ,this.isTableFor6People=false,this.isTableFor10People=false,this.event, this.transactionDetailModel,required this.isPay}) : super(key: key);
+   PaymentMethodsPage({Key? key,this.amount=0, this.fromMenu=false,this.skippingLineController="",this.vipController="",this.discountPercent=0.0,this.regularController="",this.earlyBirdController="",this.isTableFor4People = false,this.isTableFor8People = false ,this.isTableFor6People=false,this.isTableFor10People=false,this.event, this.transactionDetailModel,required this.isPay}) : super(key: key);
 
   @override
   _PaymentMethodsPageState createState() => _PaymentMethodsPageState();
@@ -48,6 +50,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
   String? cardId;
   String? stripeToken;
   bool isConnCashSelected=false;
+  bool isGooglePaySelected=false;
   bool isSelected=false;
    final paymentItems=<PaymentItem>[];
 
@@ -58,9 +61,11 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
       });
       if (response['status'] == "success") {
         var card = response['data'] as List;
-        userCardDetail = card.map<CardDetails>((e) => CardDetails.fromJson(e)).toList();
-        setState(() {});
-        print(userCardDetail.toList());
+        if(this.mounted){
+          userCardDetail = card.map<CardDetails>((e) => CardDetails.fromJson(e)).toList();
+          setState(() {});
+          print(userCardDetail.toList());
+        }
         Navigator.of(context).pop();
       }
       else if (response['status'] == 'error') {
@@ -166,6 +171,8 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
                                 cardId=userCardDetail[index].cardId.toString();
                                 stripeToken=userCardDetail[index].token.toString();
                                 isConnCashSelected=false;
+                                isGooglePaySelected=false;
+
                               });
                             },
                             child: Container(
@@ -173,7 +180,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
                               margin: EdgeInsets.symmetric(vertical: padding / 2),
                               height: 60,
                               decoration: BoxDecoration(
-                                border:cardNumber==userCardDetail[index].cardNumber && !isConnCashSelected  ? Border.all(  color: Colors.green):Border.all(),
+                                border:cardNumber==userCardDetail[index].cardNumber && !isConnCashSelected && !isGooglePaySelected ? Border.all(  color: Colors.green):Border.all(),
                                 color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(color: globalLGray, blurRadius: 5),
@@ -228,6 +235,8 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
                                   setState(() {
                                     isSelected=true;
                                     isConnCashSelected=true;
+                                    isGooglePaySelected=false;
+
                                   });
                                 },
                             child: Container(
@@ -236,7 +245,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
                               height: 60,
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                border:isConnCashSelected ? Border.all(color: globalGreen, width: 1): Border.all() ,
+                                border:isConnCashSelected && !isGooglePaySelected ? Border.all(color: globalGreen, width: 1): Border.all() ,
                                 boxShadow: [
                                   BoxShadow(color: globalLGray, blurRadius: 5),
                                 ],
@@ -267,22 +276,78 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
                         ],
                       ),
                     ),
-                      if(Platform.isAndroid)
-                    GooglePayButton(
-                      paymentConfigurationAsset: 'gpay.json',
-                      paymentItems: paymentItems,
-                      style: GooglePayButtonStyle.black,
-                      type: GooglePayButtonType.pay,
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      margin: const EdgeInsets.only(top: 15.0),
-                      onPaymentResult: (value){
-                        print(value);
-                     }  ,
-                      loadingIndicator: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                  if(!widget.fromMenu)
+                  if(Platform.isAndroid)
+                  Container(
+                    width: double.infinity,
+                    height: 57,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border:isGooglePaySelected ? Border.all(
+                        width: 2,
+                        color: globalGreen
+                      ): Border.all()
+                    ),
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      textStyle: TextStyle(
+                      fontSize: 20,
+                      )),
+                      onPressed: (){
+                        isSelected=true;
+                        isConnCashSelected=false;
+                        isGooglePaySelected=true;
+                        setState(() {});
+                          //StripeService.handleNativePayment(context, '50');
+                        },
+                        icon: SvgPicture.asset('assets/gpay.svg'),
+                        label: Text('Google Pay')),
                   ),
+                  if(!widget.fromMenu)
+                  if(Platform.isIOS)
+                  Container(
+                      width: double.infinity,
+                      height: 57,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border:isGooglePaySelected ? Border.all(
+                              width: 2,
+                              color: globalGreen
+                          ): Border.all()
+                      ),
+                      child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.black,
+                              textStyle: TextStyle(
+                                  fontSize: 20,
+                              )),
+                          onPressed: (){
+                            isSelected=true;
+                            isConnCashSelected=false;
+                            isGooglePaySelected=true;
+                            setState(() {});
+                            //StripeService.handleNativePayment(context, '50');
+                          },
+                          icon: SvgPicture.asset('assets/apple.svg',width: 30,height: 30),
+                          label: Text('Apple Pay')),
+                    )
+                  //     if(Platform.isAndroid)
+                  //   GooglePayButton(
+                  //     paymentConfigurationAsset: 'gpay.json',
+                  //     paymentItems: paymentItems,
+                  //     style: GooglePayButtonStyle.black,
+                  //     type: GooglePayButtonType.pay,
+                  //     width: MediaQuery.of(context).size.width,
+                  //     height: 60,
+                  //     margin: const EdgeInsets.only(top: 15.0),
+                  //     onPaymentResult: (value){
+                  //       print(value);
+                  //    }  ,
+                  //     loadingIndicator: const Center(
+                  //       child: CircularProgressIndicator(),
+                  //     ),
+                  // ),
 
                   ],
                 ),
@@ -304,7 +369,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
                       CustomNavigator.navigateTo(context, PaymentConfirmationPage(
                         amount:widget.amount,
                         discountPercent: widget.discountPercent,
-                       earlyBirdController: widget.earlyBirdController,
+                        earlyBirdController: widget.earlyBirdController,
                         regularController: widget.regularController,
                         vipController: widget.vipController,
                        //  isTableFor10People: widget.isTableFor10People,
@@ -316,6 +381,24 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
                         event: widget.event!,
                       ));
                        }
+                      else if(isGooglePaySelected){
+                        transactionDetailModel.paymentType="Google";
+                        CustomNavigator.navigateTo(context, PaymentConfirmationPage(
+                          amount:widget.amount,
+                          discountPercent: widget.discountPercent,
+                          earlyBirdController: widget.earlyBirdController,
+                          regularController: widget.regularController,
+                          vipController: widget.vipController,
+                          skippingLineController: widget.skippingLineController,
+                          // isTableFor10People: widget.isTableFor10People,
+                          // isTableFor4People: widget.isTableFor4People,
+                          // isTableFor6People: widget.isTableFor6People,
+                          // isTableFor8People: widget.isTableFor8People,
+                          transactionDetailModel: transactionDetailModel,
+                          event: widget.event!,
+                        ));
+
+                      }
                       else{
                         transactionDetailModel.paymentType="Card";
                         transactionDetailModel.cardId=cardId;

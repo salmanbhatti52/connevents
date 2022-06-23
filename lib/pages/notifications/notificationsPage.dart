@@ -114,7 +114,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       onTap:(){
 
                         /// Event Navigate Pages
-                        if(notify.notificationType=="PostComment" || notify.notificationType=="CommentLike" || notify.notificationType=="CommentMention")
+                        if(notify.notificationType=="PostComment" ||notify.notificationType=='EventLike' ||notify.notificationType=="CommentLike" || notify.notificationType=="CommentMention")
                         CustomNavigator.navigateTo(context, EventCommentsPage(
                           event: notify.eventDetail,
                           images:  parseMedia(notify.eventDetail!),
@@ -147,7 +147,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           ));
                         }
 
-                        if(notify.notificationType=="BusinessPostComment" || notify.notificationType=="BusinesscommentLike" || notify.notificationType=="BusinessCommentMention")
+                        if(notify.notificationType=="BusinessPostComment" || notify.notificationType=='BusinessLike'||notify.notificationType=="BusinesscommentLike" || notify.notificationType=="BusinessCommentMention")
                         CustomNavigator.navigateTo(context, BusinessCommentsPage(
                           business: notify.businessDetail,
                           images:  businessParseMedia(notify.businessDetail!),

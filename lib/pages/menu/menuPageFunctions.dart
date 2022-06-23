@@ -23,7 +23,7 @@ executeActivitiesOption(val, context) {
   switch (val) {
     case 'Payment Method':
      // CustomNavigator.navigateTo(context, PaymentMethodsPageWithoutPayButton());
-      CustomNavigator.navigateTo(context, PaymentMethodsPage(isPay: false));
+      CustomNavigator.navigateTo(context, PaymentMethodsPage(isPay: false,fromMenu: true));
       // Navigator.pushNamed(context, '/paymentMethodswithoutPay');
       break;
     case 'Dashboard':

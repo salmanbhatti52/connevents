@@ -6,7 +6,9 @@ import 'package:connevents/pages/businessCommentsPages/business-Comment-Page-Fun
 import 'package:connevents/pages/businessCommentsPages/widgets/business-action-bar.dart';
 import 'package:connevents/pages/businessReplyPage/business-reply-page.dart';
 import 'package:connevents/pages/emojisPicker/emojis-picker.dart';
+import 'package:connevents/pages/eventComments/eventCommentsPageFunctions.dart';
 import 'package:connevents/pages/eventComments/widgets/comments-mention-user.dart';
+import 'package:connevents/pages/home/businessPage/business-carousel-slider.dart';
 import 'package:connevents/pages/messageDetails/messageDetailsPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
@@ -216,7 +218,7 @@ class _BusinessCommentsPageState extends State<BusinessCommentsPage> {
       body: Container(
         child: Column(
           children: [
-            CarouselSliderBusinessPage(business: widget.business,images: widget.images),
+            BusinessSliderPage(business: widget.business,images: widget.images),
             Expanded(
               child: Stack(
                 children: [

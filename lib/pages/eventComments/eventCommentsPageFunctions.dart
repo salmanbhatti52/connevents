@@ -13,13 +13,14 @@ showCommentsOptionsForOtherUsersComments(context,comment,eventUserId, void Funct
   final action =
   CupertinoActionSheet(
     actions: <Widget>[
-      if(AppData().userdetail!.users_id!=comment.usersId)    CupertinoActionSheetAction(
+      if(AppData().userdetail!.users_id!=comment.usersId)
+        CupertinoActionSheetAction(
         child: Text("Send Message", style: TextStyle(color: Colors.blue, fontSize: 18, fontWeight: FontWeight.w500,)),
         isDefaultAction: true,
         onPressed: () {
            if(comment.usersId!=AppData().userdetail!.users_id)
              CustomNavigator.navigateTo(context, MessageDetailsPage(
-                      userName: userName,
+                    userName: userName,
                      otherUserChatId: comment.usersId,
                      profilePic: comment.commentUserProfile!,
              ));

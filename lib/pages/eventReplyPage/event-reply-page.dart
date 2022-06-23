@@ -2,7 +2,7 @@ import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/comments-model.dart';
 import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/models/mention-model.dart';
-import 'package:connevents/pages/businessCommentsPages/business-Comment-Page-Functions.dart';
+import 'package:connevents/pages/eventComments/eventCommentsPageFunctions.dart';
 import 'package:connevents/pages/messageDetails/messageDetailsPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
@@ -12,9 +12,9 @@ import 'package:connevents/widgets/profile-image-picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+
 class EventReply extends StatefulWidget {
   List<CommentReplies>? commentReplies;
-
   final EventDetail? event;
   final  Comments? comment;
    EventReply({Key? key,this.event,this.commentReplies,this.comment}) : super(key: key);
@@ -24,8 +24,6 @@ class EventReply extends StatefulWidget {
 }
 
 class _EventReplyState extends State<EventReply> {
-
-
 
   bool isFocus=false;
   int currentSlide = 0;

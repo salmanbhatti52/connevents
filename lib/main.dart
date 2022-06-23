@@ -29,6 +29,9 @@ void main() async{
    //FirebaseDynamicLinkService.initDynamicLinks();
    await OneSignal.shared.setAppId("3502caf3-e7b3-4352-a53e-a1e13ebe2cd0");
    await FlutterDownloader.initialize(debug: debug);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown]);
   runApp(MultiProvider(
     providers :[
       ChangeNotifierProvider(create: (_) => ProviderData())

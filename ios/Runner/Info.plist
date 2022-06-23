@@ -66,7 +66,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This App Requires Microphone For video Calling</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App needs to access your Photo Library to manage your profile. Your images will not be shared without your permission</string>
+	<string>App needs to access your Photo Library to manage your events and profile. Your images will not be shared without your permission</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>processing</string>
