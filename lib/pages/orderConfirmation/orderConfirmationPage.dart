@@ -67,7 +67,7 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text( widget.planType=="premium" ?  'Premium Package' : "One Time Post Purchase", style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.white.withOpacity(0.7))),
-                        Text(widget.planType=="premium" ?  '\$100/mo' : '\$20/per', style: TextStyle(color: globalGreen, fontSize: 18, fontWeight: FontWeight.bold))
+                        Text(widget.planType=="premium" ?  '\$9.99/mo' : '\$14.99/per', style: TextStyle(color: globalGreen, fontSize: 18, fontWeight: FontWeight.bold))
                       ],
                     ),
                     SizedBox(height: padding),
@@ -83,7 +83,7 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text('Total Amount:', style: TextStyle(color: globalBlack, fontSize: 16)),
-                          Text(widget.planType=="premium" ? '\$ 100' :'\$ 20', style: TextStyle(color: globalGreen, fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text(widget.planType=="premium" ? '\$ 9.99' :'\$ 14.99', style: TextStyle(color: globalGreen, fontSize: 16, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
