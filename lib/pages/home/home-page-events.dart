@@ -319,6 +319,8 @@ class _HomePageEventsState extends State<HomePageEvents> {
                                   });
 
                                 Navigator.of(context).pop();
+                                await _handleCameraAndMic(Permission.camera);
+                                return;
                                 final  statusCamera  =  await _handleCameraAndMic(Permission.camera);
                                  final statusMicrophone =    await _handleCameraAndMic(Permission.microphone);
                                   //  CustomNavigator.navigateTo(context, VideoRoomPage());
@@ -441,7 +443,8 @@ class _HomePageEventsState extends State<HomePageEvents> {
         }
 
  Future<PermissionStatus> _handleCameraAndMic(Permission permission) async {
-    final status = await permission.request();
+    print(await Permission.camera.request());
+    final status = await Permission.camera.request();
     return status;
   }
 }

@@ -29,6 +29,8 @@ class _PaymentCardsPageState extends State<PaymentCardsPage> {
    CardDetails cardDetails=CardDetails();
     final InAppPurchase _connection = InAppPurchase.instance;
     bool  available=true;
+    bool  isGooglePaySelected=false;
+    bool  isCard=false;
     StreamSubscription?  subscription;
     final String myProductId= "monthlySubscription";
     bool isPurchased=false;
@@ -127,6 +129,8 @@ class _PaymentCardsPageState extends State<PaymentCardsPage> {
                       var  userCard =userCardDetail[index];
                       return InkWell(
                         onTap: (){
+                          isGooglePaySelected=false;
+                          isCard=true;
                           cardNumber=userCard.cardNumber;
                           stripeToken=userCard.token!;
                           print(stripeToken);
@@ -138,7 +142,7 @@ class _PaymentCardsPageState extends State<PaymentCardsPage> {
                           decoration: BoxDecoration(
                             border: Border.all(
                               width: 2,
-                              color:cardNumber==userCard.cardNumber ? Colors.white : globalGolden
+                              color:cardNumber==userCard.cardNumber && isCard ? globalGreen : globalGolden
                             ),
                             borderRadius: BorderRadius.circular(16),
                             color: globalGolden,
@@ -214,37 +218,59 @@ class _PaymentCardsPageState extends State<PaymentCardsPage> {
                         ),
                       ),
                     ),
-                    if(Platform.isAndroid)
-                    GooglePayButton(
-                      paymentConfigurationAsset: 'gpay.json',
-                      paymentItems: paymentItems,
-                      style: GooglePayButtonStyle.white,
-                      type: GooglePayButtonType.pay,
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      margin: const EdgeInsets.only(top: 15.0),
-                     onPaymentResult: (value){
-                        print(value);
-                     }  ,
-                      loadingIndicator: const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                  ),
-                  //   ApplePayButton(
-                  //     paymentConfigurationAsset: 'default_payment_profile_apple_pay.json',
-                  //     paymentItems: paymentItems,
-                  //     style: ApplePayButtonStyle.white,
-                  //     type: ApplePayButtonType.buy,
-                  //     width: MediaQuery.of(context).size.width,
-                  //     height: 60,
-                  //     margin: const EdgeInsets.only(top: 15.0),
-                  //     onPaymentResult: (v){
-                  //       print(v);
-                  //     },
-                  //     loadingIndicator: const Center(
-                  //       child: CircularProgressIndicator(),
-                  //     ),
-                  // ),
+                        if(Platform.isAndroid)
+                          Container(
+                            width: double.infinity,
+                            height: 57,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border:isGooglePaySelected ? Border.all(
+                                    width: 2,
+                                    color: globalGreen
+                                ): Border.all()
+                            ),
+                            child: ElevatedButton.icon(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white,
+                                    textStyle: TextStyle(
+                                      fontSize: 20,
+                                    )),
+                                onPressed: (){
+                                  isGooglePaySelected=true;
+                                  isCard=false;
+                                  setState(() {});
+                                  //StripeService.handleNativePayment(context, '50');
+                                },
+                                icon: SvgPicture.asset('assets/gpay.svg'),
+                                label: Text('Google Pay',style: TextStyle(color:Colors.black),)),
+                          ),
+                          if(Platform.isIOS)
+                            Container(
+                              width: double.infinity,
+                              height: 57,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border:isGooglePaySelected ? Border.all(
+                                      width: 2,
+                                      color: globalGreen
+                                  ): Border.all()
+                              ),
+                              child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.white,
+                                      textStyle: TextStyle(
+                                        fontSize: 20,
+                                      )),
+                                  onPressed: (){
+                                    isGooglePaySelected=true;
+                                    isCard=false;
+                                    setState(() {});
+                                    //StripeService.handleNativePayment(context, '50');
+                                  },
+                                  icon: SvgPicture.asset('assets/apple.svg',width: 30,height: 30),
+                                  label: Text('Apple Pay',style: TextStyle(color:Colors.black),)),
+                            )
+
                       ],
                     ),
                   ),
@@ -269,7 +295,11 @@ class _PaymentCardsPageState extends State<PaymentCardsPage> {
                   ),
                   child: Text('Continue'.toUpperCase(), style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold,)),
                   onPressed: () {
+                    if(!isCard && !isGooglePaySelected) return showErrorToast('You have to select atleast one payment method');
+
+
                     CustomNavigator.navigateTo(context, OrderConfirmationPage(
+                      isCard: isCard? true : false,
                       planType: widget.planType,
                       cardId: cardNumber,
                       stripeToken: stripeToken,

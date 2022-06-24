@@ -683,6 +683,7 @@ class _HomePageState extends State<HomePage> {
                                     onChanged: (EventTypes? newValue){
                                       print(newValue);
                                       this.event.eventTypeData = newValue;
+                                      event.category=null;
                                       setState(() {});
                                     },
                                     value: this.event.eventTypeData,

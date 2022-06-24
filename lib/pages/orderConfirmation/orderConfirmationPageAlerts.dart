@@ -39,7 +39,10 @@ class PaymentSuccessAlert extends StatelessWidget {
                       fit: BoxFit.cover,
                       child: Image.asset("assets/imgs/Done.png")),
                 ),
-                Text(this.message??"",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(this.message??"",textAlign: TextAlign.center,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14)),
+                ),
                 SizedBox(height: 20),
                 ElevatedButton(
                     onPressed: (){

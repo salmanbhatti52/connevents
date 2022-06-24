@@ -47,7 +47,7 @@ post_install do |installer|
                 # 'PERMISSION_EVENTS=1',
 
                 ## dart: PermissionGroup.reminders
-                # 'PERMISSION_REMINDERS=1',
+                 #  'PERMISSION_REMINDERS=1',
 
                 ## dart: PermissionGroup.contacts
                 # 'PERMISSION_CONTACTS=1',
