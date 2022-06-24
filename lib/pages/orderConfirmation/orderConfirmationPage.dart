@@ -113,7 +113,7 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
                         'paymentType':  'card'
                       });
                     } else{
-                   Token token =   await StripeService.handleNativePayment(context, '0');
+                   Token token =   await StripeService.handleNativePayment(context, '12');
                      if(token!=null){
                        openLoadingDialog(context, "loading");
                        response = await DioService.post('subscribe_to_premium', {
@@ -151,7 +151,7 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
                       AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
                     }
                     else{
-                      Token token =   await StripeService.handleNativePayment(context, '0');
+                      Token token =   await StripeService.handleNativePayment(context, '12');
                       if(token!=null){
                         openLoadingDialog(context, "loading");
                         var response = await DioService.post('one_time_post_purchase', {

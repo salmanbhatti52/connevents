@@ -17,7 +17,9 @@ class StripeService {
   static String apiBase = 'https://api.stripe.com/v1';
   static String paymentApiUrl = '$apiBase/payment_intents';
   // Todo: Test
-  static String secret = 'sk_test_51JY9vkEfkXLPApKvck7DWJIC8gMHRPWKu86ePWkEGC6BjPyBHV2hgOHFUjRGw7JoSoch1XotMgVvXmcyNkE4wpNT00qNlOaO6L';
+ // static String secret = 'sk_test_51JY9vkEfkXLPApKvck7DWJIC8gMHRPWKu86ePWkEGC6BjPyBHV2hgOHFUjRGw7JoSoch1XotMgVvXmcyNkE4wpNT00qNlOaO6L';
+  ///Live Key
+  static String secret = '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';
   static Map<String, String> headers = {
     'Authorization': 'Bearer ${StripeService.secret}',
     'Content-Type': 'application/x-www-form-urlencoded'
@@ -25,11 +27,15 @@ class StripeService {
   static init() {
     StripePayment.setOptions(
         StripeOptions(
-        publishableKey: "pk_test_51JY9vkEfkXLPApKvmWeEhcJaeIU1V4OvKD57NNmb8FkMKDPQM0M7U2QFYOxcASsdHVfBMQSyZ8stEUaCHqGdjXmZ00869vn7PH",
-            merchantId: "Test",
-            androidPayMode: 'test'
-        )
-    );
+          ///test key
+          //  publishableKey: "pk_test_51JY9vkEfkXLPApKvmWeEhcJaeIU1V4OvKD57NNmb8FkMKDPQM0M7U2QFYOxcASsdHVfBMQSyZ8stEUaCHqGdjXmZ00869vn7PH",
+          //  merchantId: "Test",
+          // androidPayMode: 'test'
+          /// Live Key
+            publishableKey: "pk_live_51JY9vkEfkXLPApKv59UQfzRQq9JJ4hopRBXg5NYpp61yYsRRezQSpH11G2vkImgBTcgXCWUgXX6HK3Cxt2ldjLwm00E4r6IsTX",
+            merchantId: "acct_1JY9vkEfkXLPApKv",
+            androidPayMode: 'production'
+        ));
   }
 
   static Future<StripeTransactionResponse> payWithCard({required String amount, required String currency}) async {
@@ -82,18 +88,25 @@ class StripeService {
   }
 
 
-
-
  static Future<Token> handleNativePayment(BuildContext context, String amountInStr) async {
 
    Token token;
-    // I used environment configurations for ANDROID_PAY_MODE, use "test" in test mode
-    // and uses "production" in production mode
-    StripePayment.setOptions(StripeOptions(
-        publishableKey: "pk_test_51JY9vkEfkXLPApKvmWeEhcJaeIU1V4OvKD57NNmb8FkMKDPQM0M7U2QFYOxcASsdHVfBMQSyZ8stEUaCHqGdjXmZ00869vn7PH",
-        merchantId: "Test",
-        androidPayMode: 'test'
+   // I used environment configurations for ANDROID_PAY_MODE, use "test" in test mode
+   // and uses "production" in production mode
+
+   // Live Key
+   StripePayment.setOptions(StripeOptions(
+       publishableKey: "pk_live_51JY9vkEfkXLPApKv59UQfzRQq9JJ4hopRBXg5NYpp61yYsRRezQSpH11G2vkImgBTcgXCWUgXX6HK3Cxt2ldjLwm00E4r6IsTX",
+       merchantId: "acct_1JY9vkEfkXLPApKv",
+       androidPayMode: 'production'
     ));
+
+   //test key
+   // StripePayment.setOptions(StripeOptions(
+   //    publishableKey: "pk_test_51JY9vkEfkXLPApKvmWeEhcJaeIU1V4OvKD57NNmb8FkMKDPQM0M7U2QFYOxcASsdHVfBMQSyZ8stEUaCHqGdjXmZ00869vn7PH",
+   //    merchantId: "Test",
+   //   androidPayMode: 'test'
+   // ));
 
      token = await StripePayment.paymentRequestWithNativePay(
       androidPayOptions: AndroidPayPaymentRequest(
