@@ -56,8 +56,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
         print(picked);
         event.earlyBird!.selectedDate = picked;
         event.earlyBird!.selectedDate = event.earlyBird!.selectedDate;
-      event.earlyBird!.earlyBird = DateFormat.yMd().format(event.earlyBird!.selectedDate);
-      print(event.earlyBird!.earlyBird);
+        event.earlyBird!.earlyBird = DateFormat.yMd().format(event.earlyBird!.selectedDate);
+        print(event.earlyBird!.earlyBird);
         final f = new DateFormat('yyyy-MM-dd hh:mm');
         event.earlyBird!.closingDate = f.format(event.earlyBird!.selectedDate);
         print(event.earlyBird!.closingDate);

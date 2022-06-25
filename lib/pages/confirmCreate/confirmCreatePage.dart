@@ -37,6 +37,8 @@ class _ConfirmCreatePageState extends State<ConfirmCreatePage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     Uint8List firstImage = base64Decode(widget.event.firstImage);
     Uint8List secondImage = base64Decode(widget.event.secondImage);
     Uint8List thirdImage = base64Decode(widget.event.thirdImage);
@@ -448,7 +450,17 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(widget.event.dressCodeData!.dressCode.toString(), style: TextStyle(color: globalBlack, fontSize: 14, fontWeight: FontWeight.w600,),),
-                    Icon(Icons.circle, color:widget.event.dressCodeColor!=null ? Color(int.parse(widget.event.dressCodeColor!)):null ),
+                    Icon(Icons.circle,
+                        color:widget.event.dressCodeData!.dressCode=='Business'
+                            ? Color(0xff000080):
+                        widget.event.dressCodeData!.dressCode=='Casual'?
+                        Color(0xff000080):
+                        widget.event.dressCodeData!.dressCode=='As specified in description'?
+                        Color(0xf00ff00):
+                        widget.event.dressCodeData!.dressCode=='Cocktail'?
+                        Color(0xffff0000):
+                        widget.event.dressCodeData!.dressCode=='Formal'?
+                        Color(0xff000000): null),
                   ],
                 ),
                 if(!event.isFreeEvent && !event.isNotMyEvent)
