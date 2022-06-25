@@ -97,7 +97,7 @@ class StripeService {
    // Live Key
    StripePayment.setOptions(StripeOptions(
        publishableKey: "pk_live_51JY9vkEfkXLPApKv59UQfzRQq9JJ4hopRBXg5NYpp61yYsRRezQSpH11G2vkImgBTcgXCWUgXX6HK3Cxt2ldjLwm00E4r6IsTX",
-       merchantId: "acct_1JY9vkEfkXLPApKv",
+       merchantId: "BCR2DN4TWCJZL3RI",
        androidPayMode: 'production'
     ));
 

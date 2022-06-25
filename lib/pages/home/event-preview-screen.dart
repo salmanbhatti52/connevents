@@ -2,12 +2,14 @@ import 'package:better_player/better_player.dart';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/models/image-videos-model.dart';
+import 'package:connevents/pages/home/home-header/videoplay-screen.dart';
 import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 class EventPreviewScreen extends StatefulWidget {
   final EventDetail? eventDetail;
@@ -22,12 +24,27 @@ class EventPreviewScreen extends StatefulWidget {
 class _EventPreviewScreenState extends State<EventPreviewScreen> {
   ImageData? data;
 
+  late BetterPlayerController _betterPlayerController;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     data=widget.imageData;
+    _betterPlayerController = BetterPlayerController(
+      const BetterPlayerConfiguration(
+        autoDispose: true,
+        aspectRatio: 0.5,
+        looping: false,
+        autoPlay: true,
+      ),
+    );
   }
+//  mycontroller(){
+//     VideoPlayerController controller;
+//     _controller = VideoPlayerController.network(link)
+//
+// }
 
 
   @override
@@ -76,6 +93,7 @@ class _EventPreviewScreenState extends State<EventPreviewScreen> {
                }
         }
       ),
+
  // if(AppData().userdetail!.users_id != widget.eventDetail.usersId)  CupertinoActionSheetAction(
  //        child: Text("Report Image",
  //          style: TextStyle(color: Colors.blue,
@@ -86,6 +104,7 @@ class _EventPreviewScreenState extends State<EventPreviewScreen> {
  //        isDefaultAction: true,
  //        onPressed: (){}
  //      ),
+
     ],
   );
             showCupertinoModalPopup(context: context, builder: (context) => action);
@@ -110,16 +129,7 @@ class _EventPreviewScreenState extends State<EventPreviewScreen> {
                   itemBuilder: (BuildContext context, int index) {
                       return  widget.imageUrls[index].type=='image' ?
                       Image.network(widget.imageUrls[index].attachment):
-                      Center(
-                        child: BetterPlayer.network(
-                          widget.imageUrls[index].media,
-                          betterPlayerConfiguration: BetterPlayerConfiguration(
-                            aspectRatio: 0.5,
-                            looping: true,
-                            autoPlay: true,
-                          ),
-                        ),
-                      );
+                      VideoPlayScreen(url: widget.imageUrls[index].media);
                     },
 
             ),

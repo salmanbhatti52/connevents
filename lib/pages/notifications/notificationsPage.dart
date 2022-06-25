@@ -3,6 +3,7 @@ import 'package:connevents/models/notification-model.dart';
 import 'package:connevents/pages/businessCommentsPages/business-Comment-Page.dart';
 import 'package:connevents/pages/businessReplyPage/business-reply-page.dart';
 import 'package:connevents/pages/eventComments/eventCommentsPage.dart';
+import 'package:connevents/pages/eventDetails/eventDetailsPage.dart';
 import 'package:connevents/pages/eventReplyPage/eventReplyPage.dart';
 import 'package:connevents/pages/home/no-result-available-message.dart';
 import 'package:connevents/pages/home/parse-media.dart';
@@ -32,7 +33,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
     var response ;
     try {
        response = await DioService.post('get_all_notifications', {
-        "usersId": AppData().userdetail!.users_id
+        "usersId": AppData().userdetail!.users_id,
+         "userLat"  :AppData().userLocation!.latitude,
+         "userLong"  :AppData().userLocation!.longitude
       });
        Navigator.of(context).pop();
        if(response['status']=='success'){
@@ -120,6 +123,12 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           images:  parseMedia(notify.eventDetail!),
                           isNotification: true,
                         ));
+                        else if(notify.notificationType=="EventPost" || notify.notificationType==   'EventFavourite'){
+                          CustomNavigator.navigateTo(context, EventDetailsPage(
+                            event: notify.eventDetail,
+                            images:  parseMedia(notify.eventDetail!),
+                          ));
+                        }
                         else if(notify.notificationType=="RequestRefund"){
                           CustomNavigator.navigateTo(context, RefundRequestsPage());
                         }
@@ -147,7 +156,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                           ));
                         }
 
-                        if(notify.notificationType=="BusinessPostComment" || notify.notificationType=='BusinessLike'||notify.notificationType=="BusinesscommentLike" || notify.notificationType=="BusinessCommentMention")
+                        if(notify.notificationType=="BusinessPostComment" || notify.notificationType=="BusinessFavourite" ||notify.notificationType=='BusinessLike'||notify.notificationType=="BusinesscommentLike" || notify.notificationType=="BusinessCommentMention")
                         CustomNavigator.navigateTo(context, BusinessCommentsPage(
                           business: notify.businessDetail,
                           images:  businessParseMedia(notify.businessDetail!),

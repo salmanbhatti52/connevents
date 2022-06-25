@@ -48,6 +48,7 @@ class _BroadcastPageState extends State<BroadcastPage> {
   AgoraRtmClient? _client;
   AgoraRtmChannel? _channel;
   RtcEngine? _engine;
+  bool isSlidingPanel =false;
   List<LiveStreamingChat> messageList=[];
   List<LiveStreamingChat> slidingPaneList=[];
   RtcChannel?    rtcChannel;
@@ -581,7 +582,7 @@ class _BroadcastPageState extends State<BroadcastPage> {
                  ),
                ],
              ),
-             _buildSendChannelMessage(),
+
             //  Padding(
             //   padding: const EdgeInsets.only(top:500.0),
             //   child: MessageScreen(channel: _channel,client: _client,logController: logController),
@@ -591,6 +592,8 @@ class _BroadcastPageState extends State<BroadcastPage> {
              if(widget.isBroadcaster)
              _changingStream(),
              _cancelStreaming(),
+
+            _buildSendChannelMessage(),
           ],
         ),
       ),
@@ -602,8 +605,13 @@ class _BroadcastPageState extends State<BroadcastPage> {
     return  Container(
           margin: EdgeInsets.symmetric(vertical: padding / 2, horizontal: padding),
           child: SlidingUpPanel(
+            onPanelClosed: (){
+              isSlidingPanel=false;
+              setState(() {});
+            },
             borderRadius: BorderRadius.circular(10),
             minHeight: 45,
+            defaultPanelState: PanelState.OPEN,
             header: Container(
               height: 45,
               child: Divider(color: Colors.white),
@@ -907,62 +915,84 @@ class _BroadcastPageState extends State<BroadcastPage> {
                   );
                   }),
             ),
-            AppData().userdetail!.users_id == widget.userId ?
-           _slidingPanel():
+
+        isSlidingPanel?
+        _slidingPanel():
             Align(
               alignment: Alignment.bottomRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    height: 45,
-                    padding: EdgeInsets.only(bottom:10),
-                    child: TextFormField(
-                      showCursor: true,
-                      enableSuggestions: true,
-                      textCapitalization: TextCapitalization.sentences,
-                      style: TextStyle(color: Colors.white),
-                      controller: _channelMessageController,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(top: 12,left:12),
-                        filled: true,
-                        fillColor: Color(0xff1B1B1B),
-                        hintText: 'Comment...',
-                        hintStyle: TextStyle(color:Colors.white,fontSize:12),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
-                          borderSide: BorderSide(color:Color(0xff1B1B1B), width: 2),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: Color(0xff1B1B1B), width: 2),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      height: 45,
+                      padding: EdgeInsets.only(bottom:10),
+                      child: TextFormField(
+                        showCursor: true,
+                        enableSuggestions: true,
+                        textCapitalization: TextCapitalization.sentences,
+                        style: TextStyle(color: Colors.white),
+                        controller: _channelMessageController,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(top: 12,left:12),
+                          filled: true,
+                          fillColor: Color(0xff1B1B1B),
+                          hintText: 'Comment...',
+                          hintStyle: TextStyle(color:Colors.white,fontSize:12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50),
+                            borderSide: BorderSide(color:Color(0xff1B1B1B), width: 2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(color: Color(0xff1B1B1B), width: 2),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: IconButton(
-                      icon: Icon(Icons.send, color: Color(0xffFFA800)),
-                      onPressed: _sendChannelMessage,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: InkWell(
+                        onTap: _sendChannelMessage,
+                        child: Icon(Icons.send, color: Color(0xffFFA800)),
+                      ),
                     ),
-                  ),
-                  InkWell(
-                    onTap: ()async{
-                      if(isClickHand){
-                        await _channel!.sendMessage(AgoraRtmMessage.fromText("${AppData().userdetail!.profile_picture ?? "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ..i&docid=AOz9-XMe1ixZJM&w=1601&h=664&q=image&ved=2ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ"}," +  "${AppData().userdetail!.user_name}," + "Withdraw Join Request"));
-                        isClickHand=!isClickHand;
-                      }
-                      else{
-                        await _channel!.sendMessage(AgoraRtmMessage.fromText("${AppData().userdetail!.profile_picture ?? "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ..i&docid=AOz9-XMe1ixZJM&w=1601&h=664&q=image&ved=2ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ"}," +  "${AppData().userdetail!.user_name}," + "Requested to Join"));
-                        isClickHand=!isClickHand;
-                      }
+                    InkWell(
+                      onTap: ()async{
+                        if(AppData().userdetail!.users_id == widget.userId) {
+                          isSlidingPanel=true;
+                          setState(() {});
+                        }else
+                        if(isClickHand){
+                          await _channel!.sendMessage(AgoraRtmMessage.fromText("${AppData().userdetail!.profile_picture ?? "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ..i&docid=AOz9-XMe1ixZJM&w=1601&h=664&q=image&ved=2ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ"}," +  "${AppData().userdetail!.user_name}," + "Withdraw Join Request"));
+                          isClickHand=!isClickHand;
+                        }
+                        else{
+                          await _channel!.sendMessage(AgoraRtmMessage.fromText("${AppData().userdetail!.profile_picture ?? "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ..i&docid=AOz9-XMe1ixZJM&w=1601&h=664&q=image&ved=2ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ"}," +  "${AppData().userdetail!.user_name}," + "Requested to Join"));
+                          isClickHand=!isClickHand;
+                        }
 
-                      setState(() {});
-                    },
-                      child: SvgPicture.asset('assets/icons/hand.svg', height: isClickHand ? 25 : 20  , color:isClickHand ? Colors.green: Color(0xffFFA800)))
-                ],
+                        setState(() {});
+                      },
+                        child: Stack(
+                          children: [
+                            SvgPicture.asset('assets/icons/hand.svg', height: isClickHand ? 25 : 20  , color:isClickHand ? Colors.green: Color(0xffFFA800)),
+                            if(slidingPaneList.length > 0)
+                            Container(
+                              width: 12,
+                              height: 12,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                  color: Colors.red
+                                ),
+                                child: Text(slidingPaneList.length.toString() ,style: TextStyle(color: Colors.white,fontSize: 8,fontWeight: FontWeight.bold)))
+                          ],
+                        ))
+                  ],
+                ),
               ),
             ),
           ],
@@ -970,99 +1000,6 @@ class _BroadcastPageState extends State<BroadcastPage> {
       ),
     );
   }
-
-
-  //  Future<AgoraRtmChannel> _createChannelRtm(String name) async {
-  //
-  //    print("Heloooo I am here shahzaib");
-  //   AgoraRtmChannel? channel = await _client!.createChannel(name);
-  //   channel!.onMemberJoined = (AgoraRtmMember member) {
-  //     print("Member joined: " + member.userId + ', channel: ' + member.channelId);
-  //   };
-  //   channel.onMemberLeft = (AgoraRtmMember member) {
-  //     print("Member left: " + member.userId + ', channel: ' + member.channelId);
-  //   };
-  //   channel.onMessageReceived = (AgoraRtmMessage message, AgoraRtmMember member) {
-  //
-  //     print("Message Received" + message.text);
-  //     _logPeer(message.text);
-  //   };
-  //   return channel;
-  // }
-
-
-  // void _createClientRtm() async {
-  //   _client = await AgoraRtmClient.createInstance(appId);
-  //   _client!.onMessageReceived = (AgoraRtmMessage message, String peerId) {
-  //     _logPeer(message.text);
-  //   };
-  //   _client!.onConnectionStateChanged = (int state, int reason) {
-  //     print('Connection state changed: ' +
-  //         state.toString() +
-  //         ', reason: ' +
-  //         reason.toString());
-  //     if (state == 5) {
-  //       _client!.logout();
-  //       print('Logout.');
-  //       setState(() {
-  //         _isLogin = false;
-  //       });
-  //     }
-  //   };
-  //   _toggleLogin();
-  //   _toggleJoinChannel();
-  // }
-
-    void _toggleLogin() async {
-     print("Togle Login ");
-
-    if (!_isLogin) {
-      try {
-        await _client!.login(widget.rtcToken, widget.channelName);
-        print('Login success: ' + widget.channelName);
-        setState(() {
-          _isLogin = true;
-        });
-      } catch (errorCode) {
-        print('Login error: ' + errorCode.toString());
-      }
-    }
-  }
-
-  void _toggleJoinChannel() async {
-
-     print("Toggle join Channel");
-
-    try {
-      _channel = await _createChannelRtm(widget.channelName);
-      await _channel!.join();
-      print('Join channel success.');
-      setState(() {
-        _isInChannel = true;
-      });
-    } catch (errorCode) {
-      print('Join channel error: ' + errorCode.toString());
-    }
-  }
-
-
-
-
-  //
-  // _onPressSend() async {
-  //   if (_channelMessageController.text.length == 0) {
-  //     return showErrorToast("Please Input some Message");
-  //   }
-  //   var streamId = await _engine!.createDataStreamWithConfig(DataStreamConfig(false, false));
-  //   if (streamId != null) {
-  //     showErrorToast(" some Message");
-  //     _engine!.sendStreamMessage(streamId, _channelMessageController.text);
-  //   }
-  //   _channelMessageController.clear();
-  // }
-
-
-
 
 
   Widget _changingStream() {
@@ -1196,105 +1133,6 @@ class _BroadcastPageState extends State<BroadcastPage> {
   void _onSwitchCamera() {
     _engine!.switchCamera();
   }
-
-  // void _goToChatPage() {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //       builder: (context) => RealTimeMessaging(
-  //         meetingId: widget.channelName,
-  //         userName: widget.userName,
-  //         token: widget.rtmToken,
-  //         isBroadcaster: widget.isBroadcaster,
-  //       ))
-  //   );
-  // }
-
-   void _toggleSendChannelMessage() async {
-    String text = _channelMessageController.text;
-    if (text.isEmpty) {
-      print('Please input text to send.');
-      return;
-    }
-    try {
-      await _channel!.sendMessage(AgoraRtmMessage.fromText(text));
-      _logs(text);
-      _channelMessageController.clear();
-    } catch (errorCode) {
-      print('Send channel message error: ' + errorCode.toString());
-    }
-  }
-
-  void _logs(String info) {
-    print(info);
-    setState(() {
-      _infoStrings.insert(0, info);
-    });
-  }
-
-
-//   void _createClient() async {
-//      bool _isLogin=false;
-//  final _client =
-//   await AgoraRtmClient.createInstance(appId);
-//   _client.onMessageReceived = (AgoraRtmMessage message, String peerId) {
-//     _log(user: peerId,  info: message.text, type: 'message');
-//   };
-//   _client.onConnectionStateChanged = (int state, int reason) {
-//     if (state == 5) {
-//       _client.logout();
-//      setState(() {
-//         _isLogin = false;
-//       });
-//     }
-//   };
-//   await _client.login(null, widget.meetingCode );
-//   final  _channel = await _createChannelRtm(widget.meetingCode);
-//   await _channel.join();
-// }
-
-
-//   Future _createChannel(String name) async {
-//   AgoraRtmChannel? channel = await _client!.createChannel(name);
-//   channel!.onMemberJoined = (AgoraRtmMember member) async {
-//    // var img = await FireStoreClass.getImage(username: member.userId);
-//    // userMap.putIfAbsent(member.userId, () =&gt; img);
-//     var len;
-//     _channel!.getMembers().then((value) {
-//       len = value.length;
-//       setState(() {
-//        // userNo= len-1 ;
-//       });
-//     });
-//     _log(info: 'Member joined: ',  user: member.userId,type: 'join');
-//   };
-//   channel.onMemberLeft = (AgoraRtmMember member) {
-//     var len;
-//     _channel!.getMembers().then((value) {
-//       len = value.length;
-//       setState(() {
-//        // userNo= len-1 ;
-//       });
-//     });
-//   };
-//   channel.onMessageReceived = (AgoraRtmMessage message, AgoraRtmMember member) {
-//     _log(user: member.userId, info: message.text,type: 'message');
-//   };
-//   return channel;
-// }
-
-
-
-
-
-//   void _log({String? info,String? type,String? user,}) {
-//   //var image = userMap[user];
-//   //Message m = new Message(
-//    //   message: info, type: type, user: user, image: image);
-//   setState(() {
-//    //_infoStrings.insert(0, m);
-//   });
-// }
-
 
 
   Future<void> _showMyDialog(int uid, int streamId, String data) async {

@@ -654,7 +654,7 @@ class _HomePageState extends State<HomePage> {
                     child: Stack(
                        children: [
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: [
                             Padding(

@@ -4,6 +4,7 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/pages/bookRoom/bookRoomPageALert.dart';
 import 'package:connevents/services/dio-service.dart';
+import 'package:connevents/utils/date-time.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:date_format/date_format.dart';
@@ -184,28 +185,28 @@ class _BookRoomPageState extends State<BookRoomPage> {
         DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
        var startDate=dateFormat.format(pickedStartDate!).split(' ').first;
        var currentDate=dateFormat.format(DateTime.now()).split(' ').first;
-      //print(DateTime.parse(startDate).toUtc().isAtSameMomentAs(DateTime.parse(currentDate)));
-    // if(DateTime.parse(startDate).toUtc().isAtSameMomentAs(DateTime.parse(currentDate))){
-    //   if(diff.isNegative) showErrorToast("You can't  select Previous Time");
-    //   else
-    //   if(picked!=null && pickedStartDate!=null){
-    //     setState(() {
-    //       selectedStartTime = picked;
-    //       print(selectedStartTime);
-    //       _hour = selectedStartTime!.hour.toString();
-    //       _minute = selectedStartTime!.minute.toString();
-    //       _time = _hour! + ' : ' + _minute!;
-    //       //  event.eventStartTime = _time!;
-    //       startTime= formatDate(DateTime(
-    //           2019, 08, 1, selectedStartTime!.hour, selectedStartTime!.minute),
-    //           [hh, ':', nn, am]).toString();
-    //     });
-    //   }
-    //   else{
-    //     showErrorToast("Please Select Date First");
-    //   }
-    // }
-    // else{
+      print(DateTime.parse(startDate).toUtc().isAtSameMomentAs(DateTime.parse(currentDate)));
+    if(DateTime.parse(startDate).toUtc().isAtSameMomentAs(DateTime.parse(currentDate))){
+      if(diff.isNegative) showErrorToast("You can't  select Previous Time");
+      else
+      if(picked!=null && pickedStartDate!=null){
+        setState(() {
+          selectedStartTime = picked;
+          print(selectedStartTime);
+          _hour = selectedStartTime!.hour.toString();
+          _minute = selectedStartTime!.minute.toString();
+          _time = _hour! + ' : ' + _minute!;
+          //  event.eventStartTime = _time!;
+          startTime= formatDate(DateTime(
+              2019, 08, 1, selectedStartTime!.hour, selectedStartTime!.minute),
+              [hh, ':', nn, am]).toString();
+        });
+      }
+      else{
+        showErrorToast("Please Select Date First");
+      }
+    }
+    else{
     if((pickedStartDate!=null && pickedEndDate!=null )){
        // if(toDouble(picked) > toDouble(selectedEndTime!)){
        //   return  showErrorToast("Start Time Should be smaller than End Time");
@@ -227,7 +228,7 @@ class _BookRoomPageState extends State<BookRoomPage> {
         showErrorToast("Please Select Date First");
       }
 
-   // }
+    }
 
     }
 
@@ -238,7 +239,7 @@ class _BookRoomPageState extends State<BookRoomPage> {
       initialTime: selectedEndTime ?? TimeOfDay(hour: 00, minute: 00),
     );
        if(picked!=null && selectedStartTime!=null){
-        // if(toDouble(picked) > toDouble(selectedStartTime!)){
+         if(toDouble(picked) > toDouble(selectedStartTime!)){
            setState(() {
              selectedEndTime = picked;
              print(selectedEndTime);
@@ -249,8 +250,8 @@ class _BookRoomPageState extends State<BookRoomPage> {
                  2019, 08, 1, selectedEndTime!.hour, selectedEndTime!.minute),
                  [hh, ':', nn, am]).toString();
            });
-        // }
-         //else showErrorToast("Please select greater than  Start Time");
+        }
+         else showErrorToast("Please select greater than  Start Time");
     }
        else{
          showErrorToast('Please select start time first');
@@ -260,7 +261,6 @@ class _BookRoomPageState extends State<BookRoomPage> {
 
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(

@@ -57,7 +57,7 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
     return Column(children: <Widget>[
       Padding(padding: const EdgeInsets.only(top: 5),
         child: Container(
-          height: 175,
+          height: 180,
           width: double.infinity,
           child:   widget.previousImage !=null && widget.previousImage!.isNotEmpty ? networkImage() : _resolveVideo(),
         ),
