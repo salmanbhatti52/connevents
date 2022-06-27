@@ -266,7 +266,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                           children: [
                                             SvgPicture.asset('assets/icons/mark.svg', color: globalGreen, width: 16, height: 18,),
                                             SizedBox(width: padding/1.5),
-                                            Text('${widget.event!.distanceMiles!.toStringAsFixed(0)} miles away', style: gilroyMedium,
+                                            Text('${widget.event!.distanceMiles!}', style: gilroyMedium,
                                             ),
                                           ],
                                         ),

@@ -79,7 +79,7 @@ class Business extends BaseModelHive{
   @JsonKey(name: 'total_post_comments')
   String? totalPostComments;
   @JsonKey(name: 'distance_miles')
-  double? distanceMiles;
+  String? distanceMiles;
   String verified;
   String discount;
   String hyperlink;

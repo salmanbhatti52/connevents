@@ -193,7 +193,7 @@ class _BusinessDetailsPageState extends State<BusinessDetailsPage> {
                                         children: [
                                           SvgPicture.asset('assets/icons/mark.svg', color: globalGreen, width: 18, height: 20,),
                                           SizedBox(width: padding /2),
-                                          Text('${widget.business!.distanceMiles!.toStringAsFixed(0)} miles away', style: TextStyle(color: globalBlack, fontSize: 16,),
+                                          Text('${widget.business!.distanceMiles!}', style: TextStyle(color: globalBlack, fontSize: 16,),
                                           ),
                                         ],
                                       ),

@@ -206,7 +206,7 @@ class _HomePageEventsState extends State<HomePageEvents> {
                                         ],
                                       ),
                                       event.distanceMiles !=null ?
-                                      Text('${event.distanceMiles!.toStringAsFixed(0)} miles away', style: TextStyle(color: Colors.black, fontSize: 14),):
+                                      Text('${event.distanceMiles!}', style: TextStyle(color: Colors.black, fontSize: 14),):
                                       TextButton(
                                       onPressed: widget.onTapEnableLocation,
                                       child: Text("Enable Location")),

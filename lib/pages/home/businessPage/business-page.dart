@@ -235,7 +235,7 @@ class _NearbyBusinessPageState extends State<NearbyBusinessPage> {
                                   ],
                                 ),
                                 business.distanceMiles !=null ?
-                                Text('${business.distanceMiles!.toStringAsFixed(0)} miles away', style: TextStyle(color: Colors.black, fontSize: 14)):
+                                Text('${business.distanceMiles!}', style: TextStyle(color: Colors.black, fontSize: 14)):
                                 TextButton(onPressed: widget.onTapEnableLocation,
                                     child: Text("Enable Location")),
                               ],

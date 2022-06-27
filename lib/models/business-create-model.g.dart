@@ -49,7 +49,7 @@ Business _$BusinessFromJson(Map<String, dynamic> json) => Business(
       businessLogo: json['business_logo'] as String? ?? "",
       eventTicketType: json['event_ticket_type'] as String? ?? "",
       hyperlink: json['hyperlink'] as String? ?? "",
-      distanceMiles: (json['distance_miles'] as num?)?.toDouble(),
+      distanceMiles: json['distance_miles'] as String?,
       timeAgo: json['time_ago'] as String?,
       firstThumbNail: json['firstThumbNail'] as String?,
       secondThumbNail: json['secondThumbNail'] as String?,

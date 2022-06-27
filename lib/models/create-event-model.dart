@@ -150,7 +150,7 @@ class EventDetail extends BaseModelHive {
   @JsonKey(name: 'total_likes')
   int? totalLikes;
   @JsonKey(name: 'distance_miles')
-  double? distanceMiles;
+  String? distanceMiles;
   @JsonKey(name: 'early_bird_available')
   int earlyBirdAvailable;
   @JsonKey(name: 'regular_available')

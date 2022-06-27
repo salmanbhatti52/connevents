@@ -86,7 +86,7 @@ EventDetail _$EventDetailFromJson(Map<String, dynamic> json) => EventDetail(
       skippingLineAvailable: json['skipping_line_available'] as int?,
       totalAvailableTicketQuantity:
           json['total_available_ticket_quantity'] as int?,
-      distanceMiles: (json['distance_miles'] as num?)?.toDouble(),
+      distanceMiles: json['distance_miles'] as String?,
       totalLikes: json['total_likes'] as int?,
       liked: json['liked'] as String?,
       eventTagsData: json['eventTagsData'] == null
