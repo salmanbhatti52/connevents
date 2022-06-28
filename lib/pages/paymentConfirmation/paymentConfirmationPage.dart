@@ -430,14 +430,12 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                         Navigator.of(context).pop();
                         showErrorToast(response['message']);
                       }
-
                         },
                         title: 'Apple Pay',
                         color: Colors.black,
                         textColor: Colors.white,
                         image: 'apple',
                       ),
-
 
                   if(widget.transactionDetailModel.paymentType!="Google")
                   SizedBox(

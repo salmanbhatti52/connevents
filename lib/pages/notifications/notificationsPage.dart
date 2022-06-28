@@ -117,7 +117,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       onTap:(){
 
                         /// Event Navigate Pages
-                        if(notify.notificationType=="PostComment" ||notify.notificationType=='EventLike' ||notify.notificationType=="CommentLike" || notify.notificationType=="CommentMention")
+                        if(notify.notificationType=="PostComment" || notify.notificationType=="LiveStreamStarted" ||  notify.notificationType=='EventLike' ||notify.notificationType=="CommentLike" || notify.notificationType=="CommentMention")
                         CustomNavigator.navigateTo(context, EventCommentsPage(
                           event: notify.eventDetail,
                           images:  parseMedia(notify.eventDetail!),

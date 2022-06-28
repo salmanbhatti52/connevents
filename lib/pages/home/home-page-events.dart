@@ -278,7 +278,7 @@ class _HomePageEventsState extends State<HomePageEvents> {
                                   ],
                                 ),
                                 Text(event.timeAgo.toString(), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black.withOpacity(0.5),),),
-                                if(event.isRoomCreated)
+                               if(event.isRoomCreated)
                                 event.isRoomCreated && AppData().userdetail!.users_id == event.usersId ?
                                 TextButton(
                                   style: TextButton.styleFrom(

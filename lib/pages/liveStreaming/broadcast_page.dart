@@ -455,83 +455,6 @@ class _BroadcastPageState extends State<BroadcastPage> {
     }));
   }
 
-  // Widget _toolbar() {
-  //   return widget.isBroadcaster
-  //       ? Container(
-  //           alignment: Alignment.bottomCenter,
-  //           padding: const EdgeInsets.symmetric(vertical: 48),
-  //           child: Row(
-  //             mainAxisAlignment: MainAxisAlignment.center,
-  //             children: <Widget>[
-  //               RawMaterialButton(
-  //                 onPressed: _onToggleMute,
-  //                 child: Icon(
-  //                   muted ? Icons.mic_off : Icons.mic,
-  //                   color: muted ? Colors.white : Colors.blueAccent,
-  //                   size: 20.0,
-  //                 ),
-  //                 shape: CircleBorder(),
-  //                 elevation: 2.0,
-  //                 fillColor: muted ? Colors.blueAccent : Colors.white,
-  //                 padding: const EdgeInsets.all(12.0),
-  //               ),
-  //               RawMaterialButton(
-  //                 onPressed: () => _onCallEnd(context),
-  //                 child: Icon(
-  //                   Icons.call_end,
-  //                   color: Colors.white,
-  //                   size: 35.0,
-  //                 ),
-  //                 shape: CircleBorder(),
-  //                 elevation: 2.0,
-  //                 fillColor: Colors.redAccent,
-  //                 padding: const EdgeInsets.all(15.0),
-  //               ),
-  //               RawMaterialButton(
-  //                 onPressed: _onSwitchCamera,
-  //                 child: Icon(
-  //                   Icons.switch_camera,
-  //                   color: Colors.blueAccent,
-  //                   size: 20.0,
-  //                 ),
-  //                 shape: CircleBorder(),
-  //                 elevation: 2.0,
-  //                 fillColor: Colors.white,
-  //                 padding: const EdgeInsets.all(12.0),
-  //               ),
-  //               RawMaterialButton(
-  //                 onPressed: _goToChatPage,
-  //                 child: Icon(
-  //                   Icons.message_rounded,
-  //                   color: Colors.blueAccent,
-  //                   size: 20.0,
-  //                 ),
-  //                 shape: CircleBorder(),
-  //                 elevation: 2.0,
-  //                 fillColor: Colors.white,
-  //                 padding: const EdgeInsets.all(12.0),
-  //               ),
-  //             ],
-  //           ),
-  //         )
-  //       : Container(
-  //           alignment: Alignment.bottomCenter,
-  //           padding: EdgeInsets.only(bottom: 48),
-  //           child: RawMaterialButton(
-  //             onPressed: _goToChatPage,
-  //             child: Icon(
-  //               Icons.message_rounded,
-  //               color: Colors.blueAccent,
-  //               size: 20.0,
-  //             ),
-  //             shape: CircleBorder(),
-  //             elevation: 2.0,
-  //             fillColor: Colors.white,
-  //             padding: const EdgeInsets.all(12.0),
-  //           ),
-  //         );
-  // }
-
   @override
   Widget build(BuildContext context) {
 
@@ -541,60 +464,69 @@ class _BroadcastPageState extends State<BroadcastPage> {
         statusBarColor: Colors.white,
       ),
     );
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Stack(
-          children: <Widget>[
-             Stack(
-               children: [
-                 _viewRows(),
-                 if((widget.isBroadcaster && AppData().userdetail!.users_id != widget.userId) || (AppData().userdetail!.users_id == widget.userId && joinedUser.isNotEmpty))
-                 Positioned(
-                   bottom:10,
-                   right: 25,
-                   child: SizedBox(
-                     width: 30,
-                     height:  27,
-                     child: TextButton(
-                       onPressed: () async {
-                        if(AppData().userdetail!.users_id==widget.userId){
-                          await _channel!.sendMessage(AgoraRtmMessage.fromText("${AppData().userdetail!.profile_picture ?? "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ..i&docid=AOz9-XMe1ixZJM&w=1601&h=664&q=image&ved=2ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ"}," +  "$joinedUser," + "Shifted to Audience"));
-                          joinedUser="";
-                          setState((){});
-                        }
+    return WillPopScope(
+      onWillPop: () async {
+       return  await   showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return EndingLiveAlert(engine: _engine,channel: _channel,hostRoomId: widget.hostRoomId,eventHostName: widget.eventHostName);
+            });
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Stack(
+            children: <Widget>[
+               Stack(
+                 children: [
+                   _viewRows(),
+                   if((widget.isBroadcaster && AppData().userdetail!.users_id != widget.userId) || (AppData().userdetail!.users_id == widget.userId && joinedUser.isNotEmpty))
+                   Positioned(
+                     bottom:10,
+                     right: 25,
+                     child: SizedBox(
+                       width: 30,
+                       height:  27,
+                       child: TextButton(
+                         onPressed: () async {
+                          if(AppData().userdetail!.users_id==widget.userId){
+                            await _channel!.sendMessage(AgoraRtmMessage.fromText("${AppData().userdetail!.profile_picture ?? "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ..i&docid=AOz9-XMe1ixZJM&w=1601&h=664&q=image&ved=2ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ"}," +  "$joinedUser," + "Shifted to Audience"));
+                            joinedUser="";
+                            setState((){});
+                          }
 
-                        else
-                        await changeRequestRole();
-                         //   showDialog(
-                         //     context: context,
-                         //     builder: (BuildContext context) {
-                         //     return EndingLiveAlert(engine: _engine,channel: _channel,hostRoomId: widget.hostRoomId,eventHostName: widget.eventHostName);
-                         //     });
-                       },
-                       style: TextButton.styleFrom(
-                         backgroundColor: Colors.red,
-                         padding: EdgeInsets.zero,
+                          else
+                          await changeRequestRole();
+                           //   showDialog(
+                           //     context: context,
+                           //     builder: (BuildContext context) {
+                           //     return EndingLiveAlert(engine: _engine,channel: _channel,hostRoomId: widget.hostRoomId,eventHostName: widget.eventHostName);
+                           //     });
+                         },
+                         style: TextButton.styleFrom(
+                           backgroundColor: Colors.red,
+                           padding: EdgeInsets.zero,
+                         ),
+                         child: Icon(Icons.close, color: Colors.white),
                        ),
-                       child: Icon(Icons.close, color: Colors.white),
                      ),
                    ),
-                 ),
-               ],
-             ),
+                 ],
+               ),
 
-            //  Padding(
-            //   padding: const EdgeInsets.only(top:500.0),
-            //   child: MessageScreen(channel: _channel,client: _client,logController: logController),
-            // ),
-            //_buildInfoList(),
-            //_toolbar(),
-             if(widget.isBroadcaster)
-             _changingStream(),
-             _cancelStreaming(),
+              //  Padding(
+              //   padding: const EdgeInsets.only(top:500.0),
+              //   child: MessageScreen(channel: _channel,client: _client,logController: logController),
+              // ),
+              //_buildInfoList(),
+              //_toolbar(),
+               if(widget.isBroadcaster)
+               _changingStream(),
+               _cancelStreaming(),
 
-            _buildSendChannelMessage(),
-          ],
+              _buildSendChannelMessage(),
+            ],
+          ),
         ),
       ),
     );
