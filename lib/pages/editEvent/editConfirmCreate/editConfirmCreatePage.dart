@@ -465,7 +465,17 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(widget.event.dressCode!.dressCode.toString(), style: TextStyle(color: globalBlack, fontSize: 14, fontWeight: FontWeight.w600,),),
-                    Icon(Icons.circle, color: Colors.red,),
+                    Icon(Icons.circle,
+                        color:widget.event.dressCodeData!.dressCode=='Business'
+                            ? Color(0xff000080):
+                        widget.event.dressCodeData!.dressCode=='Casual'?
+                        Color(0xff000080):
+                        widget.event.dressCodeData!.dressCode=='As specified in description'?
+                        Color(0xf00ff00):
+                        widget.event.dressCodeData!.dressCode=='Cocktail'?
+                        Color(0xffff0000):
+                        widget.event.dressCodeData!.dressCode=='Formal'?
+                        Color(0xff000000): null),
                   ],
                 ),
                 if(widget.event.eventTicketType=='Paid')
