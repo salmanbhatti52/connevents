@@ -218,6 +218,8 @@ class _PaymentCardsPageState extends State<PaymentCardsPage> {
                         ),
                       ),
                     ),
+                      SizedBox(height:15),
+
                         if(Platform.isAndroid)
                           Container(
                             width: double.infinity,

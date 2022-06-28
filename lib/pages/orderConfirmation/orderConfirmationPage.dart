@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/pages/orderConfirmation/orderConfirmationPageAlerts.dart';
 import 'package:connevents/services/dio-service.dart';
@@ -6,7 +8,10 @@ import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stripe_payment/stripe_payment.dart';
+
+import '../../widgets/pay-button.dart';
 
 class OrderConfirmationPage extends StatefulWidget {
      String? planType;
@@ -91,6 +96,119 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
                 ),
               ),
             ),
+
+            ///Select  Google Pay or Apple Pay
+            if(!widget.isCard)
+            if(Platform.isAndroid)
+              PayButton(
+                onTap: ()async{
+                  var response;
+                  if(widget.planType=="premium"){
+                    Token token =   await StripeService.handleNativePayment(context, '12');
+                    if(token!=null){
+                      openLoadingDialog(context, "loading");
+                       response = await DioService.post('subscribe_to_premium', {
+                        "userId": AppData().userdetail!.users_id,
+                        "stripeToken": token.tokenId,
+                        'paymentType':  'Google'
+                      });
+                    }else
+                    {
+                      showErrorToast("Try Again After some time");
+                    }
+
+                  }
+                   else{
+                    Token token =   await StripeService.handleNativePayment(context, '12');
+                    if(token!=null){
+                      openLoadingDialog(context, "loading");
+                      response = await DioService.post('one_time_post_purchase', {
+                        "userId": AppData().userdetail!.users_id,
+                        "stripeToken": token.tokenId,
+                        'paymentType':  'Google'
+                      });
+                      AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
+                    }
+                    else {
+                      showErrorToast("Try Again After some");
+                    }
+
+                  }
+
+
+                  Navigator.of(context).pop();
+                  if(response['status']=='success'){
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return PaymentSuccessAlert(message:response['data']);
+                      },
+                    );
+                  }else{
+                    showErrorToast(response['status']);
+                  }
+
+
+
+                },
+                title: 'Google Pay',
+                image: 'gpay',
+              ),
+            if(!widget.isCard)
+            if(Platform.isIOS)
+              PayButton(
+                onTap: ()async{
+                  var response;
+                  if(widget.planType=="premium"){
+                    Token token =   await StripeService.handleNativePayment(context, '12');
+                    if(token!=null){
+                      openLoadingDialog(context, "loading");
+                      response = await DioService.post('subscribe_to_premium', {
+                        "userId": AppData().userdetail!.users_id,
+                        "stripeToken": token.tokenId,
+                        'paymentType':  'Google'
+                      });
+                    }else
+                    {
+                      showErrorToast("Try Again After some time");
+                    }
+
+                  }
+                  else{
+                    Token token =   await StripeService.handleNativePayment(context, '12');
+                    if(token!=null){
+                      openLoadingDialog(context, "loading");
+                      response = await DioService.post('one_time_post_purchase', {
+                        "userId": AppData().userdetail!.users_id,
+                        "stripeToken": token.tokenId,
+                        'paymentType':  'Google'
+                      });
+                      AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
+                    }
+                    else {
+                      showErrorToast("Try Again After some");
+                    }
+                  }
+                  Navigator.of(context).pop();
+                  if(response['status']=='success'){
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return PaymentSuccessAlert(message:response['data']);
+                      },
+                    );
+                  }else{
+                    showErrorToast(response['status']);
+                  }
+                },
+                title: 'Apple Pay',
+                image: 'apple',
+              ),
+
+            /// Select Card
+            if(widget.isCard)
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -105,27 +223,16 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
                 onPressed: () async{
                   var response;
                   if(widget.planType=="premium"){
-                    if(widget.isCard){
                       openLoadingDialog(context, "loading");
                         response = await DioService.post('subscribe_to_premium', {
                         "userId": AppData().userdetail!.users_id,
                         "stripeToken": widget.stripeToken,
                         'paymentType':  'card'
                       });
-                    } else{
-                   Token token =   await StripeService.handleNativePayment(context, '12');
-                     if(token!=null){
-                       openLoadingDialog(context, "loading");
-                       response = await DioService.post('subscribe_to_premium', {
-                         "userId": AppData().userdetail!.users_id,
-                         "stripeToken": widget.stripeToken,
-                         'paymentType':  'Google'
-                       });
-                     }else
-                       {
-                         showErrorToast("Try Again After some");
-                       }
-                    }
+                    print("Data");
+                    print(response);
+                    print("Data");
+
                       Navigator.of(context).pop();
                     if(response['status']=='success'){
                       showDialog(
@@ -141,30 +248,13 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
 
                   }
                   else{
-                    if(widget.isCard){
                       openLoadingDialog(context, "loading");
-                      var response = await DioService.post('one_time_post_purchase', {
+                       response = await DioService.post('one_time_post_purchase', {
                         "userId": AppData().userdetail!.users_id,
                         "stripeToken": widget.stripeToken,
                         'paymentType':  'card'
                       });
                       AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
-                    }
-                    else{
-                      Token token =   await StripeService.handleNativePayment(context, '12');
-                      if(token!=null){
-                        openLoadingDialog(context, "loading");
-                        var response = await DioService.post('one_time_post_purchase', {
-                          "userId": AppData().userdetail!.users_id,
-                          "stripeToken": widget.stripeToken,
-                          'paymentType':  'Google'
-                        });
-                        AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
-                      }
-                      else {
-                        showErrorToast("Try Again After some");
-                      }
-                    }
                       Navigator.of(context).pop();
 
                      if(response['status']=='success'){

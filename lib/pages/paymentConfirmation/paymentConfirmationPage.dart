@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/models/purchased-ticket.dart';
 import 'package:connevents/models/transaction-detail-model.dart';
@@ -7,6 +9,7 @@ import 'package:connevents/services/stripe-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:connevents/widgets/custom-navigator.dart';
+import 'package:connevents/widgets/pay-button.dart';
 import 'package:flutter/material.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 
@@ -324,13 +327,126 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                     ),
                   ),
                   SizedBox(height: padding * 2),
+
+
+                  ///Select  Google Pay or Apple Pay
+                  if(widget.transactionDetailModel.paymentType=="Google")
+                  if(Platform.isAndroid)
+                  PayButton(
+                        onTap: ()async{
+                          var response;
+                          Token token   =await StripeService.handleNativePayment(context, '0');
+                          if(token!=null) {
+                          openLoadingDialog(context,"buying");
+                          response  = await DioService.post('user_purchase_tickets_google_pay', {
+                          "eventPostId":  widget.transactionDetailModel.eventPostId,
+                          "userId":      widget.transactionDetailModel.usersId,
+                          "expiryMonths": token.card!.expMonth,
+                          "expiryYears": token.card!.expYear,
+                          "token" : token.tokenId,
+                          "totalAmount":    totalAmount.toStringAsFixed(2),
+                          "stripeFees":     stripeFees,
+                          "conneventFees":  connEventFees,
+                          if(widget.transactionDetailModel.discount!=null)
+                          "discount": widget.transactionDetailModel.discount,
+                          "cardId":        token.card!.cardId,
+                          "paymentType":    widget.transactionDetailModel.paymentType,
+                          "purchasedTickets":  widget.transactionDetailModel.purchasedTickets,
+                          });
+                          }
+                          else{
+                          showErrorToast("Something Went Wrong. Please try Again");
+                          }
+
+                          if(response['status']=="success"){
+                            var purchasedDetail = response ;
+                            PurchasedTicket purchased =  PurchasedTicket.fromJson(purchasedDetail);
+                            print(purchased);
+                            Navigator.of(context).pop();
+                            showSuccessToast("Congratulations! Ticket has been successfully purchased");
+                            //  CustomNavigator.pushReplacement(context, TabsPage());
+                            CustomNavigator.navigateTo(context, RefundTicketPage(
+                              purchasedData: purchased,
+                              totalAmount: totalAmount.toStringAsFixed(2),
+                              event: widget.event,
+                            ));
+                          }
+                          else if (response['status']=="error"){
+                            print(response);
+                            Navigator.of(context).pop();
+                            showErrorToast(response['message']);
+                          }
+
+
+                        },
+                        title: 'Google Pay',
+                       color: Colors.black,
+                      textColor: Colors.white,
+                        image: 'gpay',
+                      ),
+                  if(widget.transactionDetailModel.paymentType=="Google")
+                  if(Platform.isIOS)
+                  PayButton(
+                    onTap: ()async{
+                      var response;
+                      Token token   =await StripeService.handleNativePayment(context, '0');
+                      if(token!=null) {
+                        openLoadingDialog(context,"buying");
+                        response  = await DioService.post('user_purchase_tickets_google_pay', {
+                          "eventPostId":  widget.transactionDetailModel.eventPostId,
+                          "userId":      widget.transactionDetailModel.usersId,
+                          "expiryMonths": token.card!.expMonth,
+                          "expiryYears": token.card!.expYear,
+                          "token" : token.tokenId,
+                          "totalAmount":    totalAmount.toStringAsFixed(2),
+                          "stripeFees":     stripeFees,
+                          "conneventFees":  connEventFees,
+                          if(widget.transactionDetailModel.discount!=null)
+                            "discount": widget.transactionDetailModel.discount,
+                          "cardId":        token.card!.cardId,
+                          "paymentType":    widget.transactionDetailModel.paymentType,
+                          "purchasedTickets":  widget.transactionDetailModel.purchasedTickets,
+                        });
+                      }
+                      else{
+                        showErrorToast("Something Went Wrong. Please try Again");
+                      }
+
+                      if(response['status']=="success"){
+                        var purchasedDetail = response ;
+                        PurchasedTicket purchased =  PurchasedTicket.fromJson(purchasedDetail);
+                        print(purchased);
+                        Navigator.of(context).pop();
+                        showSuccessToast("Congratulations! Ticket has been successfully purchased");
+                        //  CustomNavigator.pushReplacement(context, TabsPage());
+                        CustomNavigator.navigateTo(context, RefundTicketPage(
+                          purchasedData: purchased,
+                          totalAmount: totalAmount.toStringAsFixed(2),
+                          event: widget.event,
+                        ));
+                      }
+                      else if (response['status']=="error"){
+                        print(response);
+                        Navigator.of(context).pop();
+                        showErrorToast(response['message']);
+                      }
+
+                        },
+                        title: 'Apple Pay',
+                        color: Colors.black,
+                        textColor: Colors.white,
+                        image: 'apple',
+                      ),
+
+
+                  if(widget.transactionDetailModel.paymentType!="Google")
                   SizedBox(
                     height: 50,
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () async{
                         var response;
-                       // try{
+                       try{
 
                         if(widget.transactionDetailModel.paymentType=="Conncash"){
                           openLoadingDialog(context,"buying");
@@ -352,35 +468,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                         //  'tblTenPplService':widget.isTableFor10People ? 'yes': 'no',
                      });
                      }
-                        else if(widget.transactionDetailModel.paymentType=="Google"){
-                          print(totalAmount);
-                          print("I am here");
-                       Token token   =await StripeService.handleNativePayment(context, '0');
-                        print(token.card!.toJson());
-                        print(token.card!.number);
-                        print(token.card!.name);
-                         if(token!=null) {
-                           openLoadingDialog(context,"buying");
-                           response  = await DioService.post('user_purchase_tickets_google_pay', {
-                             "eventPostId":  widget.transactionDetailModel.eventPostId,
-                             "userId":      widget.transactionDetailModel.usersId,
-                             "expiryMonths": token.card!.expMonth,
-                             "expiryYears": token.card!.expYear,
-                             "token" : token.tokenId,
-                             "totalAmount":    totalAmount.toStringAsFixed(2),
-                             "stripeFees":     stripeFees,
-                             "conneventFees":  connEventFees,
-                             if(widget.transactionDetailModel.discount!=null)
-                               "discount": widget.transactionDetailModel.discount,
-                             "cardId":        token.card!.cardId,
-                             "paymentType":    widget.transactionDetailModel.paymentType,
-                             "purchasedTickets":  widget.transactionDetailModel.purchasedTickets,
-                           });
-                         }
-                           else{
-                             showErrorToast("Something Went Wrong. Please try Again");
-                         }
-                        }
                       else{
                         openLoadingDialog(context,"buying");
                         print(widget.transactionDetailModel.toJson());
@@ -424,12 +511,12 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                             Navigator.of(context).pop();
                             showErrorToast(response['message']);
                       }
-                        // }
-                        // catch(e){
-                        // print(response);
-                        // print("heloooooooooooooooo");
-                        // Navigator.of(context).pop();
-                        // }
+                        }
+                        catch(e){
+                        print(response);
+                        print("heloooooooooooooooo");
+                        Navigator.of(context).pop();
+                        }
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: globalGreen,
