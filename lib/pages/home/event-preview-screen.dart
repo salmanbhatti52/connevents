@@ -129,7 +129,10 @@ class _EventPreviewScreenState extends State<EventPreviewScreen> {
                   itemBuilder: (BuildContext context, int index) {
                       return  widget.imageUrls[index].type=='image' ?
                       Image.network(widget.imageUrls[index].attachment):
-                      VideoPlayScreen(url: widget.imageUrls[index].media);
+                      VideoPlayScreen(
+                       url: widget.imageUrls[index].media
+
+                      );
                     },
 
             ),

@@ -21,6 +21,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
     super.initState();
     _betterPlayerController = BetterPlayerController(
       const BetterPlayerConfiguration(
+        fit: BoxFit.contain,
         autoDispose: true,
         aspectRatio: 0.5,
         looping: false,

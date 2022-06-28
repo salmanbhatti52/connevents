@@ -824,10 +824,6 @@ class _BroadcastPageState extends State<BroadcastPage> {
                   padding: const EdgeInsets.only(top:8.0,left:17.0),
                   child: Text("Comments",style:TextStyle(color:Colors.white,fontWeight: FontWeight.bold,fontSize: 20)),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top:8.0,left:17.0),
-                  child: Text(widget.description,style:TextStyle(color:Colors.white,fontWeight: FontWeight.bold,fontSize: 16)),
-                ),
               ],
             ),
             Container(
