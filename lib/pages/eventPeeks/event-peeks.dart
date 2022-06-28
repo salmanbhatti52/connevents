@@ -136,8 +136,8 @@ class _EventPeeksState extends State<EventPeeks> {
        super.initState();
        if(!widget.fromPeeksTab)
          newPeekList.add(widget.peekDetail!);
-       getPeeks();
-     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+         getPeeks();
+         WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
          openLoadingDialog(context, "loading...");
          chekInEventDetails();
           });

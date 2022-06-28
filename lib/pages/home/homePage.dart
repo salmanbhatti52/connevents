@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/cities-model.dart';
 import 'package:connevents/models/create-event-model.dart';
@@ -11,7 +10,6 @@ import 'package:connevents/models/event-dummy-ticket.dart';
 import 'package:connevents/models/event-tags-model.dart';
 import 'package:connevents/models/event-type-model.dart';
 import 'package:connevents/models/image-videos-model.dart';
-import 'package:connevents/models/user-location-model.dart';
 import 'package:connevents/pages/home/businessPage/business-page.dart';
 import 'package:connevents/pages/home/date-category.dart';
 import 'package:connevents/pages/home/home-header/city-dialog-page.dart';
@@ -101,7 +99,6 @@ class _HomePageState extends State<HomePage> {
   bool isServiceEnabled=true;
   bool isBasic = false;
   RefreshController refreshController=RefreshController(initialRefresh: true);
-  ConnectivityResult connectivityResult= ConnectivityResult.none;
 
 
 
@@ -561,26 +558,13 @@ class _HomePageState extends State<HomePage> {
   return file;
 }
 
-  Future<bool>  checkConnectivity() async {
-    hasInternet  = await  InternetConnectionChecker().hasConnection;
-    setState(() {});
-    return hasInternet;
-    }
-
-
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future<bool> isConnected = checkConnectivity();
-    isConnected.then((value) {
-    if(value){
       getEventType();
       getEventsTags();
-    }
-    else showErrorToast("Please Check Your Internet Connection");
-  });
   // WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
   //     openLoadingDialog(context, "loading...");
   //

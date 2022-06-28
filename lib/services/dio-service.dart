@@ -35,15 +35,13 @@ abstract class DioService<T> {
   }
 
   static post(String route, data, [Map<String, dynamic>? customHeaders, Function(String)? onProgress]) async {
-    print("Post Data");
-    print(AppData().accessToken);
-    print("Post Data");
-    print(headers);
+    AppData.checkConnectivity();
 
     Dio dio = Dio();
     try {
       print("$apiUrl$route");
       Response res = await dio.post('$apiUrl$route', data: data, options: Options(
+
           headers: customHeaders ?? headers,
           followRedirects: false,
           validateStatus: (status) {
@@ -113,6 +111,7 @@ abstract class DioService<T> {
   }
 
   static get(String route) async {
+    AppData.checkConnectivity();
     Dio dio = Dio();
     try {
       Response res = await dio.get("$apiUrl$route");

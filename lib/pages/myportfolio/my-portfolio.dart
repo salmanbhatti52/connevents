@@ -44,7 +44,7 @@ class _MyPortfolioState extends State<MyPortfolio> {
     }
     }
     catch (e){
-      showErrorToast(response['message']);
+     // showErrorToast(response['message']);
     }}
 
   @override

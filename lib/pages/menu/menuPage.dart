@@ -76,7 +76,7 @@ class _MenuPageState extends State<MenuPage> {
      }
    }
    catch(e){
-     Navigator.of(context).pop();
+    // Navigator.of(context).pop();
    }
  }
 

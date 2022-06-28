@@ -48,10 +48,6 @@ if(widget.event.secondImage.contains('https')) secondNetworkImage = widget.event
 if(widget.event.thirdImage.contains('https')) thirdNetworkImage = widget.event.thirdImage; else  thirdImage = base64Decode(widget.event.thirdImage);
 print(secondImage);
 
-
-
-
-
     // var dateFormat = DateFormat.yMMMd();
 
 
@@ -63,10 +59,7 @@ print(secondImage);
         title: Row(
           children: [
             TextButton(
-              onPressed: () {
-
-                Navigator.pop(context);
-              },
+              onPressed: () =>Navigator.pop(context),
               child: Row(
                 children: [
                   Icon(Icons.chevron_left),

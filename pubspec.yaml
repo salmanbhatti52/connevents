@@ -83,7 +83,6 @@ dependencies:
   image_gallery_saver: ^1.7.1
   in_app_purchase: ^3.0.6
   pay: ^1.0.10
-  connectivity_plus: ^2.3.4
   internet_connection_checker: ^0.0.1+3
   webview_flutter: ^3.0.4
   emoji_picker_flutter: 1.2.1

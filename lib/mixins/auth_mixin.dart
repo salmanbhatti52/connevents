@@ -2,9 +2,11 @@ import 'package:connevents/models/save-videos-model.dart';
 import 'package:connevents/models/specific-user-category-model.dart';
 import 'package:connevents/models/user-location-model.dart';
 import 'package:connevents/models/user-model.dart';
+import 'package:connevents/utils/loading-dialog.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive/hive.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 mixin AuthData {

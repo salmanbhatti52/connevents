@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/business-type-model.dart';
 import 'package:connevents/models/event-address-model.dart';
 import 'package:connevents/pages/BusinessCreate/businessCreateSecondPage/business-create-second-page.dart';
@@ -202,6 +203,7 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
          openLoadingDialog(context, "loading");
          getBusinessTypes();

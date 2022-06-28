@@ -61,7 +61,6 @@ class _EventGuestListPageState extends State<EventGuestListPage> {
       }
     }
     catch(e){
-      print("shahzaib");
       Navigator.of(context, rootNavigator: true).pop();
     }
   }

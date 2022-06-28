@@ -75,7 +75,7 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
     }
     catch(e){
       Navigator.of(context).pop();
-      showErrorToast(e.toString());
+     // showErrorToast(e.toString());
     }
   }
 
@@ -91,12 +91,12 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
       }
       else if (response['status'] == 'error') {
         Navigator.of(context).pop();
-        showErrorToast(response['message']);
+       // showErrorToast(response['message']);
       }
     }
     catch(e){
-      Navigator.of(context).pop();
-      showErrorToast(e.toString());
+     // Navigator.of(context).pop();
+     // showErrorToast(e.toString());
     }
   }
 
