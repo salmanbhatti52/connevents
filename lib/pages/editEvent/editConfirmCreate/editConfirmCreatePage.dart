@@ -64,6 +64,7 @@ print(secondImage);
           children: [
             TextButton(
               onPressed: () {
+
                 Navigator.pop(context);
               },
               child: Row(
@@ -460,7 +461,7 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                   ],
                 ),
                 SizedBox(height: padding),
-                if(widget.event.eventTicketType=='Paid')
+                if(widget.event.eventTicketType=='Paid' )
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
