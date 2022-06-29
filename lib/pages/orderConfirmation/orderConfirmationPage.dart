@@ -153,7 +153,7 @@ class _OrderConfirmationPageState extends State<OrderConfirmationPage> {
 
                 },
                 title: 'Google Pay',
-                image: 'gpay',
+                image: 'google-pay-mark',
               ),
             if(!widget.isCard)
             if(Platform.isIOS)

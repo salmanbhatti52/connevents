@@ -15,15 +15,16 @@ class PayButton extends StatelessWidget {
       width: double.infinity,
       height: 57,
       decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
-      child: ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-              primary: color,
-              textStyle: TextStyle(fontSize: 20)),
-          onPressed: onTap,
-          icon: SvgPicture.asset('assets/$image.svg',width: 30,height: 30),
-          label: Text(title,style: TextStyle(color:textColor),)),
+      child: ListTile(
+        onTap: onTap,
+        contentPadding: EdgeInsets.zero,
+        horizontalTitleGap: 0,
+        leading:  SvgPicture.asset('assets/$image.svg',width: 50,height: 50,),
+        title: Text(title,style: TextStyle(fontWeight: FontWeight.bold)),
+      ),
     );
   }
 }

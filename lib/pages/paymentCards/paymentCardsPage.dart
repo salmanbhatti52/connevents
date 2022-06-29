@@ -233,8 +233,15 @@ class _PaymentCardsPageState extends State<PaymentCardsPage> {
                                 ): Border.all()
                             ),
                             child: ListTile(
+                              onTap: (){
+                                isGooglePaySelected=true;
+                                isCard=false;
+                                setState(() {});
+                              },
+                              contentPadding: EdgeInsets.zero,
+                              horizontalTitleGap: 0,
                               leading:  SvgPicture.asset('assets/google-pay-mark.svg',width: 50,height: 50,),
-                              title: Text('Google Pay'),
+                              title: Text('Google Pay',style: TextStyle(fontWeight: FontWeight.bold)),
                             )
 
 
