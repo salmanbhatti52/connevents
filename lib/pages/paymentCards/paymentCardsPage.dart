@@ -222,29 +222,37 @@ class _PaymentCardsPageState extends State<PaymentCardsPage> {
 
                         if(Platform.isAndroid)
                           Container(
-                            width: double.infinity,
                             height: 57,
+                            width: double.infinity,
                             decoration: BoxDecoration(
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(5),
                                 border:isGooglePaySelected ? Border.all(
                                     width: 2,
                                     color: globalGreen
                                 ): Border.all()
                             ),
-                            child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.white,
-                                    textStyle: TextStyle(
-                                      fontSize: 20,
-                                    )),
-                                onPressed: (){
-                                  isGooglePaySelected=true;
-                                  isCard=false;
-                                  setState(() {});
-                                  //StripeService.handleNativePayment(context, '50');
-                                },
-                                icon: SvgPicture.asset('assets/gpay.svg'),
-                                label: Text('Google Pay',style: TextStyle(color:Colors.black),)),
+                            child: ListTile(
+                              leading:  SvgPicture.asset('assets/google-pay-mark.svg',width: 50,height: 50,),
+                              title: Text('Google Pay'),
+                            )
+
+
+
+                            // ElevatedButton.icon(
+                            //     style: ElevatedButton.styleFrom(
+                            //         primary: Colors.white,
+                            //         textStyle: TextStyle(
+                            //           fontSize: 20,
+                            //         )),
+                            //     onPressed: (){
+                            //       isGooglePaySelected=true;
+                            //       isCard=false;
+                            //       setState(() {});
+                            //       //StripeService.handleNativePayment(context, '50');
+                            //     },
+                            //     icon: SvgPicture.asset('assets/google-pay-mark.svg'),
+                            //     label: Text('Google Pay',style: TextStyle(color:Colors.black),)),
                           ),
                           if(Platform.isIOS)
                             Container(

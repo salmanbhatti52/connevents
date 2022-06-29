@@ -554,7 +554,8 @@ class _AddCardPageState extends State<AddCardPage> {
                               "cardHolderName": cardHolderName,
                               "expiryMonths": int.tryParse(expiryDate.split('/').first),
                               "expiryYears": int.tryParse(expiryDate.split('/').last),
-                              'token': token
+                              'token': token,
+                              'zipCode': 0
                                     });
                               });
 
