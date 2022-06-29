@@ -282,27 +282,25 @@ class _PaymentMethodsPageState extends State<PaymentMethodsPage> {
                     width: double.infinity,
                     height: 57,
                     decoration: BoxDecoration(
+                      color:Colors.black,
                       borderRadius: BorderRadius.circular(5),
                       border:isGooglePaySelected ? Border.all(
                         width: 2,
                         color: globalGreen
                       ): Border.all()
                     ),
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
-                      textStyle: TextStyle(
-                      fontSize: 20,
-                      )),
-                      onPressed: (){
-                        isSelected=true;
-                        isConnCashSelected=false;
-                        isGooglePaySelected=true;
-                        setState(() {});
-                          //StripeService.handleNativePayment(context, '50');
-                        },
-                        icon: SvgPicture.asset('assets/gpay.svg'),
-                        label: Text('Google Pay')),
+                    child: ListTile(
+                      onTap: (){
+                            isSelected=true;
+                            isConnCashSelected=false;
+                            isGooglePaySelected=true;
+                            setState(() {});
+                            },
+                      contentPadding: EdgeInsets.zero,
+                      horizontalTitleGap: 0,
+                      leading:  SvgPicture.asset('assets/google-pay-mark.svg',width: 50,height: 50,),
+                      title: Text('Google Pay',style: TextStyle(fontWeight: FontWeight.bold,color:Colors.white)),
+                    ),
                   ),
                   if(!widget.fromMenu)
                   if(Platform.isIOS)

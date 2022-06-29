@@ -348,7 +348,6 @@ class _EventCommentsPageState extends State<EventCommentsPage> {
                                                             ),
                                                             onPressed: () async{
                                                               DateTime dateTime   =  DateTime.parse("${widget.event!.roomDetails!.liveDate}"" ${ widget.event!.roomDetails!.liveEndTime}");
-                                                              print("hours ");
                                                               var seconds =    secondsBetween(DateTime.now(),dateTime);
                                                               DateTime liveStreamingStartingDateTime   =  DateTime.parse("${widget.event!.roomDetails!.liveDate}"" ${ widget.event!.roomDetails!.liveStartTime}");
                                                               DateTime liveStreamingEndingDateTime   =  DateTime.parse("${widget.event!.roomDetails!.liveDate}"" ${ widget.event!.roomDetails!.liveEndTime}");
