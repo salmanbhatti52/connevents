@@ -1,5 +1,6 @@
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpPage extends StatelessWidget {
   const HelpPage({Key? key}) : super(key: key);
@@ -102,7 +103,9 @@ class HelpPage extends StatelessWidget {
                   height: 50,
                   width: double.infinity,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                     launch('mailto:connevents@gmail.com');
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
