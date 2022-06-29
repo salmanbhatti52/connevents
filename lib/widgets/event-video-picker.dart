@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:connevents/services/dio-service.dart';
+import 'package:connevents/utils/loading-dialog.dart';
 import 'package:connevents/variables/globalVariables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,6 +51,15 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
     return file;
   }
 
+
+  getFileSize(String filepath, int decimals) async {
+    var file = File(filepath);
+    int bytes = await file.length();
+    if (bytes <= 0) return "0 B";
+    const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    var i = (log(bytes) / log(1024)).floor();
+    return ((bytes / pow(1000, i)));
+  }
 
 
 
@@ -133,29 +144,36 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
         child:GestureDetector(
           onTap: () async {
             final video = await ImagePicker().getVideo(source: ImageSource.gallery);
-            if (video != null) {
-              setState(() {
-                this._video = video;
-              });
-              final vid = File(_video!.path);
-              FormData data = FormData.fromMap(
-                  {
-                    'video': await MultipartFile.fromFile(_video!.path)
-                  });
-              var ress = await DioService.post("upload_video", data, null, (progress) {
-                this.progress = progress;
-                setState(() {});
-              });
-              print(ress);
-              widget.onVideoPicked!(ress['data']);
 
-              var res = await getThumbnailPath(video.path);
-              setState(() {
-                thumb = res;
-              });
+           double sizeInMb = await   getFileSize(video!.path,1);
+           print(sizeInMb);
+           if(sizeInMb < 25){
+             if (video != null) {
+               setState(() {
+                 this._video = video;
+               });
+               final vid = File(_video!.path);
+               FormData data = FormData.fromMap(
+                   {
+                     'video': await MultipartFile.fromFile(_video!.path)
+                   });
+               var ress = await DioService.post("upload_video", data, null, (progress) {
+                 this.progress = progress;
+                 setState(() {});
+               });
+               print(ress);
+               widget.onVideoPicked!(ress['data']);
 
-              widget.onThumbNail!(res.path,res);
-            }
+               var res = await getThumbnailPath(video.path);
+               setState(() {
+                 thumb = res;
+               });
+
+               widget.onThumbNail!(res.path,res);
+             }
+           }else{
+             showErrorToast("You can't select more than 2 Mb size");
+           }
           },
           child: Container(
             decoration: BoxDecoration(
