@@ -172,7 +172,7 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
                widget.onThumbNail!(res.path,res);
              }
            }else{
-             showErrorToast("You can't select more than 2 Mb size");
+             showErrorToast("You can't select more than 25 Mb size");
            }
           },
           child: Container(
