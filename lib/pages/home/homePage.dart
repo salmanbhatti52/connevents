@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onFavouriteEvent(isFavourite,eventPostId) async {
-      openLoadingDialog(context, "loading");
+      openLoadingDialog(context, "loading ");
       var res;
       try{
       if(isFavourite=="true"){
