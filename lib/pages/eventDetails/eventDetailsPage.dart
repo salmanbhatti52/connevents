@@ -326,7 +326,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                           children: [
                                               Text('Refund Policy', style: gilroyExtraBold),
                                               SizedBox(height: padding / 6),
-                                              Text('ConnEvents fee is nonrefundable. See Terms and Conditions. There is a 10 ticket limit per customer.', style: TextStyle(color: globalBlack,fontSize: 14,fontWeight: FontWeight.w700)),
+                                              Text('ConnEvents fee is nonrefundable. See Terms and Conditions. There is a 10 ticket limit per customer.\n\nBy purchasing tickets to this event, you agree to abide by the rules for entry that are in effect at the time of the event.', style: TextStyle(color: globalBlack,fontSize: 14,fontWeight: FontWeight.w700)),
                                               SizedBox(height: padding / 2),
                                               Text('Contact the organizer to request a refund.', style: TextStyle(color: globalBlack,fontSize: 14)),
                                           ],

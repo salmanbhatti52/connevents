@@ -106,10 +106,7 @@ class _EventDashboardState extends State<EventDashboard> {
 
    super.dispose();
  }
-
-
-
-  @override
+ @override
   Widget build(BuildContext context) {
     return Column(
       children: [

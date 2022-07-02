@@ -104,7 +104,7 @@ class HelpPage extends StatelessWidget {
                   width: double.infinity,
                   child: TextButton(
                     onPressed: () {
-                     launch('mailto:connevents@gmail.com');
+                     launch('mailto:connevents@gmail.com?subject=connevents help section');
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.transparent,
