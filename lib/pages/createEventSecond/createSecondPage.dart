@@ -51,16 +51,16 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime.now(),
         lastDate: DateTime(2101));
-    if (picked != null  && picked.toUtc().isBefore(event.pickedEventEndDate!)  || picked!.toUtc().isAtSameMomentAs(event.pickedEventEndDate!)  || picked.toUtc().isAtSameMomentAs(event.pickedEventStartDate!)){
+    if (picked != null  && picked.toUtc().isBefore(widget.event.pickedEventEndDate!)  || picked!.toUtc().isAtSameMomentAs(widget.event.pickedEventEndDate!)  || picked.toUtc().isAtSameMomentAs(widget.event.pickedEventStartDate!)){
       setState(() {
         print(picked);
-        event.earlyBird!.selectedDate = picked;
-        event.earlyBird!.selectedDate = event.earlyBird!.selectedDate;
-        event.earlyBird!.earlyBird = DateFormat.yMd().format(event.earlyBird!.selectedDate);
-        print(event.earlyBird!.earlyBird);
+        widget.event.earlyBird!.selectedDate = picked;
+        widget.event.earlyBird!.selectedDate = widget.event.earlyBird!.selectedDate;
+        widget.event.earlyBird!.earlyBird = DateFormat.yMd().format(widget.event.earlyBird!.selectedDate);
+        print(widget.event.earlyBird!.earlyBird);
         final f = new DateFormat('yyyy-MM-dd hh:mm');
-        event.earlyBird!.closingDate = f.format(event.earlyBird!.selectedDate);
-        print(event.earlyBird!.closingDate);
+        widget.event.earlyBird!.closingDate = f.format(widget.event.earlyBird!.selectedDate);
+        print(widget.event.earlyBird!.closingDate);
       });
     }
     else{
@@ -71,33 +71,33 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   Future _selectDate(BuildContext context) async {
         final DateTime? picked = await     showDatePicker(
             context: context,
-            initialDate: event.pickedEventStartDate ?? DateTime.now(),
+            initialDate: widget.event.pickedEventStartDate ?? DateTime.now(),
             initialDatePickerMode: DatePickerMode.day,
             firstDate: DateTime.now(),
             lastDate: DateTime(2101));
-          if(event.pickedEventEndDate!=null){
-            if (picked != null && picked.isAtSameMomentAs(event.pickedEventEndDate!)  ||  picked!.isBefore(event.pickedEventEndDate!)) {
-              if(event.eventStartTime.isNotEmpty && event.eventEndTime.isNotEmpty && picked.isAtSameMomentAs(event.pickedEventEndDate!)  &&  toDouble(selectedEventEndTime!) < toDouble(selectedEventStartTime!)){
+          if(widget.event.pickedEventEndDate!=null){
+            if (picked != null && picked.isAtSameMomentAs(widget.event.pickedEventEndDate!)  ||  picked!.isBefore(widget.event.pickedEventEndDate!)) {
+              if(widget.event.eventStartTime.isNotEmpty && widget.event.eventEndTime.isNotEmpty && picked.isAtSameMomentAs(widget.event.pickedEventEndDate!)  &&  toDouble(selectedEventEndTime!) < toDouble(selectedEventStartTime!)){
               return showErrorToast("Event End Time Must be smaller greater than Event End Time");
             }else{
-                event.pickedEventStartDate = picked;
+                widget.event.pickedEventStartDate = picked;
                 var dateFormat = DateFormat.yMMMd();
-                event.eventStartDate = dateFormat.format(event.pickedEventStartDate!);
+                widget.event.eventStartDate = dateFormat.format(widget.event.pickedEventStartDate!);
                 setState(() {});
             }
             }
-            else  if(event.pickedEventEndDate!.toUtc().isBefore(picked)){
+            else  if(widget.event.pickedEventEndDate!.toUtc().isBefore(picked)){
              return showErrorToast("Event Start Date Must be smaller than event End Date");
             }else{
-                event.pickedEventStartDate = picked;
+                widget.event.pickedEventStartDate = picked;
                 var dateFormat = DateFormat.yMMMd();
-                event.eventStartDate = dateFormat.format(event.pickedEventStartDate!);
+                widget.event.eventStartDate = dateFormat.format(widget.event.pickedEventStartDate!);
                 setState(() {});
             }
           } else{
-                event.pickedEventStartDate = picked;
+                widget.event.pickedEventStartDate = picked;
                 var dateFormat = DateFormat.yMMMd();
-                event.eventStartDate = dateFormat.format(event.pickedEventStartDate!);
+                widget.event.eventStartDate = dateFormat.format(widget.event.pickedEventStartDate!);
                 setState(() {});
           }
 
@@ -106,27 +106,27 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   Future _selectDateEnd(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: event.pickedEventEndDate ?? DateTime.now(),
+      initialDate: widget.event.pickedEventEndDate ?? DateTime.now(),
       initialDatePickerMode: DatePickerMode.day,
       firstDate: DateTime(2015),
       lastDate: DateTime(2040),
     );
-  // var  _startTime = stringToTimeOfDay(event.eventStartTime);
-  // var  _endTime = stringToTimeOfDay(event.eventEndTime);
+  // var  _startTime = stringToTimeOfDay(widget.event.eventStartTime);
+  // var  _endTime = stringToTimeOfDay(widget.event.eventEndTime);
 
 
-    if(event.pickedEventStartDate!=null){
-      if (picked != null && picked.isAtSameMomentAs(event.pickedEventStartDate!)  ||  picked!.isAfter(event.pickedEventStartDate!)) {
-       if(event.eventStartTime.isNotEmpty && event.eventEndTime.isNotEmpty && picked.isAtSameMomentAs(event.pickedEventStartDate!)  &&  toDouble(selectedEventEndTime!) < toDouble(selectedEventStartTime!)){
+    if(widget.event.pickedEventStartDate!=null){
+      if (picked != null && picked.isAtSameMomentAs(widget.event.pickedEventStartDate!)  ||  picked!.isAfter(widget.event.pickedEventStartDate!)) {
+       if(widget.event.eventStartTime.isNotEmpty && widget.event.eventEndTime.isNotEmpty && picked.isAtSameMomentAs(widget.event.pickedEventStartDate!)  &&  toDouble(selectedEventEndTime!) < toDouble(selectedEventStartTime!)){
          return showErrorToast("Event End Time Must be  greater than Event Start Time");
        }else{
          setState(() {
-          event.pickedEventEndDate = picked;
-          event.pickedEventEndDate = event.pickedEventEndDate;
-          var i = event.pickedEventEndDate!.isAtSameMomentAs(event.pickedEventStartDate!);
+          widget.event.pickedEventEndDate = picked;
+          widget.event.pickedEventEndDate = widget.event.pickedEventEndDate;
+          var i = widget.event.pickedEventEndDate!.isAtSameMomentAs(widget.event.pickedEventStartDate!);
           print(i);
           var dateFormat = DateFormat.yMMMd();
-          event.eventEndDate = dateFormat.format(event.pickedEventEndDate!);
+          widget.event.eventEndDate = dateFormat.format(widget.event.pickedEventEndDate!);
         });
        }
       } else {
@@ -145,13 +145,13 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
     );
     final now = new DateTime.now();
     print(now);
-    DateTime dt1= DateTime.parse("${event.pickedEventStartDate!.toString().split(" ").first}" + " ${picked!.hour.toString().length==1 ? "0${picked.hour.toString()}": picked.hour.toString()}" + ":${picked.minute.toString().length==1 ? "0${picked.minute.toString()}" : picked.minute.toString()}" + ":00" );
+    DateTime dt1= DateTime.parse("${widget.event.pickedEventStartDate!.toString().split(" ").first}" + " ${picked!.hour.toString().length==1 ? "0${picked.hour.toString()}": picked.hour.toString()}" + ":${picked.minute.toString().length==1 ? "0${picked.minute.toString()}" : picked.minute.toString()}" + ":00" );
      Duration diff = dt1.difference(DateTime.now());
      print(diff);
     if(diff.isNegative) showErrorToast("You can't  select Previous Time");
       else{
-        if(event.pickedEventStartDate!=null && event.pickedEventEndDate!=null) {
-        if(event.pickedEventStartDate!.toUtc().isAtSameMomentAs(event.pickedEventEndDate!) && selectedEventEndTime==null){
+        if(widget.event.pickedEventStartDate!=null && widget.event.pickedEventEndDate!=null) {
+        if(widget.event.pickedEventStartDate!.toUtc().isAtSameMomentAs(widget.event.pickedEventEndDate!) && selectedEventEndTime==null){
          if (picked != null){
           setState(() {
           selectedEventStartTime = picked;
@@ -159,17 +159,17 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
           _hour = selectedEventStartTime!.hour.toString();
           _minute = selectedEventStartTime!.minute.toString();
           _time = _hour! + ' : ' + _minute!;
-          event.eventStartTime = _time!;
-          event.eventStartTime = formatDate(DateTime(
+          widget.event.eventStartTime = _time!;
+          widget.event.eventStartTime = formatDate(DateTime(
               2019, 08, 1, selectedEventStartTime!.hour, selectedEventStartTime!.minute),
               [hh, ':', nn, am]).toString();
         });
       }else {
          showErrorToast("You have to select smaller than event Start Time");
       }
-      } else if(event.pickedEventStartDate!.toUtc().isAtSameMomentAs(event.pickedEventEndDate!)){
+      } else if(widget.event.pickedEventStartDate!.toUtc().isAtSameMomentAs(widget.event.pickedEventEndDate!)){
          if(selectedEventEndTime==null)
-       _endTime = stringToTimeOfDay(event.eventEndTime);
+       _endTime = stringToTimeOfDay(widget.event.eventEndTime);
          if (  selectedEventEndTime==null ?  toDouble(picked) < toDouble(_endTime!) : toDouble(picked) < toDouble(selectedEventEndTime!)){
           setState(() {
           selectedEventStartTime = picked;
@@ -177,8 +177,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
           _hour = selectedEventStartTime!.hour.toString();
           _minute = selectedEventStartTime!.minute.toString();
           _time = _hour! + ' : ' + _minute!;
-          event.eventStartTime = _time!;
-          event.eventStartTime = formatDate(DateTime(
+          widget.event.eventStartTime = _time!;
+          widget.event.eventStartTime = formatDate(DateTime(
               2019, 08, 1, selectedEventStartTime!.hour, selectedEventStartTime!.minute),
               [hh, ':', nn, am]).toString();
         });
@@ -192,8 +192,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
         _hour = selectedEventStartTime!.hour.toString();
         _minute = selectedEventStartTime!.minute.toString();
         _time = _hour! + ' : ' + _minute!;
-        event.eventStartTime = _time!;
-        event.eventStartTime = formatDate(DateTime(
+        widget.event.eventStartTime = _time!;
+        widget.event.eventStartTime = formatDate(DateTime(
             2019, 08, 1, selectedEventStartTime!.hour, selectedEventStartTime!.minute),
             [hh, ':', nn, am]).toString();
       });
@@ -213,18 +213,18 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
       context: context,
       initialTime: selectedEventEndTime ?? TimeOfDay(hour: 00, minute: 00),
     );
-    if(event.eventStartTime.isNotEmpty){
+    if(widget.event.eventStartTime.isNotEmpty){
      if(selectedEventStartTime==null)
-    _startTime = stringToTimeOfDay(event.eventStartTime);
-    if(event.pickedEventStartDate!.toUtc().isAtSameMomentAs(event.pickedEventEndDate!)){
+    _startTime = stringToTimeOfDay(widget.event.eventStartTime);
+    if(widget.event.pickedEventStartDate!.toUtc().isAtSameMomentAs(widget.event.pickedEventEndDate!)){
      if (picked != null &&  selectedEventStartTime==null ?  toDouble(picked) > toDouble(_startTime!) : toDouble(picked!) > toDouble(selectedEventStartTime!) ) {
        setState(() {
          selectedEventEndTime = picked;
          _hour = selectedEventEndTime!.hour.toString();
          _minute = selectedEventEndTime!.minute.toString();
          _time = _hour! + ' : ' + _minute!;
-         event.eventEndTime = _time!;
-         event.eventEndTime = formatDate(DateTime(
+         widget.event.eventEndTime = _time!;
+         widget.event.eventEndTime = formatDate(DateTime(
              2019, 08, 1, selectedEventEndTime!.hour, selectedEventEndTime!.minute),
              [hh, ':', nn, am]).toString();
        });
@@ -236,8 +236,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
         _hour = selectedEventEndTime!.hour.toString();
         _minute = selectedEventEndTime!.minute.toString();
         _time = _hour! + ' : ' + _minute!;
-        event.eventEndTime = _time!;
-        event.eventEndTime = formatDate(DateTime(2019, 08, 1, selectedEventEndTime!.hour, selectedEventEndTime!.minute),
+        widget.event.eventEndTime = _time!;
+        widget.event.eventEndTime = formatDate(DateTime(2019, 08, 1, selectedEventEndTime!.hour, selectedEventEndTime!.minute),
             [hh, ':', nn, am]).toString();
       });
          }
@@ -254,7 +254,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   void initState() {
     super.initState();
       event = widget.event;
-      event.list = event.list ?? [];
+      widget.event.list = widget.event.list ?? [];
 
   }
 
@@ -291,7 +291,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                               SizedBox(height: 6),
                               GestureDetector(
                                   onTap: () => _selectDate(context),
-                                  child: dateContainer(size, event.eventStartDate, Icons.calendar_today)),
+                                  child: dateContainer(size, widget.event.eventStartDate, Icons.calendar_today)),
                             ],
                           ),
                           Column(
@@ -301,7 +301,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                               SizedBox(height: 6),
                               GestureDetector(
                                   onTap: () => _selectDateEnd(context),
-                                  child: dateContainer(size, event.eventEndDate,
+                                  child: dateContainer(size, widget.event.eventEndDate,
                                       Icons.calendar_today)),
                             ],
                           ),
@@ -319,7 +319,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                               SizedBox(height: 6),
                               GestureDetector(
                                   onTap: () => _selectTime(context),
-                                  child: dateContainer(size, event.eventStartTime, Icons.watch_later_outlined)),
+                                  child: dateContainer(size, widget.event.eventStartTime, Icons.watch_later_outlined)),
                             ],
                           ),
                           Column(
@@ -329,7 +329,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                               SizedBox(height: 6),
                               GestureDetector(
                                   onTap: () => _selectTimeEnd(context),
-                                  child: dateContainer(size, event.eventEndTime,
+                                  child: dateContainer(size, widget.event.eventEndTime,
                                       Icons.watch_later_outlined)),
                             ],
                           ),
@@ -339,8 +339,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                       Text("Description*", style: TextConstants.headingStyle),
                       SizedBox(height: 6),
                       ConneventsTextField(
-                        value: event.description,
-                        onSaved: (value) => event.description = value,
+                        value: widget.event.description,
+                        onSaved: (value) => widget.event.description = value,
                         validator: (val) => val!.isEmpty ? "Please Enter Description" : null,
                         maxLines: 4,
                       ),
@@ -351,24 +351,24 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                          SizedBox(
                            width: 20,
                            child: Checkbox(
-                             value: event.isNotMyEvent,
+                             value: widget.event.isNotMyEvent,
                              checkColor: globalGreen,
                              onChanged: (val) => setState(() {
-                               event.isNotMyEvent = val!;
-                               event.isFreeEvent=false;
+                               widget.event.isNotMyEvent = val!;
+                               widget.event.isFreeEvent=false;
                              }),
                            ),
                          ),
                          text(title:"Not My Event",fontSize: 14),
                        ],
                           ),
-                      if(event.isNotMyEvent)
+                      if(widget.event.isNotMyEvent)
                       SizedBox(height: 6),
-                      if(event.isNotMyEvent)
+                      if(widget.event.isNotMyEvent)
                       Text("Hyperlink*", style: TextConstants.headingStyle),
-                      if(event.isNotMyEvent)
+                      if(widget.event.isNotMyEvent)
                       SizedBox(height: 6),
-                      if(event.isNotMyEvent)
+                      if(widget.event.isNotMyEvent)
                        ConneventsTextField(
                          controller: hyperLink,
                         keyBoardType: TextInputType.url,
@@ -389,11 +389,11 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                          SizedBox(
                            width: 20,
                            child: Checkbox(
-                             value: event.isFreeEvent,
+                             value: widget.event.isFreeEvent,
                              checkColor: globalGreen,
                              onChanged: (val) => setState(() {
-                               event.isFreeEvent = val!;
-                               event.isNotMyEvent=false;
+                               widget.event.isFreeEvent = val!;
+                               widget.event.isNotMyEvent=false;
                              }),
                            ),
                          ),
@@ -477,16 +477,16 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                          SizedBox(
                            width: 20,
                            child: Checkbox(
-                             value: event.earlyBird!.isVisible,
+                             value: widget.event.earlyBird!.isVisible,
                              checkColor: globalGreen,
-                             onChanged: (val) => setState(() => event.earlyBird!.isVisible = val!),
+                             onChanged: (val) => setState(() => widget.event.earlyBird!.isVisible = val!),
                            ),
                          ),
                          text(title:"Early bird",fontSize: 14),
                        ],
                           ),
                           Visibility(
-                       visible: event.earlyBird!.isVisible,
+                       visible: widget.event.earlyBird!.isVisible,
                        child: SizedBox(
                          width: MediaQuery.of(context).size.width/2.4,
                          child: Row(
@@ -505,8 +505,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                  ],
                                ),
                                child: TextFormField(
-                                 initialValue: event.earlyBird!.quantity,
-                                 onSaved: (value) => setState(() => event.earlyBird!.quantity = value!),
+                                 initialValue: widget.event.earlyBird!.quantity,
+                                 onSaved: (value) => setState(() => widget.event.earlyBird!.quantity = value!),
                                  keyboardType: TextInputType.number,
                                  textAlign: TextAlign.center,
                                  inputFormatters: [LengthLimitingTextInputFormatter(4)],
@@ -530,12 +530,12 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                      ],
                                    ),
                                    child: TextFormField(
-                                     initialValue: event.earlyBird!.price,
+                                     initialValue: widget.event.earlyBird!.price,
                                      keyboardType: TextInputType.number,
                                      textAlign: TextAlign.center,
                                      inputFormatters: [LengthLimitingTextInputFormatter(4)],
                                      onSaved: (value) => setState(() {
-                                       event.earlyBird!.price = value!;
+                                       widget.event.earlyBird!.price = value!;
                                      }),
                                      decoration: InputDecoration.collapsed(hintText: ""),
                                    ),
@@ -549,14 +549,14 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                         ],
                       ),
                       Visibility(
-                        visible: event.earlyBird!.isVisible,
+                        visible: widget.event.earlyBird!.isVisible,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                        text(title: "Closing Date",fontSize: 14),
                        GestureDetector(
                            onTap: () => _selectEagleBirdClosingDate(context),
-                           child: dateContainer(size*1.05, event.earlyBird!.earlyBird, Icons.calendar_today)),
+                           child: dateContainer(size*1.05, widget.event.earlyBird!.earlyBird, Icons.calendar_today)),
                           ],
                         ),
                       ),
@@ -569,17 +569,17 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
-                                  value: event.regular!.isVisible,
+                                  value: widget.event.regular!.isVisible,
                                   checkColor: globalGreen,
                                   activeColor: globalGreen,
-                                  onChanged: (val) => setState(() => event.regular!.isVisible = val!),
+                                  onChanged: (val) => setState(() => widget.event.regular!.isVisible = val!),
                                 ),
                               ),
                               text(title:"Regular",fontSize: 14),
                             ],
                           ),
                           Visibility(
-                            visible: event.regular!.isVisible,
+                            visible: widget.event.regular!.isVisible,
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width/2.4,
                               child: Row(
@@ -598,8 +598,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                       ],
                                     ),
                                     child: TextFormField(
-                                      initialValue: event.regular!.quantity,
-                                      onSaved: (value) => setState(() => event.regular!.quantity = value!),
+                                      initialValue: widget.event.regular!.quantity,
+                                      onSaved: (value) => setState(() => widget.event.regular!.quantity = value!),
                                       keyboardType: TextInputType.number,
                                       textAlign: TextAlign.center,
                                         inputFormatters: [LengthLimitingTextInputFormatter(4)],
@@ -623,12 +623,12 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                           ],
                                         ),
                                         child: TextFormField(
-                                          initialValue: event.regular!.price,
+                                          initialValue: widget.event.regular!.price,
                                           keyboardType: TextInputType.number,
                                           textAlign: TextAlign.center,
                                           inputFormatters: [LengthLimitingTextInputFormatter(4)],
                                           onSaved: (value) => setState(() {
-                                            event.regular!.price = value!;
+                                            widget.event.regular!.price = value!;
                                           }),
                                           decoration: InputDecoration.collapsed(hintText: ""),
                                         ),
@@ -649,15 +649,15 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
-                                  value: event.vip!.isVisible,
+                                  value: widget.event.vip!.isVisible,
                                   checkColor: globalGreen,
                                   activeColor: globalGreen,
                                   onChanged: (val) => setState(() {
-                                  // if(event.isTableAvailableFor4People || event.isTableAvailableFor6People || event.isTableAvailableFor6People || event.isTableAvailableFor10People ){
+                                  // if(widget.event.isTableAvailableFor4People || widget.event.isTableAvailableFor6People || widget.event.isTableAvailableFor6People || widget.event.isTableAvailableFor10People ){
                                   //   return showErrorToast("You can't deselect thi after including Table Service");
                                   // }
                                   // else
-                                    event.vip!.isVisible = val!;
+                                    widget.event.vip!.isVisible = val!;
                                   }),
                                 ),
                               ),
@@ -665,7 +665,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                             ],
                           ),
                           Visibility(
-                            visible: event.vip!.isVisible,
+                            visible: widget.event.vip!.isVisible,
                             child: SizedBox(
                               width: MediaQuery.of(context).size.width/2.4,
                               child: Row(
@@ -684,8 +684,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                       ],
                                     ),
                                     child: TextFormField(
-                                      initialValue: event.vip!.quantity,
-                                      onSaved: (value) => setState(() => event.vip!.quantity = value!),
+                                      initialValue: widget.event.vip!.quantity,
+                                      onSaved: (value) => setState(() => widget.event.vip!.quantity = value!),
                                       textAlign: TextAlign.center,
                                       inputFormatters: [LengthLimitingTextInputFormatter(4)],
                                       keyboardType: TextInputType.number,
@@ -712,11 +712,11 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                             ],
                                           ),
                                           child: TextFormField(
-                                            initialValue: event.vip!.price,
+                                            initialValue: widget.event.vip!.price,
                                             keyboardType: TextInputType.number,
                                             textAlign: TextAlign.center,
                                             inputFormatters: [LengthLimitingTextInputFormatter(4)],
-                                            onSaved: (value) => setState(() => event.vip!.price = value!),
+                                            onSaved: (value) => setState(() => widget.event.vip!.price = value!),
                                             decoration: InputDecoration.collapsed(hintText: ""),
                                           ),
                                         ),
@@ -737,15 +737,15 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                 SizedBox(
                                   width: 20,
                                   child: Checkbox(
-                                    value: event.skippingLine!.isVisible,
+                                    value: widget.event.skippingLine!.isVisible,
                                     checkColor: globalGreen,
                                     activeColor: globalGreen,
                                     onChanged: (val) => setState(() {
-                                      // if(event.isTableAvailableFor4People || event.isTableAvailableFor6People || event.isTableAvailableFor6People || event.isTableAvailableFor10People ){
+                                      // if(widget.event.isTableAvailableFor4People || widget.event.isTableAvailableFor6People || widget.event.isTableAvailableFor6People || widget.event.isTableAvailableFor10People ){
                                       //   return showErrorToast("You can't deselect thi after including Table Service");
                                       // }
                                       // else
-                                        event.skippingLine!.isVisible = val!;
+                                        widget.event.skippingLine!.isVisible = val!;
                                     }),
                                   ),
                                 ),
@@ -753,7 +753,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                               ],
                             ),
                             Visibility(
-                              visible: event.skippingLine!.isVisible,
+                              visible: widget.event.skippingLine!.isVisible,
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width/2.4,
                                 child: Row(
@@ -772,8 +772,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                         ],
                                       ),
                                       child: TextFormField(
-                                        initialValue: event.skippingLine!.quantity,
-                                        onSaved: (value) => setState(() => event.skippingLine!.quantity = value!),
+                                        initialValue: widget.event.skippingLine!.quantity,
+                                        onSaved: (value) => setState(() => widget.event.skippingLine!.quantity = value!),
                                         textAlign: TextAlign.center,
                                         inputFormatters: [LengthLimitingTextInputFormatter(4)],
                                         keyboardType: TextInputType.number,
@@ -800,11 +800,11 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                               ],
                                             ),
                                             child: TextFormField(
-                                              initialValue: event.skippingLine!.price,
+                                              initialValue: widget.event.skippingLine!.price,
                                               keyboardType: TextInputType.number,
                                               textAlign: TextAlign.center,
                                               inputFormatters: [LengthLimitingTextInputFormatter(4)],
-                                              onSaved: (value) => setState(() => event.skippingLine!.price = value!),
+                                              onSaved: (value) => setState(() => widget.event.skippingLine!.price = value!),
                                               decoration: InputDecoration.collapsed(hintText: ""),
                                             ),
                                           ),
@@ -836,13 +836,13 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   //                             SizedBox(
   //                               width:20,
   //                               child: Checkbox(
-  //                                 value: event.isTableAvailableFor4People,
+  //                                 value: widget.event.isTableAvailableFor4People,
   //                                 checkColor: globalGreen,
   //                                 activeColor: globalGreen,
   //                                 onChanged: (val) {
   //                                   setState(() {
-  //                                      if(event.vip!.isVisible)
-  //                                         event.isTableAvailableFor4People = val!;
+  //                                      if(widget.event.vip!.isVisible)
+  //                                         widget.event.isTableAvailableFor4People = val!;
   //                                      else{
   //                                        return showErrorToast("You have to select Skipping Line");
   //                                      }
@@ -855,10 +855,10 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   //                         ),
   //
   //                         Visibility(
-  //                           visible: event.isTableAvailableFor4People,
+  //                           visible: widget.event.isTableAvailableFor4People,
   //                           child:  TableServiceTextField(
-  //                             initialValue:   event.tblFourPeopleCost.toString(),
-  //                             onSaved: (value) => setState(() => event.tblFourPeopleCost = value!),
+  //                             initialValue:   widget.event.tblFourPeopleCost.toString(),
+  //                             onSaved: (value) => setState(() => widget.event.tblFourPeopleCost = value!),
   //                         ),
   //                         ),
   //                       ],
@@ -871,13 +871,13 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   //                             SizedBox(
   //                               width:20,
   //                               child: Checkbox(
-  //                                 value: event.isTableAvailableFor6People,
+  //                                 value: widget.event.isTableAvailableFor6People,
   //                                 checkColor: globalGreen,
   //                                 activeColor: globalGreen,
   //                                 onChanged: (val) {
   //                                   setState(() {
-  //                                      if(event.vip!.isVisible)
-  //                                         event.isTableAvailableFor6People = val!;
+  //                                      if(widget.event.vip!.isVisible)
+  //                                         widget.event.isTableAvailableFor6People = val!;
   //                                      else{
   //                                        return showErrorToast("You have to select Skipping Line");
   //                                      }
@@ -889,10 +889,10 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   //                           ],
   //                         ),
   //                         Visibility(
-  //                           visible: event.isTableAvailableFor6People,
+  //                           visible: widget.event.isTableAvailableFor6People,
   //                           child:  TableServiceTextField(
-  //                             initialValue:   event.tblSixPeopleCost.toString(),
-  //                             onSaved: (value) => setState(() => event.tblSixPeopleCost = value!),
+  //                             initialValue:   widget.event.tblSixPeopleCost.toString(),
+  //                             onSaved: (value) => setState(() => widget.event.tblSixPeopleCost = value!),
   //                         ),
   //                         ),
   //                       ],
@@ -905,13 +905,13 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   //                             SizedBox(
   //                               width:20,
   //                               child: Checkbox(
-  //                                 value: event.isTableAvailableFor8People,
+  //                                 value: widget.event.isTableAvailableFor8People,
   //                                 checkColor: globalGreen,
   //                                 activeColor: globalGreen,
   //                                 onChanged: (val) {
   //                                   setState(() {
-  //                                      if(event.vip!.isVisible)
-  //                                         event.isTableAvailableFor8People = val!;
+  //                                      if(widget.event.vip!.isVisible)
+  //                                         widget.event.isTableAvailableFor8People = val!;
   //                                      else{
   //                                        return showErrorToast("You have to select Skipping Line");
   //                                      }
@@ -923,10 +923,10 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   //                           ],
   //                         ),
   //                         Visibility(
-  //                           visible: event.isTableAvailableFor8People,
+  //                           visible: widget.event.isTableAvailableFor8People,
   //                           child: TableServiceTextField(
-  //                             initialValue:   event.tblEightPeopleCost.toString(),
-  //                             onSaved: (value) => setState(() => event.tblEightPeopleCost = value!),
+  //                             initialValue:   widget.event.tblEightPeopleCost.toString(),
+  //                             onSaved: (value) => setState(() => widget.event.tblEightPeopleCost = value!),
   //                           )
   //                         ),
   //                       ],
@@ -939,13 +939,13 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   //                             SizedBox(
   //                               width: 20,
   //                               child: Checkbox(
-  //                                 value: event.isTableAvailableFor10People,
+  //                                 value: widget.event.isTableAvailableFor10People,
   //                                 checkColor: globalGreen,
   //                                 activeColor: globalGreen,
   //                                 onChanged: (val) {
   //                                   setState(() {
-  //                                      if(event.vip!.isVisible)
-  //                                         event.isTableAvailableFor10People = val!;
+  //                                      if(widget.event.vip!.isVisible)
+  //                                         widget.event.isTableAvailableFor10People = val!;
   //                                      else{
   //                                        return showErrorToast("You have to select Skipping Line");
   //                                      }
@@ -957,10 +957,10 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
   //                           ],
   //                         ),
   //                         Visibility(
-  //                           visible: event.isTableAvailableFor10People,
+  //                           visible: widget.event.isTableAvailableFor10People,
   //                           child: TableServiceTextField(
-  //                             initialValue:    event.tblTenPeopleCost.toString(),
-  //                             onSaved: (value) => setState(() =>event.tblTenPeopleCost = value!),
+  //                             initialValue:    widget.event.tblTenPeopleCost.toString(),
+  //                             onSaved: (value) => setState(() =>widget.event.tblTenPeopleCost = value!),
   //                           )
   //                         ),
   //                       ],
@@ -987,8 +987,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                 ],
                                   ),
                                   child: TextFormField(
-                                initialValue: event.minTicketsDiscount,
-                                onSaved: (value) => setState(() => event.minTicketsDiscount = value),
+                                initialValue: widget.event.minTicketsDiscount,
+                                onSaved: (value) => setState(() => widget.event.minTicketsDiscount = value),
                                 keyboardType: TextInputType.number,
                                 textAlign: TextAlign.center,
                                 inputFormatters: [LengthLimitingTextInputFormatter(4)],
@@ -996,8 +996,8 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                                   ),
                                 ),
                                  DiscountTextField(
-                                     initialValue: event.discountPercent ?? "",
-                                     onSaved: (value) => setState(() =>event.discountPercent = value),
+                                     initialValue: widget.event.discountPercent ?? "",
+                                     onSaved: (value) => setState(() =>widget.event.discountPercent = value),
                                  )
 
                               ],
@@ -1010,7 +1010,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                       SizedBox(height: padding),
                             ],
                           ),
-                    if(event.isNotMyEvent || event.isFreeEvent)
+                    if(widget.event.isNotMyEvent || widget.event.isFreeEvent)
                     Opacity(
                       opacity:0.6,
                       child: Container(
@@ -1033,86 +1033,86 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                             ),
                           ),
                           onPressed: () async {
-                            event.hyperlink=hyperLink.text;
+                            widget.event.hyperlink=hyperLink.text;
                             if (key.currentState!.validate()) {
                               key.currentState!.save();
-                              if(event.isNotMyEvent && event.hyperlink.isEmpty) return showErrorToast("Please Input Valid Link");
-                              if(!event.isFreeEvent && !event.isNotMyEvent){
-                               if (isRefundableYes) event.refundable = 1; else event.refundable = 0;
-                              // if (event.isTableAvailableFor4People) event.tableService = 1;
-                              // if (event.isTableAvailableFor6People) event.tableService = 1;
-                              // if (event.isTableAvailableFor8People) event.tableService = 1;
-                              // if (event.isTableAvailableFor10People) event.tableService = 1;
-                              if (event.eventStartDate.isEmpty) return showErrorToast("You have to select a Event Start Date");
-                              if (event.eventEndDate.isEmpty) return showErrorToast("You have to select a Event End Date");
-                              if (event.eventStartTime.isEmpty) return showErrorToast("You have to select a Event Start Time");
-                              if (event.eventEndTime.isEmpty) return showErrorToast("You have to select a Event End Time");
-                             // if (!event.isTableAvailableFor10People && !event.isTableAvailableFor5People)  return showErrorToast("You have to add atleast one table service");
-                              print(event.tableService);
-                              if (!event.earlyBird!.isVisible && !event.vip!.isVisible && !event.regular!.isVisible && !event.skippingLine!.isVisible)
+                              if(widget.event.isNotMyEvent && widget.event.hyperlink.isEmpty) return showErrorToast("Please Input Valid Link");
+                              if(!widget.event.isFreeEvent && !widget.event.isNotMyEvent){
+                               if (isRefundableYes) widget.event.refundable = 1; else widget.event.refundable = 0;
+                              // if (widget.event.isTableAvailableFor4People) widget.event.tableService = 1;
+                              // if (widget.event.isTableAvailableFor6People) widget.event.tableService = 1;
+                              // if (widget.event.isTableAvailableFor8People) widget.event.tableService = 1;
+                              // if (widget.event.isTableAvailableFor10People) widget.event.tableService = 1;
+                              if (widget.event.eventStartDate.isEmpty) return showErrorToast("You have to select a Event Start Date");
+                              if (widget.event.eventEndDate.isEmpty) return showErrorToast("You have to select a Event End Date");
+                              if (widget.event.eventStartTime.isEmpty) return showErrorToast("You have to select a Event Start Time");
+                              if (widget.event.eventEndTime.isEmpty) return showErrorToast("You have to select a Event End Time");
+                             // if (!widget.event.isTableAvailableFor10People && !widget.event.isTableAvailableFor5People)  return showErrorToast("You have to add atleast one table service");
+                              print(widget.event.tableService);
+                              if (!widget.event.earlyBird!.isVisible && !widget.event.vip!.isVisible && !widget.event.regular!.isVisible && !widget.event.skippingLine!.isVisible)
                                 return showErrorToast("You have to select atleast one ticket to sell");
 
-                              if (event.earlyBird!.isVisible) {
-                                if ((event.earlyBird!.quantity ==null || event.earlyBird!.quantity!.isEmpty) || (event.earlyBird!.price ==null|| event.earlyBird!.price!.isEmpty) || event.earlyBird!.closingDate.isEmpty) {
+                              if (widget.event.earlyBird!.isVisible) {
+                                if ((widget.event.earlyBird!.quantity ==null || widget.event.earlyBird!.quantity!.isEmpty) || (widget.event.earlyBird!.price ==null|| widget.event.earlyBird!.price!.isEmpty) || widget.event.earlyBird!.closingDate.isEmpty) {
                                   return showErrorToast("You have to fill Early Bird fields");
                                 }
                               }
-                              if (event.regular!.isVisible) {
-                                if ((event.regular!.quantity ==null  ||event.regular!.quantity!.isEmpty ) || event.regular!.price ==null || event.regular!.price!.isEmpty) {
+                              if (widget.event.regular!.isVisible) {
+                                if ((widget.event.regular!.quantity ==null  ||widget.event.regular!.quantity!.isEmpty ) || widget.event.regular!.price ==null || widget.event.regular!.price!.isEmpty) {
                                   return showErrorToast("You have to fill Regular fields");
                                 }
                               }
 
-                              if (event.vip!.isVisible) {
-                                if ((event.vip!.quantity ==null   || event.vip!.quantity!.isEmpty)      || (event.vip!.price ==null  || event.vip!.price!.isEmpty)) {
+                              if (widget.event.vip!.isVisible) {
+                                if ((widget.event.vip!.quantity ==null   || widget.event.vip!.quantity!.isEmpty)      || (widget.event.vip!.price ==null  || widget.event.vip!.price!.isEmpty)) {
                                   return showErrorToast("You have to fill VIP fields");
                                 }
                               }
 
-                               if (event.skippingLine!.isVisible) {
-                                 if ((event.skippingLine!.quantity ==null   || event.skippingLine!.quantity!.isEmpty)      || (event.skippingLine!.price ==null  || event.skippingLine!.price!.isEmpty)) {
+                               if (widget.event.skippingLine!.isVisible) {
+                                 if ((widget.event.skippingLine!.quantity ==null   || widget.event.skippingLine!.quantity!.isEmpty)      || (widget.event.skippingLine!.price ==null  || widget.event.skippingLine!.price!.isEmpty)) {
                                    return showErrorToast("You have to fill Skipping Line fields");
                                  }
                                }
 
 
-                              // if (event.isTableAvailableFor4People){
-                              //   if(event.tblFourPeopleCost.isEmpty){
+                              // if (widget.event.isTableAvailableFor4People){
+                              //   if(widget.event.tblFourPeopleCost.isEmpty){
                               //     return showErrorToast("You have to add amount for 4 People");
                               //   }
                               // }
-                              // if (event.isTableAvailableFor6People){
-                              //   if(event.tblSixPeopleCost.isEmpty){
+                              // if (widget.event.isTableAvailableFor6People){
+                              //   if(widget.event.tblSixPeopleCost.isEmpty){
                               //     return showErrorToast("You have to add amount for 6 People");
                               //   }
                               // }
-                              // if (event.isTableAvailableFor8People){
-                              //   if(event.tblEightPeopleCost.isEmpty){
+                              // if (widget.event.isTableAvailableFor8People){
+                              //   if(widget.event.tblEightPeopleCost.isEmpty){
                               //     return showErrorToast("You have to add amount for 8 People");
                               //   }
                               // }
                               //
-                              // if (event.isTableAvailableFor10People){
-                              //   if(event.tblTenPeopleCost.isEmpty){
+                              // if (widget.event.isTableAvailableFor10People){F
+                              //   if(widget.event.tblTenPeopleCost.isEmpty){
                               //     return showErrorToast("You have to add amount for 10 People");
                               //   }
                               // }
                               
-                      if(event.earlyBird!.isVisible)    event.earlyBird!.ticket= "Early Bird";
-                      if(event.regular!.isVisible)        event.regular!.ticket= "Regular";
-                      if(event.vip!.isVisible)            event.vip!.ticket= "VIP";
-                      if(event.skippingLine!.isVisible)            event.skippingLine!.ticket= "Skipping Line";
+                      if(widget.event.earlyBird!.isVisible)    widget.event.earlyBird!.ticket= "Early Bird";
+                      if(widget.event.regular!.isVisible)        widget.event.regular!.ticket= "Regular";
+                      if(widget.event.vip!.isVisible)            widget.event.vip!.ticket= "VIP";
+                      if(widget.event.skippingLine!.isVisible)            widget.event.skippingLine!.ticket= "Skipping Line";
 
-                 if(event.vip!.isVisible)                   event.list!.add(event.vip!.toJson());
-                 if(event.regular!.isVisible)               event.list!.add(event.regular!.toJson());
-               if(event.earlyBird!.isVisible)                event.list!.add(event.earlyBird!.toJson());
-               if(event.skippingLine!.isVisible)                event.list!.add(event.skippingLine!.toJson());
+                 if(widget.event.vip!.isVisible)                   widget.event.list!.add(widget.event.vip!.toJson());
+                 if(widget.event.regular!.isVisible)               widget.event.list!.add(widget.event.regular!.toJson());
+               if(widget.event.earlyBird!.isVisible)                widget.event.list!.add(widget.event.earlyBird!.toJson());
+               if(widget.event.skippingLine!.isVisible)                widget.event.list!.add(widget.event.skippingLine!.toJson());
                               }
 
 
-                              print(event.list!.toList());
+                              print(widget.event.list!.toList());
 
-                              CustomNavigator.navigateTo(context, CreateThirdPage(event: event, selectedEventEndTime: selectedEventEndTime!, selectedEventStartTime: selectedEventStartTime!));
+                              CustomNavigator.navigateTo(context, CreateThirdPage(event: widget.event, selectedEventEndTime: selectedEventEndTime!, selectedEventStartTime: selectedEventStartTime!));
 
                             }
                           },

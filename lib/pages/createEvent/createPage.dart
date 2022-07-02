@@ -34,7 +34,6 @@ var event = EventDetail( eventAddress: EventAddress(),earlyBird: EarlyBird(), re
 
 class CreatePage extends StatefulWidget {
   CreatePage({Key? key}) : super(key: key);
-
   @override
   State<CreatePage> createState() => _CreatePageState();
 }
@@ -57,8 +56,6 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
   List<String> imagePath = [];
   List<Asset> listOfImages = [];
   TextEditingController tagText=TextEditingController();
-
-
 
 
    Future  _cropImage(String imagePath) async {
@@ -114,7 +111,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
 
 
 
-           for(var i=0 ; i<resultList.length; i++){
+         for(var i=0 ; i<resultList.length; i++){
           final byteData = await resultList[i].getByteData();
           final tempFile = File("${(await getTemporaryDirectory()).path}/${resultList[i].name}");
           final file = await tempFile.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
@@ -202,6 +199,8 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
   void initState() {
     super.initState();
     event.eventTags = event.eventTags ?? <TagsData>[];
+    event.customEventTags= <String>[];
+    event.showTags= <String>[];
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       openLoadingDialog(context, "loading");
       getEventType();
@@ -258,7 +257,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          imagePath.asMap().containsKey(0) ? Expanded(
+                          imagePath.asMap().containsKey(0)  ? Expanded(
                           child: SizedBox(
                               height: 160,
                               child: Stack(
@@ -273,7 +272,21 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                                           backgroundColor: Colors.red,
                                           child: IconButton(
                                               icon: Icon(Icons.delete, color: Colors.white, size: 15,),
-                                              onPressed: () => setState(() => imagePath.remove(imagePath.elementAt(0)))),
+                                              onPressed: () => setState(()
+                                              {
+                                                imagePath.remove(imagePath.elementAt(0));
+                                                if(event.firstImage.isEmpty){
+                                                 if(event.secondImage.isNotEmpty){
+                                                   event.secondImage="";
+                                                 }else if(event.thirdImage.isNotEmpty)
+                                                   event.thirdImage="";
+                                                }
+                                                event.firstImage="";
+                                              }
+
+
+                                              )
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -290,9 +303,9 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                  SvgPicture.asset('assets/icons/selectPhoto.svg', fit: BoxFit.fitWidth,),
-                                  SizedBox(height: padding),
-                                  text(title:'Upload Photo',color: globalBlack.withOpacity(0.3), fontSize: 12,fontWeight: FontWeight.bold ),
+                                      SvgPicture.asset('assets/icons/selectPhoto.svg', fit: BoxFit.fitWidth,),
+                                      SizedBox(height: padding),
+                                      text(title:'Upload Photo',color: globalBlack.withOpacity(0.3), fontSize: 12,fontWeight: FontWeight.bold ),
                                     ],
                                   ),
                                 ),
@@ -317,7 +330,19 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                                       backgroundColor: Colors.red,
                                       child: IconButton(
                                           icon: Icon(Icons.delete, color: Colors.white, size: 15,),
-                                          onPressed: () => setState(() => imagePath.remove(imagePath.elementAt(0)))),
+                                          onPressed: () => setState(() {
+                                            imagePath.remove(imagePath.elementAt(1));
+                                            if(event.secondImage.isEmpty){
+                                              if(event.firstImage.isNotEmpty){
+                                                event.firstImage="";
+                                              }else if(event.thirdImage.isNotEmpty)
+                                                event.thirdImage="";
+                                            }
+                                            event.secondImage="";
+
+                                          }
+                                          )
+                                  ),
                                     ),
                                   ),
                                 ),
@@ -361,7 +386,17 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                                             icon: Icon(Icons.delete, color: Colors.white, size: 15),
                                             onPressed: () {
                                               setState(() {
-                                                imagePath.remove(imagePath.elementAt(0));
+                                                imagePath.remove(imagePath.elementAt(2));
+
+                                                if(event.thirdImage.isEmpty){
+                                                  if(event.firstImage.isNotEmpty){
+                                                    event.firstImage="";
+                                                  }else if(event.secondImage.isNotEmpty)
+                                                    event.secondImage="";
+                                                }
+                                                event.thirdImage="";
+
+
                                               });
                                             }),
                                       ),
@@ -397,6 +432,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                         children: [
                           Expanded(
                             child: EventVideoPicker(
+                              isEdit: false,
                               onThumbNail: (thumb,thumbNail) async
                               {
                                 event.firstThumbNail = thumb;
@@ -532,13 +568,33 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                             padding: const EdgeInsets.only(top:2.0,left: 4.0),
                             child: TextButton(
                               onPressed: () {
-                                if (event.eventTags!.contains(e)) event.eventTags!.remove(e);
-                                 else event.eventTags!.add(e);
+                                if (event.customEventTags!.contains(e.tagId.toString()) || event.customEventTags!.contains(e.tagName)) {
+                                    if(e.tagType=="Default"){
+                                      event.customEventTags!.remove(e.tagId.toString());
+                                      event.showTags!.remove(e.tagName.toString());
+                                    }
+                                    else{
+                                      event.customEventTags!.remove(e.tagName);
+                                      event.showTags!.remove(e.tagName.toString());
+                                    }
+                                  }
+                                 else{
+                                  if(e.tagType=="Default"){
+                                    event.customEventTags!.add(e.tagId.toString());
+                                    event.showTags!.add(e.tagName.toString());
+
+                                  }
+                                  else{
+                                    event.customEventTags!.add(e.tagName!);
+                                    event.showTags!.add(e.tagName.toString());
+
+                                  }
+                                }
                                 setState(() {});
                               },
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.only(left:8.0,right: 8.0),
-                                backgroundColor: event.eventTags!.contains(e) ? globalGreen : Colors.grey,
+                                backgroundColor: event.customEventTags!.contains(e.tagId.toString()) || event.customEventTags!.contains(e.tagName)  ? globalGreen : Colors.grey,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
@@ -553,7 +609,10 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                       onPressed: (){
                         if(tagText.text.isEmpty) return showErrorToast("Please type tag before adding");
                           else {
-                            addCustomTags();
+                            listOfTags.add(TagsData(
+                              tagName: tagText.text
+                            ));
+                           // addCustomTags();
                             tagText.clear();
                             setState(() {});
                           }
@@ -574,6 +633,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                           onPressed: () async {
                             if (key.currentState!.validate()) {
                               key.currentState!.save();
+                              print(event.customEventTags!.toList());
                              if ((event.firstVideo.isEmpty && event.secondVideo.isEmpty  && event.thirdVideo.isEmpty) && (imagePath.length < 1) )
                                return showErrorToast("You have to add atleast 1 image or video");
 

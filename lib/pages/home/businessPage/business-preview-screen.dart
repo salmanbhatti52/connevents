@@ -1,6 +1,7 @@
 import 'package:better_player/better_player.dart';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/image-videos-model.dart';
+import 'package:connevents/pages/home/home-header/videoplay-screen.dart';
 import 'package:connevents/pages/tabs/tabsPage.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
@@ -23,12 +24,21 @@ class BusinessPreviewScreen extends StatefulWidget {
 class _BusinessPreviewScreenState extends State<BusinessPreviewScreen> {
 
   ImageData? data;
+  late BetterPlayerController _betterPlayerController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     data=widget.imageData;
+    _betterPlayerController = BetterPlayerController(
+      const BetterPlayerConfiguration(
+        autoDispose: true,
+        aspectRatio: 0.5,
+        looping: false,
+        autoPlay: true,
+      ),
+    );
   }
 
 
@@ -116,16 +126,18 @@ class _BusinessPreviewScreenState extends State<BusinessPreviewScreen> {
                 Container(
                 width: double.infinity,
                 child: Image.network(widget.imageUrls[index].attachment,fit: BoxFit.cover)):
-                Center(
-                  child: BetterPlayer.network(
-                    widget.imageUrls[index].media,
-                    betterPlayerConfiguration: BetterPlayerConfiguration(
-                      aspectRatio: 0.5,
-                      looping: true,
-                      autoPlay: true,
-                    ),
-                  ),
-                );
+                VideoPlayScreen(url: widget.imageUrls[index].media);
+
+                // Center(
+                //   child: BetterPlayer.network(
+                //     widget.imageUrls[index].media,
+                //     betterPlayerConfiguration: BetterPlayerConfiguration(
+                //       aspectRatio: 0.5,
+                //       looping: true,
+                //       autoPlay: true,
+                //     ),
+                //   ),
+                // );
               },
             ),
           )

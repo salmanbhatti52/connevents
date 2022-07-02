@@ -293,6 +293,7 @@ class _BusinessEditFirstPageState extends State<BusinessEditFirstPage> {
                       children: [
                       Expanded(
                         child: EventVideoPicker(
+                          isEdit: true,
                          previousImage: business.first_video_thumbnail.contains('https') ? business.first_video_thumbnail : "",
                           onThumbNail: (thumb,thumbNail) async
                           {
@@ -301,7 +302,11 @@ class _BusinessEditFirstPageState extends State<BusinessEditFirstPage> {
                             business.first_video_thumbnail = base64Encode(imageBytes);
                           },
                           onVideoPicked: (file) async {
+                           print("shahzaib");
+                           print(file);
+                           print("shahzaib");
                             business.firstVideo = file;
+                            print(business.firstVideo);
                           },
                              onEditVideoDeleted: () async {
                                    openLoadingDialog(context, "Deleting");

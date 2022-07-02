@@ -159,7 +159,8 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                 SizedBox(height: padding,),
                 Wrap(
                   spacing: 8.0,
-                  children: widget.event.eventTags!.map((e) => Text("${e.tagName.toString() }", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: globalBlack, fontWeight: FontWeight.w300, fontSize: 14,),)).toList(),
+                  children: widget.event.showTags!.map((e) =>
+                      Text("${e.toString() }", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: globalBlack, fontWeight: FontWeight.w300, fontSize: 14,),)).toList(),
                 ),
                 SizedBox(height: padding * 2,),
                 Row(
@@ -548,9 +549,9 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
 
                       if(!isSelectedterms) return showErrorToast("You have to accept terms & Condition");
 
-                           openLoadingDialog(context, "creating");
+                            openLoadingDialog(context, "creating");
                             DateTime salesStartTime=DateTime.now();
-                             DateTime salesEndTime=DateTime.now();
+                            DateTime salesEndTime=DateTime.now();
 
                             final f = new DateFormat('yyyy-MM-dd');
                             if(!event.isFreeEvent && !event.isNotMyEvent){
@@ -560,95 +561,93 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                           DateTime eventStartTime= DateFormat("hh:mma").parse(widget.event.eventStartTime);
                           DateTime eventEndTime= DateFormat("hh:mma").parse(widget.event.eventEndTime);
 
-                        // try{
-                          final response= await DioService.post('create_event_post',{
-                            "title": widget.event.title,
-                            "userId": AppData().userdetail!.users_id,
-                            if(widget.event.firstImage.isNotEmpty)
-                            "firstImageBasecode": widget.event.firstImage,
-                            if(widget.event.secondImage.isNotEmpty)
-                           "secondImageBasecode": widget.event.secondImage,
-                           if(widget.event.thirdImage.isNotEmpty)
-                           "thirdImageBasecode": widget.event.thirdImage,
-                           if(widget.event.first_video_thumbnail.isNotEmpty)
-                           "firstVideoThumbnail": widget.event.first_video_thumbnail,
-                            if(widget.event.second_video_thumbnail.isNotEmpty)
-                          "secondVideoThumbnail":widget.event.second_video_thumbnail,
-                           if(widget.event.third_video_thumbnail.isNotEmpty)
-                           "thirdVideoThumbnail":widget.event.third_video_thumbnail,
-                           if(widget.event.firstVideo.isNotEmpty)
-                          "firstVideo": widget.event.firstVideo,
-                          if(widget.event.secondVideo.isNotEmpty)
-                           "secondVideo": widget.event.secondVideo,
-                          if(widget.event.thirdVideo.isNotEmpty)
-                           "thirdVideo": widget.event.thirdVideo,
-                            "eventTypeId": widget.event.eventTypeData!.eventTypeId,
-                            "eventCategoryId": widget.event.category!.categoryId,
-                            if(widget.event.eventTags!.isNotEmpty)
-                            "tags": widget.event.eventTags,
-                            "eventStartDate": f.format(widget.event.pickedEventStartDate!),
-                            "eventStartTime": DateFormat("HH:mm:ss").format(eventStartTime),
-                            "eventEndDate": f.format(widget.event.pickedEventEndDate!),
-                            "eventEndTime": DateFormat("HH:mm:ss").format(eventEndTime),
-                            "eventDescription": widget.event.description,
-                            if(!event.isFreeEvent && !event.isNotMyEvent)
-                            "tickets": widget.event.list,
-                            if(!event.isFreeEvent && !event.isNotMyEvent)
-                            "discountPercent": widget.event.discountPercent,
-                            if(!event.isFreeEvent && !event.isNotMyEvent)
-                            "minTicketsDiscount": widget.event.minTicketsDiscount,
-                            if(!event.isFreeEvent && !event.isNotMyEvent)
-                            "refundable": widget.event.refundable,
-                            // if(!event.isFreeEvent && !event.isNotMyEvent)
-                            // "tableService": widget.event.tableService,
-                            if(!event.isFreeEvent && !event.isNotMyEvent)
-                            "salesStartDate": f.format(widget.event.pickedSalesStartDate!),
-                            if(!event.isFreeEvent && !event.isNotMyEvent)
-                            "salesStartTime": DateFormat("HH:mm:ss").format(salesStartTime),
-                            if(!event.isFreeEvent && !event.isNotMyEvent)
-                            "salesEndDate": f.format(widget.event.pickedSalesEndDate!),
-                           if(!event.isFreeEvent && !event.isNotMyEvent)
-                            "salesEndTime": DateFormat("HH:mm:ss").format(salesEndTime),
-                            if(!event.isFreeEvent && !event.isNotMyEvent)
-                            "dressCodeId": widget.event.dressCodeData!.dressCodeId,
-                            "fullAddress": widget.event.eventAddress!.fullAddress,
-                            "city": widget.event.eventAddress!.city,
-                            "state": widget.event.eventAddress!.state,
-                            "zip": widget.event.eventAddress!.zip,
-                            "locationLong": widget.event.locationLong,
-                            "locationLat": widget.event.locationLat,
-                            "hyperlink" :widget.event.hyperlink,
-                             "eventTicketType": event.isFreeEvent ? "MyFreeEvent" : event.isNotMyEvent ? "NotMyEvent" : "Paid",
-                            // if( (!event.isFreeEvent && !event.isNotMyEvent) && widget.event.isTableAvailableFor4People )
-                            //  "tblFourPeopleCost": widget.event.tblFourPeopleCost,
-                            // if( (!event.isFreeEvent && !event.isNotMyEvent) && widget.event.isTableAvailableFor6People  )
-                            //  "tblSixPeopleCost": widget.event.tblSixPeopleCost,
-                            // if( (!event.isFreeEvent && !event.isNotMyEvent) &&  widget.event.isTableAvailableFor8People )
-                            //  "tblEightPeopleCost": widget.event.tblEightPeopleCost,
-                            // if( (!event.isFreeEvent && !event.isNotMyEvent)  && widget.event.isTableAvailableFor10People )
-                            //   "tblTenPeopleCost": widget.event.tblTenPeopleCost,
-                          });
-
-
-                      if(response['status']=='success'){
+                      var datToPost  =   {
+                                "title": widget.event.title,
+                                "userId": AppData().userdetail!.users_id,
+                                if(widget.event.firstImage.isNotEmpty)
+                                "firstImageBasecode": widget.event.firstImage,
+                                if(widget.event.secondImage.isNotEmpty)
+                                "secondImageBasecode": widget.event.secondImage,
+                                if(widget.event.thirdImage.isNotEmpty)
+                                "thirdImageBasecode": widget.event.thirdImage,
+                                if(widget.event.first_video_thumbnail.isNotEmpty)
+                                "firstVideoThumbnail": widget.event.first_video_thumbnail,
+                                if(widget.event.second_video_thumbnail.isNotEmpty)
+                                "secondVideoThumbnail":widget.event.second_video_thumbnail,
+                                if(widget.event.third_video_thumbnail.isNotEmpty)
+                                "thirdVideoThumbnail":widget.event.third_video_thumbnail,
+                                if(widget.event.firstVideo.isNotEmpty)
+                                "firstVideo": widget.event.firstVideo,
+                                if(widget.event.secondVideo.isNotEmpty)
+                                "secondVideo": widget.event.secondVideo,
+                                if(widget.event.thirdVideo.isNotEmpty)
+                                "thirdVideo": widget.event.thirdVideo,
+                                "eventTypeId": widget.event.eventTypeData!.eventTypeId,
+                                "eventCategoryId": widget.event.category!.categoryId,
+                                if(widget.event.customEventTags!.isNotEmpty)
+                                "tags": widget.event.customEventTags,
+                                "eventStartDate": f.format(widget.event.pickedEventStartDate!),
+                                "eventStartTime": DateFormat("HH:mm:ss").format(eventStartTime),
+                                "eventEndDate": f.format(widget.event.pickedEventEndDate!),
+                                "eventEndTime": DateFormat("HH:mm:ss").format(eventEndTime),
+                                "eventDescription": widget.event.description,
+                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                "tickets": widget.event.list,
+                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                "discountPercent": widget.event.discountPercent,
+                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                "minTicketsDiscount": widget.event.minTicketsDiscount,
+                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                "refundable": widget.event.refundable,
+                                // if(!event.isFreeEvent && !event.isNotMyEvent)
+                                // "tableService": widget.event.tableService,
+                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                "salesStartDate": f.format(widget.event.pickedSalesStartDate!),
+                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                "salesStartTime": DateFormat("HH:mm:ss").format(salesStartTime),
+                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                "salesEndDate": f.format(widget.event.pickedSalesEndDate!),
+                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                "salesEndTime": DateFormat("HH:mm:ss").format(salesEndTime),
+                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                "dressCodeId": widget.event.dressCodeData!.dressCodeId,
+                                "fullAddress": widget.event.eventAddress!.fullAddress,
+                                "city": widget.event.eventAddress!.city,
+                                "state": widget.event.eventAddress!.state,
+                                "zip": widget.event.eventAddress!.zip,
+                                "locationLong": widget.event.locationLong,
+                                 "locationLat": widget.event.locationLat,
+                                "hyperlink" :widget.event.hyperlink,
+                                "eventTicketType": event.isFreeEvent ? "MyFreeEvent" : event.isNotMyEvent ? "NotMyEvent" : "Paid",
+                                // if( (!event.isFreeEvent && !event.isNotMyEvent) && widget.event.isTableAvailableFor4People )
+                                //  "tblFourPeopleCost": widget.event.tblFourPeopleCost,
+                                // if( (!event.isFreeEvent && !event.isNotMyEvent) && widget.event.isTableAvailableFor6People  )
+                                //  "tblSixPeopleCost": widget.event.tblSixPeopleCost,
+                                // if( (!event.isFreeEvent && !event.isNotMyEvent) &&  widget.event.isTableAvailableFor8People )
+                                //  "tblEightPeopleCost": widget.event.tblEightPeopleCost,
+                                // if( (!event.isFreeEvent && !event.isNotMyEvent)  && widget.event.isTableAvailableFor10People )
+                                //   "tblTenPeopleCost": widget.event.tblTenPeopleCost,
+                      };
+                          try{
+                          final response= await DioService.post('add_log',datToPost);
+                          if(response['status']=='success'){
                              print(response);
-                             AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
-                             showSuccessToast("Your Event has been Created Successfully");
-                          event=EventDetail( earlyBird: EarlyBird(), regular: Regular(), vip: VIP(), eventAddress: EventAddress(),skippingLine: SkippingLine());
-
-                          Navigator.pop(context);
-                          CustomNavigator.pushReplacement(context,TabsPage());
+                            // AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
+                             showSuccessToast(response);
+                             event=EventDetail( earlyBird: EarlyBird(), regular: Regular(), vip: VIP(), eventAddress: EventAddress(),skippingLine: SkippingLine());
+                             Navigator.pop(context);
+                            // CustomNavigator.pushReplacement(context,TabsPage());
                            }
                            else{
                              Navigator.of(context).pop();
-                             showSuccessToast("Your Event has not been Created Successfully");
+                             showErrorToast("Error $response");
+                             // showSuccessToast("Your Event has not been Created Successfully");
                            }
-                        // } catch(e) {
-                        //   print(e.toString);
-                        //   Navigator.of(context).pop();
-                        //   showErrorToast(e.toString());
-                        // }
-
+                        } catch(e) {
+                          print("Catch Error: ${e.toString}");
+                          Navigator.of(context).pop();
+                          showErrorToast("Catch Error:" + e.toString());
+                        }
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: globalGreen,

@@ -69,12 +69,12 @@ class _EditCreatePageState extends State<EditCreatePage> {
    Future addCustomTags() async {
     openLoadingDialog(context, "adding");
     var  response;
-   try{
+    try{
        response = await DioService.post('add_custom_tag', {
         "usersId": AppData().userdetail!.users_id,
          "tagName": tagText.text
       });
-       Navigator.of(context).pop();
+     Navigator.of(context).pop();
       print(response);
       if(response['status']=='success'){
           var jsonData = response['data'] ;
@@ -91,12 +91,11 @@ class _EditCreatePageState extends State<EditCreatePage> {
      }
 
    Future getEventsTags() async {
-
-    var  response;
+  var  response;
    try{
        response = await DioService.post('get_all_tags_with_custom', {
         "usersId": AppData().userdetail!.users_id,
-         //"eventPostId" :
+         "eventPostId" : eventDetail.eventPostId
       });
        Navigator.of(context).pop();
       print(response);
@@ -275,6 +274,7 @@ class _EditCreatePageState extends State<EditCreatePage> {
                       SizedBox(width: padding),
                       Expanded(
                         child: EventVideoPicker(
+                          isEdit: true,
                           previousImage:  eventDetail.second_video_thumbnail.contains('https') ? eventDetail.second_video_thumbnail : "",
                           onThumbNail: (thumb,thumbNail) {
                             eventDetail.secondThumbNail = thumb;
@@ -389,7 +389,8 @@ class _EditCreatePageState extends State<EditCreatePage> {
                         padding: const EdgeInsets.only(top:2.0,left: 4.0),
                         child: TextButton(
                           onPressed: () {
-                            if (eventDetail.eventTags!.any((element) => element.tagName==e.tagName)) eventDetail.eventTags!.removeWhere((element) => element.tagName==e.tagName);
+                            if (eventDetail.eventTags!.any((element) => element.tagName==e.tagName))
+                              eventDetail.eventTags!.removeWhere((element) => element.tagName==e.tagName);
                              else eventDetail.eventTags!.add(e);
                             setState(() {});
                           },
@@ -434,6 +435,8 @@ class _EditCreatePageState extends State<EditCreatePage> {
                       onPressed: () async {
                         if (key.currentState!.validate()) {
                           key.currentState!.save();
+
+
                         if ((eventDetail.firstImage.isEmpty  && eventDetail.secondImage.isEmpty && eventDetail.thirdImage.isEmpty) && (eventDetail.firstVideo.isEmpty && eventDetail.secondVideo.isEmpty  && eventDetail.thirdVideo.isEmpty) )
                           return showErrorToast("You have to add atleast 1 Photo or video");
 

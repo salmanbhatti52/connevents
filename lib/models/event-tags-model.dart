@@ -14,7 +14,7 @@ class EventTagsModel extends BaseModelHive {
   factory EventTagsModel.fromJson(json) => _$EventTagsModelFromJson(json);
 }
 
-@JsonSerializable(includeIfNull: false, createToJson: false)
+@JsonSerializable(includeIfNull: false)
 class TagsData extends BaseModelHive {
   @JsonKey(name: 'event_tag_id')
   int? eventTagId;
@@ -33,7 +33,7 @@ class TagsData extends BaseModelHive {
 
   TagsData({this.status,this.tagType,this.customTagUsersId,this.isSelected=false,this.tagId, this.tagName,this.eventPostId,this.eventTagId});
 
-  int toJson() => tagId!;
+  Map<String, dynamic> toJson() => _$TagsDataToJson(this);
 
   factory TagsData.fromJson(json) => _$TagsDataFromJson(json);
 }

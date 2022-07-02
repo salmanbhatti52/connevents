@@ -121,6 +121,7 @@ class _EndingLiveAlertState extends State<EndingLiveAlert> {
                       if(widget.eventHostName == AppData().userdetail!.user_name){
                        openLoadingDialog(context, "loading");
                        await    liveStreamEnded();
+                       await widget.channel!.sendMessage(AgoraRtmMessage.fromText("${AppData().userdetail!.profile_picture ?? "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhelpx.adobe.com%2Fcontent%2Fdam%2Fhelp%2Fen%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white%2Fjcr_content%2Fmain-pars%2Fbefore_and_after%2Fimage-before%2FLandscape-Color.jpg&imgrefurl=https%3A%2F%2Fhelpx.adobe.com%2Fphotoshop%2Fusing%2Fconvert-color-image-black-white.html&tbnid=2DNOEjVi-CBaYM&vet=12ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ..i&docid=AOz9-XMe1ixZJM&w=1601&h=664&q=image&ved=2ahUKEwibzcaFl8_2AhVKEmMBHT1HCpsQMygDegUIARDcAQ"}," +  "${AppData().userdetail!.user_name}," + "Meeting Ended"));
                        await widget.engine!.leaveChannel();
                        await widget.channel!.leave();
                        CustomNavigator.pushReplacement(context, TabsPage(index: 0));

@@ -186,11 +186,11 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
        var json = response['data'] as List;
         businessTypeList   = json.map<BusinessType>((e) => BusinessType.fromJson(e)).toList();
         // businessType=businessTypeList.first;
-        setState(() {});
+      setState(() {});
       Navigator.of(context).pop();
     }
     catch(e){
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
     }
   }
 
@@ -281,7 +281,6 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
                               ),
                             ),
                           ),
-
                       ],
                     ))) :
                 Expanded(
@@ -549,14 +548,15 @@ class _BusinessCreateFirstPageState extends State<BusinessCreateFirstPage> {
               children: [
                 Expanded(
                   child: EventVideoPicker(
-                    onThumbNail: (thumb,thumbNail) async
-                    {
+                    isEdit: false,
+                    onThumbNail: (thumb,thumbNail) async {
                       business.firstThumbNail = thumb;
                       List<int> imageBytes = thumbNail.readAsBytesSync();
                       business.first_video_thumbnail = base64Encode(imageBytes);
                     },
                     onVideoPicked: (file) async {
                       business.firstVideo = file;
+                      // print(business.firstVideo);
                     },
                     onVideoDeleted: () async {
                       openLoadingDialog(context, "deleting");
