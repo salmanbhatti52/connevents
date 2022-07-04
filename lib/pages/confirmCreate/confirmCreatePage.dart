@@ -628,30 +628,31 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                                 // if( (!event.isFreeEvent && !event.isNotMyEvent)  && widget.event.isTableAvailableFor10People )
                                 //   "tblTenPeopleCost": widget.event.tblTenPeopleCost,
                       };
-                          try{
-                          final response= await DioService.post('add_log',datToPost);
+                          // try{
+                          final response= await DioService.post('create_event_post',datToPost);
                           if(response['status']=='success'){
                              print(response);
-                            // AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
-                             showSuccessToast(response);
+                             AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
+
                              event=EventDetail( earlyBird: EarlyBird(), regular: Regular(), vip: VIP(), eventAddress: EventAddress(),skippingLine: SkippingLine());
                              Navigator.pop(context);
-                            // CustomNavigator.pushReplacement(context,TabsPage());
+                             CustomNavigator.pushReplacement(context,TabsPage());
                            }
                            else{
                              Navigator.of(context).pop();
                              showErrorToast("Error $response");
                              // showSuccessToast("Your Event has not been Created Successfully");
                            }
-                        } catch(e) {
-                          print("Catch Error: ${e.toString}");
-                          Navigator.of(context).pop();
-                          showErrorToast("Catch Error:" + e.toString());
-                        }
+                        // }
+                        // catch(e) {
+                        //   print("Catch Error: ${e.toString}");
+                        //   Navigator.of(context).pop();
+                        //   showErrorToast("Catch Error:" + e.toString());
+                        // }
                     },
                     style: TextButton.styleFrom(
-                      backgroundColor: globalGreen,
-                      shape: RoundedRectangleBorder(
+                        backgroundColor: globalGreen,
+                        shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),

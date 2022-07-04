@@ -57,6 +57,6 @@ Map<String, dynamic> _$TagsDataToJson(TagsData instance) {
   writeNotNull('tag_name', instance.tagName);
   writeNotNull('custom_tag_users_id', instance.customTagUsersId);
   writeNotNull('status', instance.status);
-  val['isSelected'] = instance.isSelected;
+  writeNotNull('isSelected', instance.isSelected);
   return val;
 }

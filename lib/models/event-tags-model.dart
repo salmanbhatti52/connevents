@@ -29,7 +29,7 @@ class TagsData extends BaseModelHive {
    @JsonKey(name: 'custom_tag_users_id')
   int? customTagUsersId;
   String? status;
-  bool isSelected;
+  bool? isSelected;
 
   TagsData({this.status,this.tagType,this.customTagUsersId,this.isSelected=false,this.tagId, this.tagName,this.eventPostId,this.eventTagId});
 

@@ -27,10 +27,6 @@ class _SideMenuState extends State<SideMenu> {
 
   @override
   Widget build(BuildContext context) {
-    print("shahzaib");
-    print(widget.peekDetail!.totalComments);
-    print("shahzaib");
-
     return Column(
        children: [
             InkWell(

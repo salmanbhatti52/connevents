@@ -62,7 +62,7 @@ class _ConneventsTextFieldState extends State<ConneventsTextField> {
         textCapitalization: TextCapitalization.sentences,
       //  inputFormatters: widget.onlyNumbers! ? [FilteringTextInputFormatter.digitsOnly] : null,
         validator: widget.validator,
-        textInputAction: TextInputAction.next,
+        textInputAction: TextInputAction.newline,
         onFieldSubmitted: widget.onFieldSubmitted ?? (val){},
         onChanged: widget.onChanged ?? (val){},
         keyboardType: widget.keyBoardType,

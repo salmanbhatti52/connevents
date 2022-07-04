@@ -254,7 +254,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                        if(widget.event!.eventTicketType=="Paid")
                                          (widget.event!.earlyBird != null && differenceEarlyDate > -1 && widget.event!.earlyBirdAvailable>0 )    || (widget.event!.regular != null && widget.event!.regularAvailable! > 0) ?
                                         Text(differenceEarlyDate > -1  && widget.event!.earlyBirdAvailable > 0  ?   '\$ ${widget.event!.earlyBird!.price}' : '\$ ${widget.event!.regular!.price}', style: TextStyle(color: globalGreen, fontSize: 20, fontWeight: FontWeight.w600),
-                                        ):(widget.event!.vip !=null  &&   widget.event!.vipAvailable! > 0) ?  Text('\$ ${widget.event!.vip!.price}') :  Text('\$ ${widget.event!.skippingLine!.price}' ,  style: TextStyle(color: globalGreen, fontSize: 20, fontWeight: FontWeight.w600,))
+                                        ):(widget.event!.vip !=null  &&   widget.event!.vipAvailable! > 0) ?  Text('\$ ${widget.event!.vip!.price}',  style: TextStyle(color: globalGreen, fontSize: 20, fontWeight: FontWeight.w600,) ) :  Text('\$ ${widget.event!.skippingLine!.price}' ,  style: TextStyle(color: globalGreen, fontSize: 20, fontWeight: FontWeight.w600,))
                                       ],
                                     ),
                                   ),
@@ -326,7 +326,8 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                           children: [
                                               Text('Refund Policy', style: gilroyExtraBold),
                                               SizedBox(height: padding / 6),
-                                              Text('ConnEvents fee is nonrefundable. See Terms and Conditions. There is a 10 ticket limit per customer.', style: TextStyle(color: globalBlack,fontSize: 14,fontWeight: FontWeight.w700)),
+                                              Text('ConnEvents fee is nonrefundable. See Terms and Conditions. There is a 10 ticket limit per customer.\n\n'
+                                                   'By purchasing tickets to this event, you agree to abide by the rules for entry that are in effect at the time of the event', style: TextStyle(color: globalBlack,fontSize: 14,fontWeight: FontWeight.w700)),
                                               SizedBox(height: padding / 2),
                                               Text('Contact the organizer to request a refund.', style: TextStyle(color: globalBlack,fontSize: 14)),
                                           ],
@@ -335,9 +336,9 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                             Column(
                                                mainAxisAlignment: MainAxisAlignment.start,
                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                              Text('Disclosure :', style: TextStyle(color: globalBlack, fontSize: 20, fontWeight: FontWeight.bold)),
-                                              RichText(text: TextSpan(
+                                               children: [
+                                               Text('Disclosure :', style: TextStyle(color: globalBlack, fontSize: 20, fontWeight: FontWeight.bold)),
+                                               RichText(text: TextSpan(
                                         style: TextStyle(color: Colors.black ,fontSize: 14,fontWeight: FontWeight.w700),
                                         text: "This event is not being hosted on the ConnEvents service app. Please ",
                                         children: [

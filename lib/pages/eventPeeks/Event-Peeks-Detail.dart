@@ -46,7 +46,8 @@ late VideoPlayerController _controller;
 
       if(response['status']=="success"){
         Navigator.of(context).pop();
-        //isEmojiShown=false;
+        if(isEmojiShown)
+        isEmojiShown=false;
         widget.peekDetail!.totalComments =  (int.parse(widget.peekDetail!.totalComments!)+1).toString();
         setState(() {});
         showErrorToast("sent Successfully");

@@ -48,6 +48,8 @@ Map<String, dynamic> _$EventDataToJson(EventData instance) {
 }
 
 EventDetail _$EventDetailFromJson(Map<String, dynamic> json) => EventDetail(
+      mixTags:
+          (json['mixTags'] as List<dynamic>?)?.map((e) => e as String).toList(),
       showTags: (json['showTags'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -263,6 +265,7 @@ Map<String, dynamic> _$EventDetailToJson(EventDetail instance) {
       'event_tags', instance.eventTags?.map((e) => e.toJson()).toList());
   writeNotNull('customEventTags', instance.customEventTags);
   writeNotNull('showTags', instance.showTags);
+  writeNotNull('mixTags', instance.mixTags);
   writeNotNull('eventTagsData', instance.eventTagsData?.toJson());
   val['event_tickets'] = instance.eventTickets.map((e) => e.toJson()).toList();
   writeNotNull('event_address', instance.eventAddress?.toJson());

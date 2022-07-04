@@ -241,7 +241,6 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
                             //   widget.onEditVideoDeleted!();
                             //  else
                               widget.onVideoDeleted!();
-
                           });
                         }),
                 ),

@@ -49,6 +49,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
   bool isEdit=false;
   EventTypeList? listOfEventType;
   List<TagsData> listOfTags = [];
+  List<String> mixTags = [];
   Future<EventTypeList>? futureEventTypeModel;
   Future<EventTagsModel>? futureEventTagsModel;
   int totalImages = 3;
@@ -159,6 +160,8 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
        await futureEventTagsModel!.then((value) {
          if(this.mounted){
            listOfTags = value.data!;
+
+
            setState(() {});
          }
        });
@@ -582,12 +585,10 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
                                   if(e.tagType=="Default"){
                                     event.customEventTags!.add(e.tagId.toString());
                                     event.showTags!.add(e.tagName.toString());
-
                                   }
                                   else{
                                     event.customEventTags!.add(e.tagName!);
                                     event.showTags!.add(e.tagName.toString());
-
                                   }
                                 }
                                 setState(() {});
