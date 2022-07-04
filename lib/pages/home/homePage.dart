@@ -595,176 +595,269 @@ class _HomePageState extends State<HomePage> {
                 },
               )
               : Container(
-                height: 25,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                  CityDialogBox(
-                    width: selectedSegment == 'nearby' ? 140: null,
-                    city: (val) async{
-                       city=val;
-                       setState(() {});
-                     if(selectedSegment == 'nearby')
-                     await getNearbyBusiness(isReFresh: true);
-                     else
-                     await getEvents(isReFresh: true);
-                      if(city.isNotEmpty){
-                         Navigator.of(context).pop();
-                         Navigator.of(context).pop();
-                      }else Navigator.of(context).pop();
-                    },
-                  ),
-                 if(selectedSegment == 'Events')
-                  CategoriesButton(
-                  onPressed: () =>_selectDate(context),
-                  child: DateCategory(
-                      date: date,
-                      onTap:() =>showDate())),
-                  if(selectedSegment == 'Events')
-                CategoriesButton(
-                  onPressed:(){
-                  showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                  return StatefulBuilder(
-                  builder: (context, setState){
-                  return Dialog(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    child: Container(
-                    height: 350,
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
-                    child: Stack(
-                       children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text("Select Categories", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),),),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                      CityDialogBox(
+                        width: selectedSegment == 'nearby' ? 140: null,
+                        city: (val) async{
+                           city=val;
+                           setState(() {});
+                         if(selectedSegment == 'nearby')
+                         await getNearbyBusiness(isReFresh: true);
+                         else
+                         await getEvents(isReFresh: true);
+                          if(city.isNotEmpty){
+                             Navigator.of(context).pop();
+                             Navigator.of(context).pop();
+                          }else Navigator.of(context).pop();
+                        },
+                      ),
+                     if(selectedSegment == 'Events')
+                      CategoriesButton(
+                      onPressed: () =>_selectDate(context),
+                      child: DateCategory(
+                          date: date,
+                          onTap:() =>showDate())),
+                      if(selectedSegment == 'Events')
+                    CategoriesButton(
+                      onPressed:(){
+                      showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                      return StatefulBuilder(
+                      builder: (context, setState){
+                      return Dialog(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        elevation: 0,
+                        backgroundColor: Colors.transparent,
+                        child: Container(
+                        height: 350,
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                        child: Stack(
+                           children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
                               children: [
-                                SizedBox(height: 8),
-                                Text("Select Event Type", style: TextStyle(fontSize: 18),),
-                                SizedBox(height: 10,),
-                                dropDownContainer(
-                                  child: DropdownButton<EventTypes>(
-                                    underline: Container(),
-                                    isExpanded: true,
-                                    iconEnabledColor: Colors.black,
-                                    focusColor: Colors.black,
-                                    hint: Text("Select Event Type"),
-                                    icon: Icon(Icons.arrow_drop_down_rounded),
-                                    items: listOfEventType?.event_types?.map((value) {
-                                      return new DropdownMenuItem<EventTypes>(
-                                        value: value,
-                                        child: Text(value.eventType.toString()),
-                                      );
-                                    }).toList(),
-                                    onChanged: (EventTypes? newValue){
-                                      print(newValue);
-                                      this.event.eventTypeData = newValue;
-                                      event.category=null;
-                                      setState(() {});
-                                    },
-                                    value: this.event.eventTypeData,
-                                  ),
-                          ),
-                        SizedBox(height: 15),
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text("Select Categories", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),),),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 8),
+                                    Text("Select Event Type", style: TextStyle(fontSize: 18),),
+                                    SizedBox(height: 10,),
+                                    dropDownContainer(
+                                      child: DropdownButton<EventTypes>(
+                                        underline: Container(),
+                                        isExpanded: true,
+                                        iconEnabledColor: Colors.black,
+                                        focusColor: Colors.black,
+                                        hint: Text("Select Event Type"),
+                                        icon: Icon(Icons.arrow_drop_down_rounded),
+                                        items: listOfEventType?.event_types?.map((value) {
+                                          return new DropdownMenuItem<EventTypes>(
+                                            value: value,
+                                            child: Text(value.eventType.toString()),
+                                          );
+                                        }).toList(),
+                                        onChanged: (EventTypes? newValue){
+                                          print(newValue);
+                                          this.event.eventTypeData = newValue;
+                                          event.category=null;
+                                          setState(() {});
+                                        },
+                                        value: this.event.eventTypeData,
+                                      ),
+                              ),
+                            SizedBox(height: 15),
 
-                        Text("Select Category", style: TextStyle(fontSize: 18),),
-                        SizedBox(height: 10,),
-                        dropDownContainer(
-                          child: DropdownButton<EventTypeCategories>(
-                            underline: Container(),
-                            isExpanded: true,
-                            iconEnabledColor: Colors.black,
-                            focusColor: Colors.black,
-                            hint: Text("Select Category"),
-                            icon: Icon(Icons.arrow_drop_down_rounded),
-                            items: event.eventTypeData?.categories?.map((value) {
-                              return new DropdownMenuItem<EventTypeCategories>(
-                                value: value,
-                                child: Text(value.category.toString()),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) => setState(() => event.category = newValue!),
-                            value: event.category,
-                          ),
-                        ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 9.0),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: RaisedButton(
-                          textColor: Colors.white,
-                          color: globalGreen,
-                          child: Text("GO", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800)),
-                          onPressed:()async{
-                            openLoadingDialog(context, "loading");
-                                if(selectedSegment == 'nearby')
-                            await getNearbyBusiness(isReFresh: true);
-                            else
-                           await  getEvents(isReFresh: true);
-                           Navigator.of(context).pop();
-                           Navigator.of(context).pop();
-                          },
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(25.0),
+                            Text("Select Category", style: TextStyle(fontSize: 18),),
+                            SizedBox(height: 10,),
+                            dropDownContainer(
+                              child: DropdownButton<EventTypeCategories>(
+                                underline: Container(),
+                                isExpanded: true,
+                                iconEnabledColor: Colors.black,
+                                focusColor: Colors.black,
+                                hint: Text("Select Category"),
+                                icon: Icon(Icons.arrow_drop_down_rounded),
+                                items: event.eventTypeData?.categories?.map((value) {
+                                  return new DropdownMenuItem<EventTypeCategories>(
+                                    value: value,
+                                    child: Text(value.category.toString()),
+                                  );
+                                }).toList(),
+                                onChanged: (newValue) => setState(() => event.category = newValue!),
+                                value: event.category,
+                              ),
+                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 9.0),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: RaisedButton(
+                              textColor: Colors.white,
+                              color: globalGreen,
+                              child: Text("GO", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800)),
+                              onPressed:()async{
+                                openLoadingDialog(context, "loading");
+                                    if(selectedSegment == 'nearby')
+                                await getNearbyBusiness(isReFresh: true);
+                                else
+                               await  getEvents(isReFresh: true);
+                               Navigator.of(context).pop();
+                               Navigator.of(context).pop();
+                              },
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
 
-                  ],
-                    )],
-                    ),
-                  ),
-                    Positioned(
-                      top: 5,
-                      right: 5,
-                      child: IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.close, size: 35, color: globalGreen),
+                      ],
+                        )],
+                        ),
                       ),
-                    ),
-                        ]))
-                        ); }
-                    );
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Icon(Icons.close, size: 35, color: globalGreen),
+                          ),
+                        ),
+                            ]))
+                            ); }
+                        );
 
             });
             },
-                  child: Row(
-                  children: [
-                  Text('Category', style: TextStyle(color: Colors.black, fontSize: 12)),
-                  Padding(
-                   padding: const EdgeInsets.only(left:4.0),
-                   child: SvgPicture.asset('assets/icons/downArrow.svg', color: globalGreen, width: 10)),
-                ],
-                )),
-                  Container(
-                    width: selectedSegment == 'nearby' ? MediaQuery.of(context).size.width*0.37: null,
-                    child: CategoriesButton(
-                      onPressed: ()=> setState(() => showSearchBar = !showSearchBar),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right:4.0),
-                            child: Text('Search', style: TextStyle(color: Colors.black, fontSize: 12)),
+                      children: [
+                      Text('Category', style: TextStyle(color: Colors.black, fontSize: 12)),
+                      Padding(
+                       padding: const EdgeInsets.only(left:4.0),
+                       child: SvgPicture.asset('assets/icons/downArrow.svg', color: globalGreen, width: 10)),
+                    ],
+                    )),
+                      Container(
+                        width: selectedSegment == 'nearby' ? MediaQuery.of(context).size.width*0.37: null,
+                        child: CategoriesButton(
+                          onPressed: ()=> setState(() => showSearchBar = !showSearchBar),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right:4.0),
+                                child: Text('Search', style: TextStyle(color: Colors.black, fontSize: 12)),
+                              ),
+                              SvgPicture.asset('assets/icons/search.svg', color: globalGreen, width: 10),
+                            ],
                           ),
-                          SvgPicture.asset('assets/icons/search.svg', color: globalGreen, width: 10),
-                        ],
+                        ),
                       ),
+                     ]),
+                    SizedBox(height: 10,),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        isVisibleTags ? Expanded(
+                          child: Visibility(
+                            visible: isVisibleTags,
+                            child: Wrap(
+                              children: [
+                                for (var i = 0; i < listOfTags.length; i++)
+                                  Wrap(
+                                    children: [
+                                      filterContainer(
+                                        Checkbox(
+                                          checkColor: Colors.transparent,
+                                          fillColor: MaterialStateProperty.resolveWith((states) => globalGreen),
+                                          value: listOfTags[i].isSelected,
+                                          onChanged: (value) {
+                                            filterEvents(listOfTags[i],value);
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(width: padding / 2),
+                                      Text(listOfTags[i].tagName.toString(), style: TextStyle(height: 2, color: globalBlack, fontSize: 12,)),
+                                      SizedBox(width: padding),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ):
+                        Expanded(
+                          child: Container(
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: globalLightButtonbg,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: (selectedSegment == 'Events') ? BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(color: globalGreen),
+                                        borderRadius: BorderRadius.circular(30))
+                                        : BoxDecoration(),
+                                    child: TextButton(
+                                      onPressed: () => isSelectedEvents(),
+                                      child: Text('Events',style: TextStyle(color: Colors.black, fontSize: 12,
+                                      ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: (selectedSegment == 'nearby') ?
+                                    BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(color: globalGreen),
+                                        borderRadius: BorderRadius.circular(30))
+                                        : BoxDecoration(),
+                                    child: TextButton(
+                                        onPressed: () => isSelectedBusiness(),
+                                        child: Text("What's Nearby", style: TextStyle(color: Colors.black, fontSize: 12,
+                                        ),
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: padding),
+                        if(selectedSegment == 'Events')
+                          GestureDetector(
+                            onTap: () {
+                              if(isVisibleTags) setState(() => isVisibleTags=false);
+                              else setState(()=> isVisibleTags=true);
+                            },
+                            child: SvgPicture.asset('assets/filter.svg', width: 22,
+                            ),
+                          ),
+                      ],
                     ),
-                  ),
-                 ]))),
+                  ],
+                ))),
             Expanded(
              child: SmartRefresher(
                controller: refreshController,
@@ -801,94 +894,7 @@ class _HomePageState extends State<HomePage> {
               decoration: BoxDecoration(color: globallightbg),
               child: Column(
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                     isVisibleTags ? Expanded(
-                       child: Visibility(
-                         visible: isVisibleTags,
-                         child: Wrap(
-                           children: [
-                             for (var i = 0; i < listOfTags.length; i++)
-                               Wrap(
-                                 children: [
-                                   filterContainer(
-                                      Checkbox(
-                                       checkColor: Colors.transparent,
-                                       fillColor: MaterialStateProperty.resolveWith((states) => globalGreen),
-                                       value: listOfTags[i].isSelected,
-                                         onChanged: (value) {
-                                         filterEvents(listOfTags[i],value);
-                                       },
-                                     ),
-                                   ),
-                                   SizedBox(width: padding / 2),
-                                   Text(listOfTags[i].tagName.toString(), style: TextStyle(height: 2, color: globalBlack, fontSize: 12,)),
-                                   SizedBox(width: padding),
-                                 ],
-                               ),
-                           ],
-                         ),
-                       ),
-                     ):
-                      Expanded(
-                        child: Container(
-                          height: 30,
-                          decoration: BoxDecoration(
-                          color: globalLightButtonbg,
-                          borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: (selectedSegment == 'Events') ? BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(color: globalGreen),
-                                  borderRadius: BorderRadius.circular(30))
-                                  : BoxDecoration(),
-                                  child: TextButton(
-                                    onPressed: () => isSelectedEvents(),
-                                    child: Text('Events',style: TextStyle(color: Colors.black, fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: (selectedSegment == 'nearby') ?
-                                  BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(color: globalGreen),
-                                  borderRadius: BorderRadius.circular(30))
-                                  : BoxDecoration(),
-                                  child: TextButton(
-                                  onPressed: () => isSelectedBusiness(),
-                                  child: Text("What's Nearby", style: TextStyle(color: Colors.black, fontSize: 12,
-                                    ),
-                                  )),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
 
-                        SizedBox(width: padding),
-                        if(selectedSegment == 'Events')
-                        GestureDetector(
-                          onTap: () {
-                            if(isVisibleTags) setState(() => isVisibleTags=false);
-                            else setState(()=> isVisibleTags=true);
-                          },
-                          child: SvgPicture.asset('assets/filter.svg', width: 22,
-                          ),
-                        ),
-                      ],
-                    ),
                   if(isVisibleTags && tagsList.isNotEmpty)
                   Align(
                       alignment: Alignment.topRight,

@@ -40,7 +40,7 @@ class _OrganizerPortfolioState extends State<OrganizerPortfolio> {
               }),
               selectedSegment=="Portfolio" ?
               Expanded(child: OrganizerLibraryList(eventDetail: widget.eventDetail)):
-              Expanded(child: FollowersListPage(eventDetail:widget.eventDetail))
+              Expanded(child: FollowersListPage(eventDetail:widget.eventDetail)),
             ],
           ),
          ),

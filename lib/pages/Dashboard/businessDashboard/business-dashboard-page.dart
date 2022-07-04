@@ -67,7 +67,7 @@ String message="";
         Text(AppData().userdetail!.user_name!, style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: globalBlack,)),
          businessList.isNotEmpty ?
          ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: BouncingScrollPhysics(),
             shrinkWrap: true,
             itemCount:businessList.length,
             itemBuilder: (context,index){

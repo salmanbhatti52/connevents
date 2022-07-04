@@ -39,58 +39,61 @@ class _BaseTabCreatePageState extends State<BaseTabCreatePage> with TickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-       height: 30,
-       decoration: BoxDecoration(
-       color: globalLightButtonbg,
-       borderRadius: BorderRadius.circular(30),
-       ),
-       child: Row(
-         children: [
-           Expanded(
-             child: Container(
-               clipBehavior: Clip.antiAlias,
-               decoration: (selectedSegment == 'Events') ? BoxDecoration(
-               color: Colors.white,
-               border: Border.all(color: globalGreen),
-               borderRadius: BorderRadius.circular(30))
-               : BoxDecoration(),
-               child: TextButton(
-                 onPressed: () {
-                   setState(() {
-                     selectedSegment = 'Events';
-                     widget.selectedSegment(selectedSegment);
-                   });
-                 },
-                 child: Text('Events',style: TextStyle(color: Colors.black, fontSize: 12,
+    return SingleChildScrollView(
+      physics: NeverScrollableScrollPhysics(),
+      child: Container(
+         height: 30,
+         decoration: BoxDecoration(
+         color: globalLightButtonbg,
+         borderRadius: BorderRadius.circular(30),
+         ),
+         child: Row(
+           children: [
+             Expanded(
+               child: Container(
+                 clipBehavior: Clip.antiAlias,
+                 decoration: (selectedSegment == 'Events') ? BoxDecoration(
+                 color: Colors.white,
+                 border: Border.all(color: globalGreen),
+                 borderRadius: BorderRadius.circular(30))
+                 : BoxDecoration(),
+                 child: TextButton(
+                   onPressed: () {
+                     setState(() {
+                       selectedSegment = 'Events';
+                       widget.selectedSegment(selectedSegment);
+                     });
+                   },
+                   child: Text('Events',style: TextStyle(color: Colors.black, fontSize: 12,
+                     ),
                    ),
                  ),
                ),
              ),
-           ),
-           Expanded(
-             child: Container(
-               clipBehavior: Clip.antiAlias,
-               decoration: (selectedSegment == 'Business') ?
-               BoxDecoration(
-               color: Colors.white,
-               border: Border.all(color: globalGreen),
-               borderRadius: BorderRadius.circular(30))
-               : BoxDecoration(),
-               child: TextButton(
-               onPressed: ()  {
-                 setState(() {
-                     selectedSegment = 'Business';
-                     widget.selectedSegment(selectedSegment);
-                   });
-               },
-               child: Text('Business', style: TextStyle(color: Colors.black, fontSize: 12,
-                 ),
-               )),
+             Expanded(
+               child: Container(
+                 clipBehavior: Clip.antiAlias,
+                 decoration: (selectedSegment == 'Business') ?
+                 BoxDecoration(
+                 color: Colors.white,
+                 border: Border.all(color: globalGreen),
+                 borderRadius: BorderRadius.circular(30))
+                 : BoxDecoration(),
+                 child: TextButton(
+                 onPressed: ()  {
+                   setState(() {
+                       selectedSegment = 'Business';
+                       widget.selectedSegment(selectedSegment);
+                     });
+                 },
+                 child: Text('Business', style: TextStyle(color: Colors.black, fontSize: 12,
+                   ),
+                 )),
+               ),
              ),
-           ),
-         ],
-       ),
-      );
+           ],
+         ),
+        ),
+    );
   }
 }

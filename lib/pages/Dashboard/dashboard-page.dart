@@ -26,7 +26,7 @@ class _DashboardPageState extends State<DashboardPage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          // physics: NeverScrollableScrollPhysics(),
           child: Container(
             padding: EdgeInsets.only(left:padding * 2,right:padding * 2,top:8 ,bottom:20.0),
             child: Column(

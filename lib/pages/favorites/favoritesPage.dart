@@ -329,6 +329,60 @@ class _FavoritesPageState extends State<FavoritesPage> {
         padding: EdgeInsets.only(top: 5),
         child: Column(
           children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: padding, horizontal: padding * 2),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                          color: globalLightButtonbg,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.antiAlias,
+                              decoration: (selectedSegment == 'Events') ?
+                              BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: globalGreen),
+                                  borderRadius: BorderRadius.circular(30)) :
+                              BoxDecoration(),
+                              child: TextButton(
+                                onPressed: ()=> isSelectedEvents(),
+                                child: Text('Events',style: TextStyle(color: Colors.black, fontSize: 12,
+                                ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.antiAlias,
+                              decoration: (selectedSegment == 'nearby') ?
+                              BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: globalGreen),
+                                  borderRadius: BorderRadius.circular(30)) :
+                              BoxDecoration(),
+                              child: TextButton(
+                                  onPressed: () => isSelectedBusiness(),
+                                  child: Text("What's Nearby" , style: TextStyle(color: Colors.black, fontSize: 12,
+                                  ),
+                                  )),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: padding),
+
+                ],
+              ),
+            ),
             Expanded(
               child: SmartRefresher(
                 controller: refreshController,
@@ -365,60 +419,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     decoration: BoxDecoration(color: globallightbg),
                     child: Column(
                       children: [
-                        Container(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                      color: globalLightButtonbg,
-                                      borderRadius: BorderRadius.circular(30)),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: (selectedSegment == 'Events') ?
-                                          BoxDecoration(
-                                              color: Colors.white,
-                                              border: Border.all(color: globalGreen),
-                                              borderRadius: BorderRadius.circular(30)) :
-                                          BoxDecoration(),
-                                          child: TextButton(
-                                            onPressed: ()=> isSelectedEvents(),
-                                            child: Text('Events',style: TextStyle(color: Colors.black, fontSize: 12,
-                                            ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          clipBehavior: Clip.antiAlias,
-                                          decoration: (selectedSegment == 'nearby') ?
-                                          BoxDecoration(
-                                              color: Colors.white,
-                                              border: Border.all(color: globalGreen),
-                                              borderRadius: BorderRadius.circular(30)) :
-                                          BoxDecoration(),
-                                          child: TextButton(
-                                              onPressed: () => isSelectedBusiness(),
-                                              child: Text("What's Nearby" , style: TextStyle(color: Colors.black, fontSize: 12,
-                                              ),
-                                              )),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: padding),
-
-                            ],
-                          ),
-                        ),
-
                         selectedSegment=="Events" ?
                         eventDetail.length > 0 ?
                         HomePageEvents(
