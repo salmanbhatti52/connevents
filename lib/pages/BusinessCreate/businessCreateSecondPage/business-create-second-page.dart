@@ -61,7 +61,7 @@ class _BusinessCreateSecondPageState extends State<BusinessCreateSecondPage> {
        if(key.currentState!.validate()){
         key.currentState!.save();
         if(business.hyperlink.isEmpty) return showErrorToast("You have to add Website Link");
-       if(business.description.isEmpty) return showErrorToast("You have to add Description");
+        if(business.description.isEmpty) return showErrorToast("You have to add Description");
         if(business.eventAddress!.fullAddress.isEmpty) return showErrorToast("You have to add Address");
         if(business.eventAddress!.city.isEmpty) return showErrorToast("You have to enter City");
         if(business.eventAddress!.state.isEmpty) return showErrorToast("You have to enter state");
@@ -107,13 +107,13 @@ class _BusinessCreateSecondPageState extends State<BusinessCreateSecondPage> {
         "businessLong": business.businessLong,
         "businessLat": business.businessLat,
         "hyperlink" :business.hyperlink,
-         "businessType":widget.businessType!.type
+        "businessType":widget.businessType!.type
       });
       print(response);
        if(response['status']=='success'){
          print(response);
        //  AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
-         showSuccessToast("Your Business has been Created Successfully");
+      showSuccessToast("Your Business has been Created Successfully");
       Navigator.pop(context);
       CustomNavigator.pushReplacement(context,TabsPage());
        }

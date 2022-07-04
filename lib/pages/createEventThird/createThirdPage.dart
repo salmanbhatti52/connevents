@@ -57,48 +57,48 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
   Future _selectSalesStartDate(BuildContext context) async {
      final DateTime? picked = await   showDatePicker(
         context: context,
-        initialDate: event.pickedSalesStartDate ?? DateTime.now(),
+        initialDate: widget.event.pickedSalesStartDate ?? DateTime.now(),
         initialDatePickerMode: DatePickerMode.day,
         firstDate: DateTime.now(),
         lastDate: DateTime(2101));
-          if(event.pickedSalesEndDate!=null){
-          if (picked != null && picked.isAtSameMomentAs(event.pickedSalesEndDate!)  ||  picked!.isBefore(event.pickedSalesEndDate!)) {
-           if(event.salesStartTime.isNotEmpty && event.salesEndTime.isNotEmpty && picked.isAtSameMomentAs(event.pickedSalesEndDate!)  &&  toDouble(createSelectedEndTime!) < toDouble(createSelectedStartTime!)){
+          if(widget.event.pickedSalesEndDate!=null){
+          if (picked != null && picked.isAtSameMomentAs(widget.event.pickedSalesEndDate!)  ||  picked!.isBefore(widget.event.pickedSalesEndDate!)) {
+           if(widget.event.salesStartTime.isNotEmpty && widget.event.salesEndTime.isNotEmpty && picked.isAtSameMomentAs(widget.event.pickedSalesEndDate!)  &&  toDouble(createSelectedEndTime!) < toDouble(createSelectedStartTime!)){
           return showErrorToast("Event End Time Must be smaller greater than Event End Time");
         }else {
               setState(() {
-          event.pickedSalesStartDate = picked;
-          event.pickedSalesStartDate = event.pickedSalesStartDate;
-          print(event.pickedSalesStartDate);
+          widget.event.pickedSalesStartDate = picked;
+          widget.event.pickedSalesStartDate = widget.event.pickedSalesStartDate;
+          print(widget.event.pickedSalesStartDate);
           var dateFormat = DateFormat.yMMMd();
-          event.salesStartDate = dateFormat.format(event.pickedSalesStartDate!);
+          widget.event.salesStartDate = dateFormat.format(widget.event.pickedSalesStartDate!);
         });
            }
           }
-          if(event.pickedSalesEndDate!.toUtc().isBefore(picked)){
+          if(widget.event.pickedSalesEndDate!.toUtc().isBefore(picked)){
          return showErrorToast("Sales Start Date Must be smaller than event End Date or Sales End Date");
           }
           else{
-            if (picked.toUtc().isAtSameMomentAs(event.pickedEventStartDate!)  || picked.toUtc().isAtSameMomentAs(event.pickedEventEndDate!) || picked.toUtc().isBefore(event.pickedEventEndDate!)) {
+            if (picked.toUtc().isAtSameMomentAs(widget.event.pickedEventStartDate!)  || picked.toUtc().isAtSameMomentAs(widget.event.pickedEventEndDate!) || picked.toUtc().isBefore(widget.event.pickedEventEndDate!)) {
           setState(() {
-          event.pickedSalesStartDate = picked;
-          event.pickedSalesStartDate = event.pickedSalesStartDate;
-          print(event.pickedSalesStartDate);
+          widget.event.pickedSalesStartDate = picked;
+          widget.event.pickedSalesStartDate = widget.event.pickedSalesStartDate;
+          print(widget.event.pickedSalesStartDate);
           var dateFormat = DateFormat.yMMMd();
-          event.salesStartDate = dateFormat.format(event.pickedSalesStartDate!);
+          widget.event.salesStartDate = dateFormat.format(widget.event.pickedSalesStartDate!);
         });
     }
     }
       }
     else{
-    if (picked != null && picked.toUtc().isAtSameMomentAs(event.pickedEventStartDate!)  || picked!.toUtc().isAtSameMomentAs(event.pickedEventEndDate!) || picked.toUtc().isBefore(event.pickedEventEndDate!)) {
+    if (picked != null && picked.toUtc().isAtSameMomentAs(widget.event.pickedEventStartDate!)  || picked!.toUtc().isAtSameMomentAs(widget.event.pickedEventEndDate!) || picked.toUtc().isBefore(widget.event.pickedEventEndDate!)) {
       setState(() {
-        event.pickedSalesStartDate = picked;
-        event.pickedSalesStartDate = event.pickedSalesStartDate;
-        print(event.pickedSalesStartDate);
+        widget.event.pickedSalesStartDate = picked;
+        widget.event.pickedSalesStartDate = widget.event.pickedSalesStartDate;
+        print(widget.event.pickedSalesStartDate);
         var dateFormat = DateFormat.yMMMd();
-        event.salesStartDate =
-            dateFormat.format(event.pickedSalesStartDate!);
+        widget.event.salesStartDate =
+            dateFormat.format(widget.event.pickedSalesStartDate!);
       });
     }
     else showErrorToast("You can't Select greater than Event End Date");
@@ -108,22 +108,22 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
   Future _selectSalesDateEnd(BuildContext context) async {
   final DateTime? picked = await showDatePicker(
     context: context,
-    initialDate: event.pickedSalesEndDate ?? DateTime.now(),
+    initialDate: widget.event.pickedSalesEndDate ?? DateTime.now(),
     initialDatePickerMode: DatePickerMode.day,
     firstDate: DateTime(2015),
     lastDate: DateTime(2040));
-    if(event.pickedSalesStartDate!=null){
-      if (picked != null && (picked.isAtSameMomentAs(event.pickedSalesStartDate!)    || picked.toUtc().isAfter(event.pickedSalesStartDate!))  &&  (picked.isAtSameMomentAs(event.pickedEventEndDate!)  || picked.toUtc().isBefore(event.pickedEventEndDate!)   ) ){
-          if(event.salesStartTime.isNotEmpty && event.salesEndTime.isNotEmpty && picked.isAtSameMomentAs(event.pickedSalesStartDate!)  &&  toDouble(createSelectedEndTime!) < toDouble(createSelectedStartTime!)){
+    if(widget.event.pickedSalesStartDate!=null){
+      if (picked != null && (picked.isAtSameMomentAs(widget.event.pickedSalesStartDate!)    || picked.toUtc().isAfter(widget.event.pickedSalesStartDate!))  &&  (picked.isAtSameMomentAs(widget.event.pickedEventEndDate!)  || picked.toUtc().isBefore(widget.event.pickedEventEndDate!)   ) ){
+          if(widget.event.salesStartTime.isNotEmpty && widget.event.salesEndTime.isNotEmpty && picked.isAtSameMomentAs(widget.event.pickedSalesStartDate!)  &&  toDouble(createSelectedEndTime!) < toDouble(createSelectedStartTime!)){
          return showErrorToast("Sales End Time Must be greater or equal than Sales Start Time");
        }else{
            setState(() {
-          event.pickedSalesEndDate = picked;
-          event.pickedSalesEndDate = event.pickedSalesEndDate;
-          var i = selectedDate.isAtSameMomentAs(event.pickedSalesStartDate!);
+          widget.event.pickedSalesEndDate = picked;
+          widget.event.pickedSalesEndDate = widget.event.pickedSalesEndDate;
+          var i = selectedDate.isAtSameMomentAs(widget.event.pickedSalesStartDate!);
           print(i);
           var dateFormat = DateFormat.yMMMd();
-          event.salesEndDate = dateFormat.format(event.pickedSalesEndDate!);
+          widget.event.salesEndDate = dateFormat.format(widget.event.pickedSalesEndDate!);
         });
           }
       } else {
@@ -139,22 +139,22 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
   final TimeOfDay? picked = await showTimePicker(
   context: context,
   initialTime: createSelectedStartTime ?? TimeOfDay(hour: 00, minute: 00));
-  DateTime dt1= DateTime.parse("${event.pickedSalesStartDate!.toString().split(" ").first}" + " ${picked!.hour.toString().length==1 ? "0${picked.hour.toString()}": picked.hour.toString()}" + ":${picked.minute.toString().length==1 ? "0${picked.minute.toString()}" : picked.minute.toString()}" + ":00" );
+  DateTime dt1= DateTime.parse("${widget.event.pickedSalesStartDate!.toString().split(" ").first}" + " ${picked!.hour.toString().length==1 ? "0${picked.hour.toString()}": picked.hour.toString()}" + ":${picked.minute.toString().length==1 ? "0${picked.minute.toString()}" : picked.minute.toString()}" + ":00" );
      Duration diff = dt1.difference(DateTime.now());
      if(diff.isNegative) showErrorToast("You can't  select Previous Time");
        else {
-       if (event.pickedSalesStartDate != null && event.pickedSalesEndDate != null) {
-         if (event.pickedSalesStartDate!.toUtc().isAtSameMomentAs(event.pickedSalesEndDate!)) {
-             if(event.salesEndTime.isNotEmpty){
-               _endTime = stringToTimeOfDay(event.salesEndTime);
+       if (widget.event.pickedSalesStartDate != null && widget.event.pickedSalesEndDate != null) {
+         if (widget.event.pickedSalesStartDate!.toUtc().isAtSameMomentAs(widget.event.pickedSalesEndDate!)) {
+             if(widget.event.salesEndTime.isNotEmpty){
+               _endTime = stringToTimeOfDay(widget.event.salesEndTime);
                if (toDouble(picked) < toDouble(_endTime)) {
                  setState(() {
                    createSelectedStartTime = picked;
                    _hour = createSelectedStartTime!.hour.toString();
                    _minute = createSelectedStartTime!.minute.toString();
                    _time = _hour! + ' : ' + _minute!;
-                   event.salesStartTime = _time!;
-                   event.salesStartTime = formatDate(DateTime(
+                   widget.event.salesStartTime = _time!;
+                   widget.event.salesStartTime = formatDate(DateTime(
                        2019, 08, 1, createSelectedStartTime!.hour,
                        createSelectedStartTime!.minute),
                        [hh, ':', nn, am]).toString();
@@ -169,8 +169,8 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                _hour = createSelectedStartTime!.hour.toString();
                _minute = createSelectedStartTime!.minute.toString();
                _time = _hour! + ' : ' + _minute!;
-               event.salesStartTime = _time!;
-               event.salesStartTime = formatDate(DateTime(2019, 08, 1, createSelectedStartTime!.hour, createSelectedStartTime!.minute), [hh, ':', nn, am]).toString();
+               widget.event.salesStartTime = _time!;
+               widget.event.salesStartTime = formatDate(DateTime(2019, 08, 1, createSelectedStartTime!.hour, createSelectedStartTime!.minute), [hh, ':', nn, am]).toString();
              });
              }
          } else         setState(() {
@@ -178,8 +178,8 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
            _hour = createSelectedStartTime!.hour.toString();
            _minute = createSelectedStartTime!.minute.toString();
            _time = _hour! + ' : ' + _minute!;
-           event.salesStartTime = _time!;
-           event.salesStartTime = formatDate(DateTime(
+           widget.event.salesStartTime = _time!;
+           widget.event.salesStartTime = formatDate(DateTime(
                2019, 08, 1, createSelectedStartTime!.hour,
                createSelectedStartTime!.minute),
                [hh, ':', nn, am]).toString();
@@ -198,10 +198,10 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
     context: context,
     initialTime: createSelectedEndTime ?? TimeOfDay(hour: 00, minute: 00),
   );
-  if(event.salesStartTime.isNotEmpty){
+  if(widget.event.salesStartTime.isNotEmpty){
   if(createSelectedStartTime==null)
-  _startTime = stringToTimeOfDay(event.salesStartTime);
-  if(event.pickedSalesStartDate!.toUtc().isAtSameMomentAs(event.pickedSalesEndDate!)){
+  _startTime = stringToTimeOfDay(widget.event.salesStartTime);
+  if(widget.event.pickedSalesStartDate!.toUtc().isAtSameMomentAs(widget.event.pickedSalesEndDate!)){
     if (picked != null  && createSelectedStartTime==null ?  toDouble(picked) > toDouble(_startTime!) : toDouble(picked!) > toDouble(createSelectedStartTime!)) {
     print(createSelectedEndTime);
     setState(() {
@@ -209,8 +209,8 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
       _hour = createSelectedEndTime!.hour.toString();
       _minute = createSelectedEndTime!.minute.toString();
       _time = _hour! + ' : ' + _minute!;
-      event.salesEndTime = _time!;
-      event.salesEndTime = formatDate(
+      widget.event.salesEndTime = _time!;
+      widget.event.salesEndTime = formatDate(
           DateTime(2019, 08, 1, createSelectedEndTime!.hour, createSelectedEndTime!.minute),
           [hh, ':', nn, am]).toString();
     });
@@ -222,8 +222,8 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
       _hour = createSelectedEndTime!.hour.toString();
       _minute = createSelectedEndTime!.minute.toString();
       _time = _hour! + ' : ' + _minute!;
-      event.salesEndTime = _time!;
-      event.salesEndTime = formatDate(
+      widget.event.salesEndTime = _time!;
+      widget.event.salesEndTime = formatDate(
           DateTime(2019, 08, 1, createSelectedEndTime!.hour, createSelectedEndTime!.minute),
           [hh, ':', nn, am]).toString();
     });
@@ -251,7 +251,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
   addMarker(double lat, double long){
    int id=Random().nextInt(100);
     setState(() {
-    markers.add(Marker(position: LatLng(event.locationLat!.toDouble(),event.locationLong!.toDouble()) , markerId: MarkerId(id.toString())));
+    markers.add(Marker(position: LatLng(widget.event.locationLat!.toDouble(),widget.event.locationLong!.toDouble()) , markerId: MarkerId(id.toString())));
   });
     }
 
@@ -265,10 +265,10 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
      var startBreak = startShift.add(Duration(hours: widget.selectedEventStartTime.hour));
     event = widget.event;
     _placesService.initialize(apiKey: apiKey);
-    city=TextEditingController(text: event.eventAddress!.city);
-    zip=TextEditingController(text: event.eventAddress!.zip);
-    state=TextEditingController(text: event.eventAddress!.state);
-    mainText=TextEditingController(text: event.eventAddress!.fullAddress);
+    city=TextEditingController(text: widget.event.eventAddress!.city);
+    zip=TextEditingController(text: widget.event.eventAddress!.zip);
+    state=TextEditingController(text: widget.event.eventAddress!.state);
+    mainText=TextEditingController(text: widget.event.eventAddress!.fullAddress);
   }
 
   @override
@@ -328,7 +328,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                               SizedBox(height: 6),
                               GestureDetector(
                                   onTap:  ()=> _selectSalesStartDate(context),
-                                  child: dateContainer(size, event.salesStartDate, Icons.calendar_today)),
+                                  child: dateContainer(size, widget.event.salesStartDate, Icons.calendar_today)),
                             ],
                           ),
                           Column(
@@ -338,7 +338,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                               SizedBox(height: 6),
                               GestureDetector(
                                   onTap:  ()=> _selectSalesDateEnd(context),
-                                  child: dateContainer(size, event.salesEndDate, Icons.calendar_today)),
+                                  child: dateContainer(size, widget.event.salesEndDate, Icons.calendar_today)),
 
 
                             ],
@@ -356,7 +356,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                              SizedBox(height: 6),
                              GestureDetector(
                                  onTap: ()=>_selectSalesStartTime(context),
-                                 child: dateContainer( size, event.salesStartTime, Icons.watch_later_outlined)),
+                                 child: dateContainer( size, widget.event.salesStartTime, Icons.watch_later_outlined)),
                            ],
                          ),
                        Column(
@@ -366,7 +366,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                            SizedBox(height: 6),
                            GestureDetector(
                               onTap: ()=>_selectSalesEndTime(context),
-                                child: dateContainer( size, event.salesEndTime, Icons.watch_later_outlined)),
+                                child: dateContainer( size, widget.event.salesEndTime, Icons.watch_later_outlined)),
                          ],
                        ),
 
@@ -398,17 +398,17 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                                    return showErrorToast("You can't select this dress code because You have selected Non alcoholic Tag");
                                }
                                else{
-                                 event.dressCodeData = newValue;
+                                 widget.event.dressCodeData = newValue;
                                }
-                                event.dressCodeData = newValue;
+                                widget.event.dressCodeData = newValue;
 
 
                             }),
-                            value: event.dressCodeData),
+                            value: widget.event.dressCodeData),
                       ),
                        ],
                      ),
-                    if(event.isNotMyEvent || event.isFreeEvent)
+                    if(widget.event.isNotMyEvent || widget.event.isFreeEvent)
                      Opacity(
                       opacity:0.6,
                       child: Container(
@@ -428,7 +428,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                             padding: const EdgeInsets.only(top:30.0),
                             child: ConneventsTextField(
                               controller: mainText,
-                              onSaved: (value) => event.eventAddress!.fullAddress = value!,
+                              onSaved: (value) => widget.event.eventAddress!.fullAddress = value!,
                               onChanged: (value) async {
                                 setState(() {
                                   print(value);
@@ -463,7 +463,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                                         ),
                                         child: TextFormField(
                                           controller: city,
-                                          onSaved: (value) => event.eventAddress!.city = value!,
+                                          onSaved: (value) => widget.event.eventAddress!.city = value!,
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
                                           ),
@@ -492,7 +492,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                                         ),
                                         child: TextFormField(
                                           controller: state,
-                                          onSaved: (value) => event.eventAddress!.state = value!,
+                                          onSaved: (value) => widget.event.eventAddress!.state = value!,
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
                                           ),
@@ -521,7 +521,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                                         ),
                                         child: TextFormField(
                                           controller: zip,
-                                          onSaved: (value) => event.eventAddress!.zip = value!,
+                                          onSaved: (value) => widget.event.eventAddress!.zip = value!,
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
@@ -558,11 +558,11 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                                           state.text = placeDetails.state!;
                                           city.text = placeDetails.city!;
                                           latlng = LatLng(lat, lng);
-                                          event.locationLat = placeDetails.lat!;
-                                          event.locationLong = placeDetails.lng!;
+                                          widget.event.locationLat = placeDetails.lat!;
+                                          widget.event.locationLong = placeDetails.lng!;
                                           mainText.text = "${_autoCompleteResult[index].mainText!} " + _autoCompleteResult[index].secondaryText!;
                                           _autoCompleteResult.clear();
-                                          addMarker(event.locationLat!.toDouble(),event.locationLong!.toDouble());
+                                          addMarker(widget.event.locationLat!.toDouble(),widget.event.locationLong!.toDouble());
                                         });
                                       },
                                     );
@@ -599,7 +599,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                                // onMapCreated: onMapCreated,
                                   mapType: MapType.normal,
                                   initialCameraPosition: CameraPosition(
-                                  target: LatLng(event.locationLat??22.735110,event.locationLong??75.917380),
+                                  target: LatLng(widget.event.locationLat??22.735110,widget.event.locationLong??75.917380),
                                   zoom: 5.0,
                                 ),
                               markers: markers.toSet()
@@ -630,25 +630,25 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
 
                                 if (key.currentState!.validate()) {
                                   key.currentState!.save();
-                          if(!event.isFreeEvent && !event.isNotMyEvent){
-                        if(event.salesStartDate.isEmpty) return showErrorToast("You have to select a Sales Start Date");
-                        if(event.salesEndDate.isEmpty) return showErrorToast("You have to select a Sales End Date");
-                        if(event.salesStartTime.isEmpty) return showErrorToast("You have to select a Sales Start Time");
-                        if(event.salesEndTime.isEmpty) return showErrorToast("You have to select a Sales End Time");
-                         if(event.dressCodeData==null) return showErrorToast("You have to select Dress Code");
+                          if(!widget.event.isFreeEvent && !widget.event.isNotMyEvent){
+                        if(widget.event.salesStartDate.isEmpty) return showErrorToast("You have to select a Sales Start Date");
+                        if(widget.event.salesEndDate.isEmpty) return showErrorToast("You have to select a Sales End Date");
+                        if(widget.event.salesStartTime.isEmpty) return showErrorToast("You have to select a Sales Start Time");
+                        if(widget.event.salesEndTime.isEmpty) return showErrorToast("You have to select a Sales End Time");
+                         if(widget.event.dressCodeData==null) return showErrorToast("You have to select Dress Code");
 
                                   }
-                      if(event.eventAddress!.fullAddress.isEmpty) return showErrorToast("You have to add Address");
-                      if(event.eventAddress!.city.isEmpty) return showErrorToast("You have to enter City");
-                      if(event.eventAddress!.state.isEmpty) return showErrorToast("You have to enter state");
-                      if(event.eventAddress!.zip.isEmpty) return showErrorToast("You have to enter zip Code");
+                      if(widget.event.eventAddress!.fullAddress.isEmpty) return showErrorToast("You have to add Address");
+                      if(widget.event.eventAddress!.city.isEmpty) return showErrorToast("You have to enter City");
+                      if(widget.event.eventAddress!.state.isEmpty) return showErrorToast("You have to enter state");
+                      if(widget.event.eventAddress!.zip.isEmpty) return showErrorToast("You have to enter zip Code");
 
                           CustomNavigator.navigateTo(context, ConfirmCreatePage(
                             event: event,
                             selectedEventStartTime: widget.selectedEventStartTime,
                             selectedEventEndTime: widget.selectedEventEndTime,
-                            selectedSalesEndTime: !event.isFreeEvent &&  !event.isNotMyEvent ? createSelectedEndTime! : TimeOfDay(hour: 12, minute: 12),
-                            selectedSalesStartTime: !event.isFreeEvent &&  !event.isNotMyEvent ? createSelectedStartTime! : TimeOfDay(hour: 12, minute: 12),
+                            selectedSalesEndTime: !widget.event.isFreeEvent &&  !widget.event.isNotMyEvent ? createSelectedEndTime! : TimeOfDay(hour: 12, minute: 12),
+                            selectedSalesStartTime: !widget.event.isFreeEvent &&  !widget.event.isNotMyEvent ? createSelectedStartTime! : TimeOfDay(hour: 12, minute: 12),
                           ));
                              }
                         },

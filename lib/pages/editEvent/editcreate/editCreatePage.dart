@@ -66,37 +66,13 @@ class _EditCreatePageState extends State<EditCreatePage> {
    // if(this.mounted) setState(() {});
   }
 
-   Future addCustomTags() async {
-    openLoadingDialog(context, "adding");
-    var  response;
-   try{
-       response = await DioService.post('add_custom_tag', {
-        "usersId": AppData().userdetail!.users_id,
-         "tagName": tagText.text
-      });
-       Navigator.of(context).pop();
-      print(response);
-      if(response['status']=='success'){
-          var jsonData = response['data'] ;
-        TagsData tags =  TagsData.fromJson(jsonData);
-          print(tags.toJson());
-           listOfTags.add(tags);
-           print(listOfTags);
-           setState(() {});
-    }
-   }
-    catch (e){
-      showErrorToast(response['message']);
-    }
-     }
 
    Future getEventsTags() async {
-
-    var  response;
+  var  response;
    try{
        response = await DioService.post('get_all_tags_with_custom', {
         "usersId": AppData().userdetail!.users_id,
-         //"eventPostId" :
+         "eventPostId" : eventDetail.eventPostId
       });
        Navigator.of(context).pop();
       print(response);
@@ -117,6 +93,9 @@ class _EditCreatePageState extends State<EditCreatePage> {
        eventDetail=widget.event!;
        WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
        openLoadingDialog(context, "Loading...");
+       eventDetail.mixTags=[];
+       eventDetail.showTags= <String>[];
+       eventDetail.eventTags!.map((e) => eventDetail.mixTags!.add(e.tagId.toString())).toList();
        getEventType();
        getEventsTags();
        });
@@ -135,6 +114,8 @@ class _EditCreatePageState extends State<EditCreatePage> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: ConneventAppBar(),
       body: Container(
@@ -275,6 +256,7 @@ class _EditCreatePageState extends State<EditCreatePage> {
                       SizedBox(width: padding),
                       Expanded(
                         child: EventVideoPicker(
+                          isEdit: true,
                           previousImage:  eventDetail.second_video_thumbnail.contains('https') ? eventDetail.second_video_thumbnail : "",
                           onThumbNail: (thumb,thumbNail) {
                             eventDetail.secondThumbNail = thumb;
@@ -389,13 +371,38 @@ class _EditCreatePageState extends State<EditCreatePage> {
                         padding: const EdgeInsets.only(top:2.0,left: 4.0),
                         child: TextButton(
                           onPressed: () {
-                            if (eventDetail.eventTags!.any((element) => element.tagName==e.tagName)) eventDetail.eventTags!.removeWhere((element) => element.tagName==e.tagName);
-                             else eventDetail.eventTags!.add(e);
+                            ///-----------------------------///
+                            if (eventDetail.mixTags!.contains(e.tagId.toString()) || eventDetail.mixTags!.contains(e.tagName) ){
+                              if(e.tagType=="Default"){
+                                print(e.tagType);
+                                eventDetail.mixTags!.remove(e.tagId.toString());
+                                eventDetail.showTags!.remove(e.tagName.toString());
+                              }else if(e.tagType!="Default" && e.tagId!=null){
+                                eventDetail.mixTags!.remove(e.tagId.toString());
+                                eventDetail.showTags!.remove(e.tagName.toString());
+                              }
+                              else{
+                                eventDetail.mixTags!.remove(e.tagName);
+                                eventDetail.showTags!.remove(e.tagName.toString());
+                              }
+                            }
+                             else{
+                              if(e.tagType=="Default"){
+                                eventDetail.mixTags!.add(e.tagId.toString());
+                                eventDetail.showTags!.add(e.tagName.toString());
+                              }else if(e.tagType!="Default" && e.tagId!=null){
+                                eventDetail.mixTags!.add(e.tagId.toString());
+                                eventDetail.showTags!.add(e.tagName.toString());
+                              }else{
+                                eventDetail.mixTags!.add(e.tagName.toString());
+                                eventDetail.showTags!.add(e.tagName.toString());
+                              }
+                            }
                             setState(() {});
                           },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.only(left:8.0,right: 8.0),
-                            backgroundColor: eventDetail.eventTags!.any((element) => element.tagName==e.tagName) ? globalGreen : Colors.grey,
+                            backgroundColor: eventDetail.mixTags!.any((element) => element==e.tagId.toString())  || eventDetail.mixTags!.any((element) => element==e.tagName)? globalGreen : Colors.grey,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -411,7 +418,7 @@ class _EditCreatePageState extends State<EditCreatePage> {
                     onPressed: (){
                       if(tagText.text.isEmpty) return showErrorToast("Please type tag before adding");
                         else {
-                          addCustomTags();
+                        listOfTags.add(TagsData(tagName: tagText.text));
                           tagText.clear();
                           setState(() {});
                         }
@@ -434,6 +441,7 @@ class _EditCreatePageState extends State<EditCreatePage> {
                       onPressed: () async {
                         if (key.currentState!.validate()) {
                           key.currentState!.save();
+
                         if ((eventDetail.firstImage.isEmpty  && eventDetail.secondImage.isEmpty && eventDetail.thirdImage.isEmpty) && (eventDetail.firstVideo.isEmpty && eventDetail.secondVideo.isEmpty  && eventDetail.thirdVideo.isEmpty) )
                           return showErrorToast("You have to add atleast 1 Photo or video");
 

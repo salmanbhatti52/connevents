@@ -131,7 +131,6 @@ class _EventPreviewScreenState extends State<EventPreviewScreen> {
                       Image.network(widget.imageUrls[index].attachment):
                       VideoPlayScreen(
                        url: widget.imageUrls[index].media
-
                       );
                     },
 

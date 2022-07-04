@@ -166,7 +166,7 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                 SizedBox(height: padding,),
                 Wrap(
                   spacing: 8.0,
-                  children: widget.event.eventTags!.map((e) => Text("${e.tagName.toString() }", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: globalBlack, fontWeight: FontWeight.w300, fontSize: 14,),)).toList(),
+                  children: widget.event.showTags!.map((e) => Text("${e.toString() }", maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(color: globalBlack, fontWeight: FontWeight.w300, fontSize: 14,),)).toList(),
                 ),
                 SizedBox(height: padding * 2),
                 Row(
@@ -566,7 +566,7 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                             "eventTypeId": widget.event.eventTypeData!.eventTypeId,
                             "eventCategoryId": widget.event.category!.categoryId,
                              if(widget.event.eventTags!.isNotEmpty)
-                            "tags": widget.event.eventTags,
+                            "tags": widget.event.mixTags,
                             "eventStartDate": f.format(widget.event.pickedEventStartDate!),
                             "eventStartTime": DateFormat("HH:mm:ss").format(eventStartTime),
                             "eventEndDate": f.format(widget.event.pickedEventEndDate!),
@@ -615,16 +615,15 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                           print(response);
 
                            if(response['status']=='success'){
-                             print(response);
                           showSuccessToast("Your Event has been Edit Successfully");
                           event=EventDetail(  earlyBird: EarlyBird(), regular: Regular(), vip: VIP(), eventAddress: EventAddress(),skippingLine: SkippingLine());
                           Navigator.pop(context);
-
                           CustomNavigator.pushReplacement(context,TabsPage());
                            }
                            else{
                              Navigator.of(context).pop();
-                             showSuccessToast("Your Event has not been Edit Successfully");
+                             // response['message'];
+                             showSuccessToast(response['message']);
                            }
 
                     },

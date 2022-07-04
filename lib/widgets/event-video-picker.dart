@@ -14,13 +14,14 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 class EventVideoPicker extends StatefulWidget {
    String? previousImage;
   String? image;
+  bool isEdit;
   final Function(String)? onVideoPicked;
   final void Function()? onVideoDeleted;
   final void Function()? onEditVideoDeleted;
   final Function(String, File)? onThumbNail;
 
   EventVideoPicker(
-      {this.onVideoPicked,this.previousImage, this.onEditVideoDeleted,this.image, this.onVideoDeleted, this.onThumbNail});
+      {this.onVideoPicked,this.isEdit=false,this.previousImage, this.onEditVideoDeleted,this.image, this.onVideoDeleted, this.onThumbNail});
 
   @override
   _EventVideoPickerState createState() => _EventVideoPickerState();
@@ -108,8 +109,9 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
               ],
             ),
             child:Stack(
+              alignment: Alignment.center,
               children: [
-                Image.network(widget.previousImage!,fit: BoxFit.cover,),
+                Image.network(widget.previousImage!,fit: BoxFit.cover,height: 500),
                 Align(
                 alignment: Alignment(.95, -.95),
                 child: SizedBox(
@@ -144,10 +146,9 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
         child:GestureDetector(
           onTap: () async {
             final video = await ImagePicker().getVideo(source: ImageSource.gallery);
-
            double sizeInMb = await   getFileSize(video!.path,1);
            print(sizeInMb);
-           if(sizeInMb < 25){
+           if(sizeInMb <= 25){
              if (video != null) {
                setState(() {
                  this._video = video;
@@ -161,7 +162,10 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
                  this.progress = progress;
                  setState(() {});
                });
+               print("Res Data");
                print(ress);
+               print("Res Data");
+
                widget.onVideoPicked!(ress['data']);
 
                var res = await getThumbnailPath(video.path);
@@ -198,8 +202,7 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
         ),
       );
     } else {
-      return _video != null && thumb == null
-          ? Container(
+      return _video != null && thumb == null ? Container(
               padding: EdgeInsets.symmetric(horizontal: padding * 2, vertical: padding * 4),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -215,8 +218,7 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
                   CircularProgressIndicator(value: double.tryParse(progress))
                 ],
               ))
-          :
-      Container(
+          :  Container(
               constraints: BoxConstraints.expand(),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -235,7 +237,10 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
                           setState(() {
                             widget.previousImage = null;
                             _video = null;
-                            widget.onVideoDeleted!();
+                            // if(widget.isEdit)
+                            //   widget.onEditVideoDeleted!();
+                            //  else
+                              widget.onVideoDeleted!();
                           });
                         }),
                 ),

@@ -226,7 +226,6 @@ class _BroadcastPageState extends State<BroadcastPage> {
     channel.onMemberLeft = (AgoraRtmMember member) async{
 
       if(widget.eventHostName==member.userId){
-
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -277,6 +276,14 @@ class _BroadcastPageState extends State<BroadcastPage> {
          if(list[1]==AppData().userdetail!.user_name){
            changeRequestRole();
          }
+       }else if(list[2]=="Meeting Ended"){
+         if(widget.userId!=AppData().userdetail!.users_id)
+         showDialog(
+             barrierDismissible: false,
+             context: context,
+             builder: (BuildContext context) {
+               return MemberLeftAlert();
+             });
        }
 
 
@@ -907,7 +914,7 @@ class _BroadcastPageState extends State<BroadcastPage> {
                         child: Stack(
                           children: [
                             SvgPicture.asset('assets/icons/hand.svg', height: isClickHand ? 25 : 20  , color:isClickHand ? Colors.green: Color(0xffFFA800)),
-                            if(slidingPaneList.length > 0)
+                            if(slidingPaneList.length > 0 && AppData().userdetail!.users_id == widget.userId)
                             Container(
                               width: 12,
                               height: 12,

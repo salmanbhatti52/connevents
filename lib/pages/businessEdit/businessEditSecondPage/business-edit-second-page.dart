@@ -77,17 +77,17 @@ class _BusinessEditSecondPageState extends State<BusinessEditSecondPage> {
           "secondImageBasecode": business.secondImage,
         if(business.thirdImage.isNotEmpty && !business.thirdImage.contains('https'))
           "thirdImageBasecode": business.thirdImage,
-        if(business.first_video_thumbnail.isNotEmpty && business.first_video_thumbnail.contains('https'))
+        if(business.first_video_thumbnail.isNotEmpty && !business.first_video_thumbnail.contains('https'))
           "firstVideoThumbnail": business.first_video_thumbnail,
-        if(business.second_video_thumbnail.isNotEmpty && business.second_video_thumbnail.contains('https'))
+        if(business.second_video_thumbnail.isNotEmpty && !business.second_video_thumbnail.contains('https'))
           "secondVideoThumbnail": business.second_video_thumbnail,
-        if(business.third_video_thumbnail.isNotEmpty && business.third_video_thumbnail.contains('https'))
+        if(business.third_video_thumbnail.isNotEmpty && !business.third_video_thumbnail.contains('https'))
           "thirdVideoThumbnail": business.third_video_thumbnail,
-        if(business.firstVideo.isNotEmpty && business.firstVideo.contains('https'))
+        if(business.firstVideo.isNotEmpty && !business.firstVideo.contains('https'))
           "firstVideo": business.firstVideo,
-        if(business.secondVideo.isNotEmpty && business.secondVideo.contains('https'))
+        if(business.secondVideo.isNotEmpty && !business.secondVideo.contains('https'))
           "secondVideo": business.secondVideo,
-        if(business.thirdVideo.isNotEmpty && business.thirdVideo.contains('https'))
+        if(business.thirdVideo.isNotEmpty && !business.thirdVideo.contains('https'))
           "thirdVideo": business.thirdVideo,
         "description":business.description,
         "discount": business.discount,

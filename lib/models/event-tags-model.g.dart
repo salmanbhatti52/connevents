@@ -39,3 +39,24 @@ TagsData _$TagsDataFromJson(Map<String, dynamic> json) => TagsData(
       eventPostId: json['event_post_id'] as int?,
       eventTagId: json['event_tag_id'] as int?,
     )..id = json['id'] as String?;
+
+Map<String, dynamic> _$TagsDataToJson(TagsData instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('event_tag_id', instance.eventTagId);
+  writeNotNull('event_post_id', instance.eventPostId);
+  writeNotNull('tag_id', instance.tagId);
+  writeNotNull('tag_type', instance.tagType);
+  writeNotNull('tag_name', instance.tagName);
+  writeNotNull('custom_tag_users_id', instance.customTagUsersId);
+  writeNotNull('status', instance.status);
+  writeNotNull('isSelected', instance.isSelected);
+  return val;
+}

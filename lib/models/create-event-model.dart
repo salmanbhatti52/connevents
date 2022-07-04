@@ -123,6 +123,9 @@ class EventDetail extends BaseModelHive {
   DressCodeData? dressCodeData;
   @JsonKey(name: 'event_tags')
   List<TagsData>? eventTags;
+  List<String>? customEventTags;
+  List<String>? showTags;
+  List<String>? mixTags;
   TagsData? eventTagsData;
   @JsonKey(name: 'event_tickets')
   List<EventTicket> eventTickets;
@@ -204,6 +207,9 @@ class EventDetail extends BaseModelHive {
   bool isAdmin;
 
   EventDetail({
+    this.mixTags,
+    this.showTags,
+    this.customEventTags,
     this.isAdmin=false,
     this.isEditableEvent=false,
     this.isPeeksAvailable=false,
