@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/models/event-address-model.dart';
@@ -59,6 +60,17 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
   TextEditingController tagText=TextEditingController();
 
 
+  getFileSize(String filepath, int decimals) async {
+    var file = File(filepath);
+    int bytes = await file.length();
+    if (bytes <= 0) return "0 B";
+    const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    var i = (log(bytes) / log(1024)).floor();
+    return ((bytes / pow(1000, i)));
+  }
+
+
+
    Future  _cropImage(String imagePath) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: imagePath,
@@ -97,6 +109,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
       var resultList = await MultiImagePicker.pickImages(
           maxImages: 3 - imagePath.length,
           enableCamera: false,
+
           selectedAssets: listOfImages,
           cupertinoOptions: CupertinoOptions(
             takePhotoIcon: "chat",
@@ -110,12 +123,12 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
             selectCircleStrokeColor: "#000000",
           ));
 
-
-
          for(var i=0 ; i<resultList.length; i++){
           final byteData = await resultList[i].getByteData();
           final tempFile = File("${(await getTemporaryDirectory()).path}/${resultList[i].name}");
           final file = await tempFile.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+          double sizeinMb = await getFileSize(file.path, 1);
+          if(sizeinMb>2) return showErrorToast("You can't select more than 25 Mb size");
            await _cropImage(file.path);
            imagePath.add(imageFile!.path);
 
