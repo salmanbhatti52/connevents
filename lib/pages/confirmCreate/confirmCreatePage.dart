@@ -631,7 +631,6 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                           // try{
                           final response= await DioService.post('create_event_post',datToPost);
                           if(response['status']=='success'){
-                             print(response);
                              AppData().userdetail!.one_time_post_count=response['one_time_post_count'];
 
                              event=EventDetail( earlyBird: EarlyBird(), regular: Regular(), vip: VIP(), eventAddress: EventAddress(),skippingLine: SkippingLine());

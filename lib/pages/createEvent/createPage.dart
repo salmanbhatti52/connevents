@@ -128,7 +128,7 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
           final tempFile = File("${(await getTemporaryDirectory()).path}/${resultList[i].name}");
           final file = await tempFile.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
           double sizeinMb = await getFileSize(file.path, 1);
-          if(sizeinMb>2) return showErrorToast("You can't select more than 25 Mb size");
+          // if(sizeinMb>25) return showErrorToast("You can't select more than 25 Mb size");
            await _cropImage(file.path);
            imagePath.add(imageFile!.path);
 
@@ -232,443 +232,453 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
         automaticallyImplyLeading: false,
         elevation: 0),
         body: CreateContainer(
-          child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Form(
-              key: key,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  BaseTabCreatePage(selectedSegment: (val){
-                    selectedSegment=val;
-                    setState(() {});
-                  }),
-                  selectedSegment=='Events' ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                       Padding(
-                        padding: const EdgeInsets.only(bottom: padding / 9,top: padding*2),
-                        child: Text('Create Post', style: TextStyle(color: globalBlack, fontSize: 30, fontWeight: FontWeight.bold),),
-                      ),
-                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: padding / 1.2),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            text(title:'Event Title',color: globalBlack, fontSize: 18,fontWeight: FontWeight.bold ),
-                            text(title:'*',color: Colors.red, fontSize: 18,fontWeight: FontWeight.bold ),
-                          ],
-                        ),
-                  ),
-                      Padding(
-                         padding: const EdgeInsets.only(bottom: 12.0),
-                         child: ConneventsTextField(
-                          value: event.title,
-                          validator: (val) => val!.isEmpty ? "Please Enter your Title" : null,
-                          onSaved: (val) => setState(() => event.title = val!),
-                          hintText: 'Enter Event Title',
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+          child: Column(
+            children: [
+              BaseTabCreatePage(selectedSegment: (val){
+                selectedSegment=val;
+                setState(() {});
+              }),
+              Expanded(
+                child: ListView(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  children: [
+                    Form(
+                      key: key,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          imagePath.asMap().containsKey(0)  ? Expanded(
-                          child: SizedBox(
-                              height: 160,
-                              child: Stack(
-                                children: [
-                                 Image.file(File(imagePath[0]),width: 200, height: 305,fit: BoxFit.cover),
-                                   Positioned(
-                                      top: 2,
-                                      right: -2,
-                                      child: SizedBox(
-                                        height: 30,
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.red,
-                                          child: IconButton(
-                                              icon: Icon(Icons.delete, color: Colors.white, size: 15,),
-                                              onPressed: () => setState(()
-                                              {
-                                                imagePath.remove(imagePath.elementAt(0));
-                                                if(event.firstImage.isEmpty){
-                                                 if(event.secondImage.isNotEmpty){
-                                                   event.secondImage="";
-                                                 }else if(event.thirdImage.isNotEmpty)
-                                                   event.thirdImage="";
-                                                }
-                                                event.firstImage="";
-                                              }
 
 
-                                              )
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-
-                                ],
-                              ))) :
-                          Expanded(
-                            child: imageContainer(
-                              child: Stack(
-                                  clipBehavior: Clip.none, children: [
-                                GestureDetector(
-                                  onTap: loadAssets,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset('assets/icons/selectPhoto.svg', fit: BoxFit.fitWidth,),
-                                      SizedBox(height: padding),
-                                      text(title:'Upload Photo',color: globalBlack.withOpacity(0.3), fontSize: 12,fontWeight: FontWeight.bold ),
-                                    ],
-                                  ),
-                                ),
-
-                              ]),
-                            ),
-                          ),
-                          SizedBox(width: padding),
-                          imagePath.asMap().containsKey(1) ?
-                          Expanded(
-                         child: SizedBox(
-                             height: 160,
-                             child: Stack(
-                               children: [
-                                Image.file(File(imagePath[1]),width: 200, height: 305,fit: BoxFit.cover),
-                                 Positioned(
-                                  top: 2,
-                                  right: -2,
-                                  child: SizedBox(
-                                    height: 30,
-                                    child: CircleAvatar(
-                                      backgroundColor: Colors.red,
-                                      child: IconButton(
-                                          icon: Icon(Icons.delete, color: Colors.white, size: 15,),
-                                          onPressed: () => setState(() {
-                                            imagePath.remove(imagePath.elementAt(1));
-                                            if(event.secondImage.isEmpty){
-                                              if(event.firstImage.isNotEmpty){
-                                                event.firstImage="";
-                                              }else if(event.thirdImage.isNotEmpty)
-                                                event.thirdImage="";
-                                            }
-                                            event.secondImage="";
-
-                                          }
-                                          )
-                                  ),
-                                    ),
-                                  ),
-                                ),
-                               ],
-                             ))):
-                          Expanded(
-                              child:imageContainer(
-                                child: Stack(
-                                    children: [
-                                  GestureDetector(
-                                    onTap: loadAssets,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                         SvgPicture.asset('assets/icons/selectPhoto.svg', fit: BoxFit.fitWidth,),
-                                         SizedBox(height: padding),
-                                         text(title:'Upload Photo',color: globalBlack.withOpacity(0.3), fontSize: 12,fontWeight: FontWeight.bold ),
-
-                                      ],
-                                    ),
-                                  ),
-
-                                ]),
-                              )),
-                          SizedBox(width: padding,),
-                         imagePath.asMap().containsKey(2) ?
-                         Expanded(child:
-                         SizedBox( height: 160,
-                             child: Stack(
-                               children: [
-                                 Image.file(File(imagePath[2]),width: 200, height: 305,fit: BoxFit.cover),
-                                  Positioned(
-                                    top: 2,
-                                    right: -2,
-                                    child: SizedBox(
-                                      height: 30,
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.red,
-                                        child: IconButton(
-                                            icon: Icon(Icons.delete, color: Colors.white, size: 15),
-                                            onPressed: () {
-                                              setState(() {
-                                                imagePath.remove(imagePath.elementAt(2));
-
-                                                if(event.thirdImage.isEmpty){
-                                                  if(event.firstImage.isNotEmpty){
-                                                    event.firstImage="";
-                                                  }else if(event.secondImage.isNotEmpty)
-                                                    event.secondImage="";
-                                                }
-                                                event.thirdImage="";
-
-
-                                              });
-                                            }),
-                                      ),
-                                    ),
-                                  ),
-                               ],
-                             ))):
-                          Expanded(
-                              child: imageContainer(
-                                child: Stack(
+                          selectedSegment=='Events' ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: padding / 9,top: padding*2),
+                                child: Text('Create Post', style: TextStyle(color: globalBlack, fontSize: 30, fontWeight: FontWeight.bold),),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: padding / 1.2),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    GestureDetector(
-                                      onTap: loadAssets,
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-
-                                           SvgPicture.asset('assets/icons/selectPhoto.svg', fit: BoxFit.fitWidth,),
-                                          SizedBox(height: padding,),
-                                          text(title:'Upload Photo',color: globalBlack.withOpacity(0.3), fontSize: 12,fontWeight: FontWeight.bold ),
-                                        ],
-                                      ),
-                                    ),
-
+                                    text(title:'Event Title',color: globalBlack, fontSize: 18,fontWeight: FontWeight.bold ),
+                                    text(title:'*',color: Colors.red, fontSize: 18,fontWeight: FontWeight.bold ),
                                   ],
                                 ),
-                              )),
-                        ],
-                      ),
-                      SizedBox(height: padding),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: EventVideoPicker(
-                              isEdit: false,
-                              onThumbNail: (thumb,thumbNail) async
-                              {
-                                event.firstThumbNail = thumb;
-                                  List<int> imageBytes = thumbNail.readAsBytesSync();
-                                event.first_video_thumbnail = base64Encode(imageBytes);
-                              },
-                              onVideoPicked: (file) async {
-                                event.firstVideo = file;
-                              },
-                              onVideoDeleted: () async {
-                                openLoadingDialog(context, "deleting");
-                             var res   = await DioService.post('delete_video', {
-                                   'fileName': event.firstVideo
-                                 });
-                                print(res);
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ),
-                          SizedBox(width: padding),
-                          Expanded(
-                            child: EventVideoPicker(
-
-                              onThumbNail: (thumb,thumbNail) {
-                                event.secondThumbNail = thumb;
-                                List<int> imageBytes = thumbNail.readAsBytesSync();
-                                event.second_video_thumbnail = base64Encode(imageBytes);
-                              },
-                              onVideoPicked: (file) async {
-                               event.secondVideo = file;
-                              },
-                              onVideoDeleted: () async {
-                                openLoadingDialog(context, "deleting");
-                             var res   = await DioService.post('delete_video', {
-                                   'fileName': event.secondVideo
-                                 });
-                                print(res);
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ),
-                          SizedBox(width: padding),
-                          Expanded(
-                            child: EventVideoPicker(
-                              onThumbNail: (thumb,thumbNail) async{
-                                 event.thirdThumbNail = thumb;
-                                  List<int> imageBytes = thumbNail.readAsBytesSync();
-                                event.third_video_thumbnail = base64Encode(imageBytes);
-                              },
-                              onVideoPicked: (file) async {
-                                event.thirdVideo = file;
-                              },
-                              onVideoDeleted: () async {
-                                openLoadingDialog(context, "deleting");
-                             var res   = await DioService.post('delete_video', {
-                                   'fileName': event.thirdVideo
-                                 });
-                                print(res);
-
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: padding),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: padding),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            text(title:'Event Type',color: globalBlack, fontSize: 18,fontWeight: FontWeight.bold ),
-                            text(title:'*',color: Colors.red, fontSize: 18,fontWeight: FontWeight.bold ),
-                          ],
-                        ),
-                      ),
-                      dropDownContainer(
-                        child: DropdownButton<EventTypes>(
-                          underline: Container(),
-                          isExpanded: true,
-                          iconEnabledColor: Colors.black,
-                          focusColor: Colors.black,
-                          hint: Text("Select Event Type"),
-                          icon: Icon(Icons.arrow_drop_down_rounded),
-                          items: listOfEventType?.event_types?.map((value) {
-                           // FocusManager.instance.primaryFocus?.unfocus();
-                            return new DropdownMenuItem<EventTypes>(
-                              value: value,
-                              child: Text(value.eventType.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (newValue) => setState(() {
-                                event.eventTypeData = newValue;
-                                 event.category=null;
-                          }),
-                          value: event.eventTypeData,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: padding),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            text(title:'Category',color:globalBlack,fontSize: 18, fontWeight: FontWeight.bold),
-                            text(title:'*',color:Colors.red,fontSize: 18, fontWeight: FontWeight.bold)
-                          ],
-                        ),
-                      ),
-
-                      dropDownContainer(
-                        child: DropdownButton<EventTypeCategories>(
-                          underline: Container(),
-                          isExpanded: true,
-                          iconEnabledColor: Colors.black,
-                          focusColor: Colors.black,
-                          hint: Text("Select Category"),
-                          icon: Icon(Icons.arrow_drop_down_rounded),
-                          items: event.eventTypeData?.categories?.map((value) {
-                            return new DropdownMenuItem<EventTypeCategories>(
-                              value: value,
-                              child: Text(value.category.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (newValue) => setState(() => event.category = newValue!),
-                          value: event.category,
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: padding * 2,bottom: padding),
-                        child: Wrap(
-                            children: listOfTags.map((e) {
-                          return Padding(
-                            padding: const EdgeInsets.only(top:2.0,left: 4.0),
-                            child: TextButton(
-                              onPressed: () {
-                                if (event.customEventTags!.contains(e.tagId.toString()) || event.customEventTags!.contains(e.tagName)) {
-                                    if(e.tagType=="Default"){
-                                      event.customEventTags!.remove(e.tagId.toString());
-                                      event.showTags!.remove(e.tagName.toString());
-                                    }
-                                    else{
-                                      event.customEventTags!.remove(e.tagName);
-                                      event.showTags!.remove(e.tagName.toString());
-                                    }
-                                  }
-                                 else{
-                                  if(e.tagType=="Default"){
-                                    event.customEventTags!.add(e.tagId.toString());
-                                    event.showTags!.add(e.tagName.toString());
-                                  }
-                                  else{
-                                    event.customEventTags!.add(e.tagName!);
-                                    event.showTags!.add(e.tagName.toString());
-                                  }
-                                }
-                                setState(() {});
-                              },
-                              style: TextButton.styleFrom(
-                                padding: EdgeInsets.only(left:8.0,right: 8.0),
-                                backgroundColor: event.customEventTags!.contains(e.tagId.toString()) || event.customEventTags!.contains(e.tagName)  ? globalGreen : Colors.grey,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 12.0),
+                                child: ConneventsTextField(
+                                  value: event.title,
+                                  validator: (val) => val!.isEmpty ? "Please Enter your Title" : null,
+                                  onSaved: (val) => setState(() => event.title = val!),
+                                  hintText: 'Enter Event Title',
                                 ),
                               ),
-                              child: Text(e.tagName.toString(), style: TextStyle(color: Colors.white, fontSize: 13),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  imagePath.asMap().containsKey(0)  ? Expanded(
+                                      child: SizedBox(
+                                          height: 160,
+                                          child: Stack(
+                                            children: [
+                                              Image.file(File(imagePath[0]),width: 200, height: 305,fit: BoxFit.cover),
+                                              Positioned(
+                                                top: 2,
+                                                right: -2,
+                                                child: SizedBox(
+                                                  height: 30,
+                                                  child: CircleAvatar(
+                                                    backgroundColor: Colors.red,
+                                                    child: IconButton(
+                                                        icon: Icon(Icons.delete, color: Colors.white, size: 15,),
+                                                        onPressed: () => setState(()
+                                                        {
+                                                          imagePath.remove(imagePath.elementAt(0));
+                                                          if(event.firstImage.isEmpty){
+                                                            if(event.secondImage.isNotEmpty){
+                                                              event.secondImage="";
+                                                            }else if(event.thirdImage.isNotEmpty)
+                                                              event.thirdImage="";
+                                                          }
+                                                          event.firstImage="";
+                                                        }
+
+
+                                                        )
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                            ],
+                                          ))) :
+                                  Expanded(
+                                    child: imageContainer(
+                                      child: Stack(
+                                          clipBehavior: Clip.none, children: [
+                                        GestureDetector(
+                                          onTap: loadAssets,
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset('assets/icons/selectPhoto.svg', fit: BoxFit.fitWidth,),
+                                              SizedBox(height: padding),
+                                              text(title:'Upload Photo',color: globalBlack.withOpacity(0.3), fontSize: 12,fontWeight: FontWeight.bold ),
+                                            ],
+                                          ),
+                                        ),
+
+                                      ]),
+                                    ),
+                                  ),
+                                  SizedBox(width: padding),
+                                  imagePath.asMap().containsKey(1) ?
+                                  Expanded(
+                                      child: SizedBox(
+                                          height: 160,
+                                          child: Stack(
+                                            children: [
+                                              Image.file(File(imagePath[1]),width: 200, height: 305,fit: BoxFit.cover),
+                                              Positioned(
+                                                top: 2,
+                                                right: -2,
+                                                child: SizedBox(
+                                                  height: 30,
+                                                  child: CircleAvatar(
+                                                    backgroundColor: Colors.red,
+                                                    child: IconButton(
+                                                        icon: Icon(Icons.delete, color: Colors.white, size: 15,),
+                                                        onPressed: () => setState(() {
+                                                          imagePath.remove(imagePath.elementAt(1));
+                                                          if(event.secondImage.isEmpty){
+                                                            if(event.firstImage.isNotEmpty){
+                                                              event.firstImage="";
+                                                            }else if(event.thirdImage.isNotEmpty)
+                                                              event.thirdImage="";
+                                                          }
+                                                          event.secondImage="";
+
+                                                        }
+                                                        )
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ))):
+                                  Expanded(
+                                      child:imageContainer(
+                                        child: Stack(
+                                            children: [
+                                              GestureDetector(
+                                                onTap: loadAssets,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    SvgPicture.asset('assets/icons/selectPhoto.svg', fit: BoxFit.fitWidth,),
+                                                    SizedBox(height: padding),
+                                                    text(title:'Upload Photo',color: globalBlack.withOpacity(0.3), fontSize: 12,fontWeight: FontWeight.bold ),
+
+                                                  ],
+                                                ),
+                                              ),
+
+                                            ]),
+                                      )),
+                                  SizedBox(width: padding,),
+                                  imagePath.asMap().containsKey(2) ?
+                                  Expanded(child:
+                                  SizedBox( height: 160,
+                                      child: Stack(
+                                        children: [
+                                          Image.file(File(imagePath[2]),width: 200, height: 305,fit: BoxFit.cover),
+                                          Positioned(
+                                            top: 2,
+                                            right: -2,
+                                            child: SizedBox(
+                                              height: 30,
+                                              child: CircleAvatar(
+                                                backgroundColor: Colors.red,
+                                                child: IconButton(
+                                                    icon: Icon(Icons.delete, color: Colors.white, size: 15),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        imagePath.remove(imagePath.elementAt(2));
+
+                                                        if(event.thirdImage.isEmpty){
+                                                          if(event.firstImage.isNotEmpty){
+                                                            event.firstImage="";
+                                                          }else if(event.secondImage.isNotEmpty)
+                                                            event.secondImage="";
+                                                        }
+                                                        event.thirdImage="";
+
+
+                                                      });
+                                                    }),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ))):
+                                  Expanded(
+                                      child: imageContainer(
+                                        child: Stack(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: loadAssets,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+
+                                                  SvgPicture.asset('assets/icons/selectPhoto.svg', fit: BoxFit.fitWidth,),
+                                                  SizedBox(height: padding,),
+                                                  text(title:'Upload Photo',color: globalBlack.withOpacity(0.3), fontSize: 12,fontWeight: FontWeight.bold ),
+                                                ],
+                                              ),
+                                            ),
+
+                                          ],
+                                        ),
+                                      )),
+                                ],
                               ),
-                            ),
-                          );
-                        }).toList()),
-                      ),
-                     CustomTagContainer(
-                      onPressed: (){
-                        if(tagText.text.isEmpty) return showErrorToast("Please type tag before adding");
-                          else {
-                            listOfTags.add(TagsData(
-                              tagName: tagText.text
-                            ));
-                           // addCustomTags();
-                            tagText.clear();
-                            setState(() {});
-                          }
-                      },
-                      tagText: tagText,
-                    ),
-                      SizedBox(height: padding),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: globalGreen,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          onPressed: () async {
-                            if (key.currentState!.validate()) {
-                              key.currentState!.save();
-                              print(event.customEventTags!.toList());
-                             if ((event.firstVideo.isEmpty && event.secondVideo.isEmpty  && event.thirdVideo.isEmpty) && (imagePath.length < 1) )
-                               return showErrorToast("You have to add atleast 1 image or video");
+                              SizedBox(height: padding),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: EventVideoPicker(
+                                      isEdit: false,
+                                      onThumbNail: (thumb,thumbNail) async
+                                      {
+                                        event.firstThumbNail = thumb;
+                                        List<int> imageBytes = thumbNail.readAsBytesSync();
+                                        event.first_video_thumbnail = base64Encode(imageBytes);
+                                      },
+                                      onVideoPicked: (file) async {
+                                        event.firstVideo = file;
+                                      },
+                                      onVideoDeleted: () async {
+                                        openLoadingDialog(context, "deleting");
+                                        var res   = await DioService.post('delete_video', {
+                                          'fileName': event.firstVideo
+                                        });
+                                        print(res);
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(width: padding),
+                                  Expanded(
+                                    child: EventVideoPicker(
 
-                              if (event.category == null) return showErrorToast("You have to select a Category");
+                                      onThumbNail: (thumb,thumbNail) {
+                                        event.secondThumbNail = thumb;
+                                        List<int> imageBytes = thumbNail.readAsBytesSync();
+                                        event.second_video_thumbnail = base64Encode(imageBytes);
+                                      },
+                                      onVideoPicked: (file) async {
+                                        event.secondVideo = file;
+                                      },
+                                      onVideoDeleted: () async {
+                                        openLoadingDialog(context, "deleting");
+                                        var res   = await DioService.post('delete_video', {
+                                          'fileName': event.secondVideo
+                                        });
+                                        print(res);
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(width: padding),
+                                  Expanded(
+                                    child: EventVideoPicker(
+                                      onThumbNail: (thumb,thumbNail) async{
+                                        event.thirdThumbNail = thumb;
+                                        List<int> imageBytes = thumbNail.readAsBytesSync();
+                                        event.third_video_thumbnail = base64Encode(imageBytes);
+                                      },
+                                      onVideoPicked: (file) async {
+                                        event.thirdVideo = file;
+                                      },
+                                      onVideoDeleted: () async {
+                                        openLoadingDialog(context, "deleting");
+                                        var res   = await DioService.post('delete_video', {
+                                          'fileName': event.thirdVideo
+                                        });
+                                        print(res);
 
-                              if (event.eventTypeData == null) return showErrorToast("You have to select a Event Type");
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: padding),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: padding),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    text(title:'Event Type',color: globalBlack, fontSize: 18,fontWeight: FontWeight.bold ),
+                                    text(title:'*',color: Colors.red, fontSize: 18,fontWeight: FontWeight.bold ),
+                                  ],
+                                ),
+                              ),
+                              dropDownContainer(
+                                child: DropdownButton<EventTypes>(
+                                  underline: Container(),
+                                  isExpanded: true,
+                                  iconEnabledColor: Colors.black,
+                                  focusColor: Colors.black,
+                                  hint: Text("Select Event Type"),
+                                  icon: Icon(Icons.arrow_drop_down_rounded),
+                                  items: listOfEventType?.event_types?.map((value) {
+                                    // FocusManager.instance.primaryFocus?.unfocus();
+                                    return new DropdownMenuItem<EventTypes>(
+                                      value: value,
+                                      child: Text(value.eventType.toString()),
+                                    );
+                                  }).toList(),
+                                  onChanged: (newValue) => setState(() {
+                                    event.eventTypeData = newValue;
+                                    event.category=null;
+                                  }),
+                                  value: event.eventTypeData,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: padding),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    text(title:'Category',color:globalBlack,fontSize: 18, fontWeight: FontWeight.bold),
+                                    text(title:'*',color:Colors.red,fontSize: 18, fontWeight: FontWeight.bold)
+                                  ],
+                                ),
+                              ),
 
-                             // if (event.eventTags!.isEmpty) return showErrorToast("You have to select Some Tags");
+                              dropDownContainer(
+                                child: DropdownButton<EventTypeCategories>(
+                                  underline: Container(),
+                                  isExpanded: true,
+                                  iconEnabledColor: Colors.black,
+                                  focusColor: Colors.black,
+                                  hint: Text("Select Category"),
+                                  icon: Icon(Icons.arrow_drop_down_rounded),
+                                  items: event.eventTypeData?.categories?.map((value) {
+                                    return new DropdownMenuItem<EventTypeCategories>(
+                                      value: value,
+                                      child: Text(value.category.toString()),
+                                    );
+                                  }).toList(),
+                                  onChanged: (newValue) => setState(() => event.category = newValue!),
+                                  value: event.category,
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(top: padding * 2,bottom: padding),
+                                child: Wrap(
+                                    children: listOfTags.map((e) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(top:2.0,left: 4.0),
+                                        child: TextButton(
+                                          onPressed: () {
+                                            if (event.customEventTags!.contains(e.tagId.toString()) || event.customEventTags!.contains(e.tagName)) {
+                                              if(e.tagType=="Default"){
+                                                event.customEventTags!.remove(e.tagId.toString());
+                                                event.showTags!.remove(e.tagName.toString());
+                                              }
+                                              else{
+                                                event.customEventTags!.remove(e.tagName);
+                                                event.showTags!.remove(e.tagName.toString());
+                                              }
+                                            }
+                                            else{
+                                              if(e.tagType=="Default"){
+                                                event.customEventTags!.add(e.tagId.toString());
+                                                event.showTags!.add(e.tagName.toString());
+                                              }
+                                              else{
+                                                event.customEventTags!.add(e.tagName!);
+                                                event.showTags!.add(e.tagName.toString());
+                                              }
+                                            }
+                                            setState(() {});
+                                          },
+                                          style: TextButton.styleFrom(
+                                            padding: EdgeInsets.only(left:8.0,right: 8.0),
+                                            backgroundColor: event.customEventTags!.contains(e.tagId.toString()) || event.customEventTags!.contains(e.tagName)  ? globalGreen : Colors.grey,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                          child: Text(e.tagName.toString(), style: TextStyle(color: Colors.white, fontSize: 13),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList()),
+                              ),
+                              CustomTagContainer(
+                                onPressed: (){
+                                  if(tagText.text.isEmpty) return showErrorToast("Please type tag before adding");
+                                  else {
+                                    listOfTags.add(TagsData(
+                                        tagName: tagText.text
+                                    ));
+                                    // addCustomTags();
+                                    tagText.clear();
+                                    setState(() {});
+                                  }
+                                },
+                                tagText: tagText,
+                              ),
+                              SizedBox(height: padding),
+                              SizedBox(
+                                width: double.infinity,
+                                height: 50,
+                                child: TextButton(
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: globalGreen,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      if (key.currentState!.validate()) {
+                                        key.currentState!.save();
+                                        print(event.customEventTags!.toList());
+                                        if ((event.firstVideo.isEmpty && event.secondVideo.isEmpty  && event.thirdVideo.isEmpty) && (imagePath.length < 1) )
+                                          return showErrorToast("You have to add atleast 1 image or video");
 
-                              CustomNavigator.navigateTo(context, CreateSecondPage(event: event));
-                            }
-                          },
-                          child: text(title:'Next'.toUpperCase(), color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold )
-                        ),
-                      )
+                                        if (event.category == null) return showErrorToast("You have to select a Category");
 
+                                        if (event.eventTypeData == null) return showErrorToast("You have to select a Event Type");
+
+                                        // if (event.eventTags!.isEmpty) return showErrorToast("You have to select Some Tags");
+
+                                        CustomNavigator.navigateTo(context, CreateSecondPage(event: event));
+                                      }
+                                    },
+                                    child: text(title:'Next'.toUpperCase(), color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold )
+                                ),
+                              )
+
+                            ],
+                          ) : BusinessCreateFirstPage()
                         ],
-                      ) : BusinessCreateFirstPage()
-                ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
     );

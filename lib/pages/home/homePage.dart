@@ -856,6 +856,21 @@ class _HomePageState extends State<HomePage> {
                           ),
                       ],
                     ),
+
+                    if(isVisibleTags && tagsList.isNotEmpty)
+                      Align(
+                          alignment: Alignment.topRight,
+                          child: InkWell(
+                              onTap:() async{
+                                isVisibleTags=false;
+                                tagsList.clear();
+                                listOfTags.map((e) => e.isSelected=false).toList();
+                                setState(() {});
+                                openLoadingDialog(context, 'loading');
+                                await  getEvents(isReFresh: true);
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("Clear Filter", style: TextStyle(color: Color(0xffF3960B),decoration: TextDecoration.underline,)))),
                   ],
                 ))),
             Expanded(
@@ -895,20 +910,6 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
 
-                  if(isVisibleTags && tagsList.isNotEmpty)
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: InkWell(
-                          onTap:() async{
-                            isVisibleTags=false;
-                            tagsList.clear();
-                            listOfTags.map((e) => e.isSelected=false).toList();
-                            setState(() {});
-                            openLoadingDialog(context, 'loading');
-                            await  getEvents(isReFresh: true);
-                            Navigator.of(context).pop();
-                          },
-                          child: Text("Clear Filter", style: TextStyle(color: Color(0xffF3960B),decoration: TextDecoration.underline,)))),
                   if(AppData().userLocation != null)
                   selectedSegment=="Events" ?
                   eventDetail.length > 0 ?
