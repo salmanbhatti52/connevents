@@ -25,22 +25,34 @@ class _DashboardPageState extends State<DashboardPage> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: SingleChildScrollView(
-          // physics: NeverScrollableScrollPhysics(),
-          child: Container(
-            padding: EdgeInsets.only(left:padding * 2,right:padding * 2,top:8 ,bottom:20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-               BaseTabCreatePage(selectedSegment: (val) =>setState(() =>selectedSegment=val)),
-                SizedBox(height: 15),
-                if(selectedSegment=='Events')
-                  EventDashboard()
-                else
-                  BusinessDashboardPage()
-              ],
+        child: Column(
+          children: [
+            Container(
+                padding: EdgeInsets.only(left:padding * 2,right:padding * 2,top:8 ,bottom:20.0),
+                child:  BaseTabCreatePage(selectedSegment: (val) =>setState(() =>selectedSegment=val)),
             ),
-          ),
+           Expanded(
+             child: ListView(
+               physics: BouncingScrollPhysics(),
+               scrollDirection: Axis.vertical,
+               shrinkWrap: true,
+               children: [
+                 Container(
+                   padding: EdgeInsets.only(left:padding * 2,right:padding * 2,top:8 ,bottom:20.0),
+                   child: Column(
+                     children: [
+                       SizedBox(height: 15),
+                       if(selectedSegment=='Events')
+                         EventDashboard()
+                       else
+                         BusinessDashboardPage()
+                     ],
+                   ),
+                 ),
+               ],
+             ),
+           ),
+          ],
         ),
       ),
     );
