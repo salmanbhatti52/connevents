@@ -187,13 +187,12 @@ late VideoPlayerController _controller;
                   children: [
                     InkWell(
                         onTap: () async {
-                          if(widget.peekDetail!.eventDetail!.eventTicketType=="Paid") {
                             _controller.pause();
                          bool  isPlay =    await CustomNavigator.navigateTo(context, EventDetailsPage(fromPeeks: true, event: widget.peekDetail!.eventDetail!,images: parseMedia(widget.peekDetail!.eventDetail!)));
                          if(isPlay)
                            _controller.play();
 
-                          }
+
                         },
                         child: Text(widget.peekDetail!.eventTitle!,style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold))),
                     Row(

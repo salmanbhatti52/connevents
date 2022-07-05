@@ -351,10 +351,16 @@ late  EventDetail event;
                               onChanged: (newValue) => setState((){
                                 bool  isAvailable= widget.event.eventTags!.any((element) => element.tagName=="Non alcoholic");
                                 if(isAvailable) {
-                                  if (newValue!.dressCode == "Casual wear") return showErrorToast("You can't select this dress code because You have selected No alcoholic Tag");
+                                  print(newValue!.dressCode);
+                                  if (newValue.dressCode == "Casual wear")
+                                    return showErrorToast("You can't select this dress code because You have selected Non alcoholic Tag");
                                 }
-                                else event.dressCode = newValue;
-                                event.dressCode = newValue;
+                                else{
+                                  widget.event.dressCodeData = newValue;
+                                }
+                                widget.event.dressCodeData = newValue;
+
+
                               }),
                               value: event.dressCode),
                         ),

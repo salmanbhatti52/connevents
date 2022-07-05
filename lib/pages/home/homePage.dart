@@ -337,7 +337,8 @@ class _HomePageState extends State<HomePage> {
       List<EventDetail> events = event.map<EventDetail>((e) => EventDetail.fromJson(e)).toList();
       events.map((e) => distance.add(Distance(long: e.locationLong!, lat: e.locationLat!))).toList();
       // events.sort((b,a)=>a.eventPostId!.compareTo(b.eventPostId!));
-      print(events.first.title);
+      print('-------------------------------------------------');
+      print(events.first.toJson());
       if(isReFresh)  eventDetail = events;
       else eventDetail.addAll(events);
       print(events.length);
@@ -903,7 +904,7 @@ class _HomePageState extends State<HomePage> {
             }
           },
           child: SingleChildScrollView(
-            physics:NeverScrollableScrollPhysics(),
+             physics:NeverScrollableScrollPhysics(),
             child: Container(
               padding: EdgeInsets.only(left:padding * 2,right: padding * 2),
               decoration: BoxDecoration(color: globallightbg),

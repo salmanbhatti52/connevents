@@ -45,7 +45,7 @@ class _ShowSearchBarState extends State<ShowSearchBar> {
                      widget.onSearch!(search.text);
                     }
                     else
-                      showErrorToast("Please Some Text");
+                      showErrorToast("Please Enter Some Text");
 
                   },
                    icon: Icon(Icons.search, color: Colors.white)),

@@ -63,6 +63,7 @@ class _BroadcastPageState extends State<BroadcastPage> {
   List<String> list=[];
   String joinedUser="";
   bool isAllowing=false;
+  final ScrollController _scrollController = ScrollController();
 
   LogController logController = LogController();
 
@@ -464,7 +465,11 @@ class _BroadcastPageState extends State<BroadcastPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.easeInOut
+    );
       SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
@@ -834,9 +839,10 @@ class _BroadcastPageState extends State<BroadcastPage> {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top:80),
-              height:MediaQuery.of(context).size.height/2,
+              margin: EdgeInsets.only(top:50),
+              height:MediaQuery.of(context).size.height/2.2,
               child: ListView.builder(
+                controller: _scrollController,
                physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,

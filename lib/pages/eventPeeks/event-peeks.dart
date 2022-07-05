@@ -168,7 +168,7 @@ class _EventPeeksState extends State<EventPeeks> {
           setState(() {});
         },
       ):SizedBox(),
-      body :widget.fromHome ? mainLoading ? Center(child: CircularProgressIndicator()) :    Stack(
+      body :widget.fromHome ?    Stack(
         children: [
           isLoading ? Positioned(
                bottom: 10,

@@ -56,10 +56,13 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
   getFileSize(String filepath, int decimals) async {
     var file = File(filepath);
     int bytes = await file.length();
+
     if (bytes <= 0) return "0 B";
-    const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-    var i = (log(bytes) / log(1024)).floor();
-    return ((bytes / pow(1000, i)));
+    // const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    // var i = (log(bytes) / log(1024)).floor();
+    // print('bytes');
+    // print(((bytes / pow(1000, 1))));
+    return ((bytes / 1048576));
   }
 
 
@@ -147,6 +150,7 @@ class _EventVideoPickerState extends State<EventVideoPicker> {
           onTap: () async {
             final video = await ImagePicker().getVideo(source: ImageSource.gallery);
            double sizeInMb = await   getFileSize(video!.path,1);
+           print("-------------------------------------------------------------------------");
            print(sizeInMb);
            if(sizeInMb <= 25){
              if (video != null) {
