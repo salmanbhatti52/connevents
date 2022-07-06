@@ -194,7 +194,7 @@ EventDetail _$EventDetailFromJson(Map<String, dynamic> json) => EventDetail(
           : DateTime.parse(json['created_at'] as String),
       organizerProfilePicture: json['organizer_profile_picture'] as String?,
       organizerUserName: json['organizer_user_name'] as String?,
-      socialLink: json['socialLink'] as String?,
+      socialLink: json['socialLink'] as String? ?? "",
     )..id = json['id'] as String?;
 
 Map<String, dynamic> _$EventDetailToJson(EventDetail instance) {
@@ -316,6 +316,6 @@ Map<String, dynamic> _$EventDetailToJson(EventDetail instance) {
   val['is_peeks_available'] = instance.isPeeksAvailable;
   val['is_editable_event'] = instance.isEditableEvent;
   val['is_admin'] = instance.isAdmin;
-  writeNotNull('socialLink', instance.socialLink);
+  val['socialLink'] = instance.socialLink;
   return val;
 }

@@ -373,47 +373,6 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
 
                         ],
                       ),
-
-                      SizedBox(height: padding),
-                      Text('Dress Code', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
-                      SizedBox(height: padding),
-                      dropDownContainer(
-                        child: DropdownButton<DressCodeData>(
-                            underline: Container(),
-                            isExpanded: true,
-                            iconEnabledColor: Colors.black,
-                            focusColor: Colors.black,
-                            hint: Text("Select Category"),
-                            icon: Icon(Icons.arrow_drop_down_rounded),
-                            items: listOfDressCode.map((value) {
-                              return new DropdownMenuItem<DressCodeData>(
-                                value: value,
-                                child: Text(value.dressCode.toString()),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) => setState((){
-                            bool  isAvailable= widget.event.eventTags!.any((element) => element.tagName=="Non alcoholic");
-                               if(isAvailable) {
-                                 print(newValue!.dressCode);
-                                 if (newValue.dressCode == "Casual wear")
-                                   return showErrorToast("You can't select this dress code because You have selected Non alcoholic Tag");
-                               }
-                               else{
-                                 widget.event.dressCodeData = newValue;
-                               }
-                                widget.event.dressCodeData = newValue;
-
-
-                            }),
-                            value: widget.event.dressCodeData),
-                      ),
-                         SizedBox(height: padding),
-                         Text('Social Link', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
-                         SizedBox(height: 10),
-                         ConneventsTextField(
-                           controller: socialLink,
-                           onSaved: (value) => widget.event.socialLink = value!,
-                         ),
                        ],
                      ),
                     if(widget.event.isNotMyEvent || widget.event.isFreeEvent)
@@ -421,13 +380,51 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                       opacity:0.6,
                       child: Container(
                         color:Colors.grey.shade50,
-                        height:300,
+                        height:190,
                         width : MediaQuery.of(context).size.width,
                             ),
-                    )
+                    ),
                     ],
                   ),
+                      SizedBox(height: padding),
+                      Text('Dress Code', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
+                      SizedBox(height: padding),
+                      dropDownContainer(
+                      child: DropdownButton<DressCodeData>(
+                      underline: Container(),
+                      isExpanded: true,
+                      iconEnabledColor: Colors.black,
+                      focusColor: Colors.black,
+                      hint: Text("Select Category"),
+                      icon: Icon(Icons.arrow_drop_down_rounded),
+                      items: listOfDressCode.map((value) {
+                      return new DropdownMenuItem<DressCodeData>(
+                      value: value,
+                      child: Text(value.dressCode.toString()),
+                      );
+                      }).toList(),
+                      onChanged: (newValue) => setState((){
+                      bool  isAvailable= widget.event.eventTags!.any((element) => element.tagName=="Non alcoholic");
+                      if(isAvailable) {
+                      print(newValue!.dressCode);
+                      if (newValue.dressCode == "Casual wear")
+                      return showErrorToast("You can't select this dress code because You have selected Non alcoholic Tag");
+                      }
+                      else{
+                      widget.event.dressCodeData = newValue;
+                      }
+                      widget.event.dressCodeData = newValue;
 
+
+                      }),
+                      value: widget.event.dressCodeData),),
+                      SizedBox(height: padding),
+                      Text('Hyper Link', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
+                      SizedBox(height: 10),
+                      ConneventsTextField(
+                        controller: socialLink,
+                        onSaved: (value) => widget.event.socialLink = value!,
+                      ),
                       SizedBox(height: padding),
                       Stack(
                         children: [
@@ -634,6 +631,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                           ),
                         ),
                         onPressed: () async{
+
                           print(createSelectedEndTime);
 
                                 if (key.currentState!.validate()) {

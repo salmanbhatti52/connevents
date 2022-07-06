@@ -434,7 +434,7 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                 ),
                 if(!event.isFreeEvent && !event.isNotMyEvent)
                 SizedBox(height: padding * 2),
-                if(!event.isFreeEvent && !event.isNotMyEvent)
+                if(!event.isNotMyEvent)
                 Row(
                   children: [
                     Text('Dress Code', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
@@ -446,7 +446,9 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                         child: SvgPicture.asset('assets/icons/editPencil1.svg', width: 16,)),
                   ],
                 ),
-                if(!event.isFreeEvent && !event.isNotMyEvent)
+                SizedBox(height: padding),
+
+                if( !event.isNotMyEvent)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -464,8 +466,21 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                         Color(0xff000000): null),
                   ],
                 ),
+                SizedBox(height: padding),
                 if(!event.isFreeEvent && !event.isNotMyEvent)
                 SizedBox(height: padding * 2),
+                Row(
+                  children: [
+                    Text('Hyper Link', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
+                    SizedBox(width: padding,),
+                    GestureDetector(
+                        onTap: ()=>Navigator.of(context).pop(widget.event),
+                        child: SvgPicture.asset('assets/icons/editPencil1.svg', width: 16,)),
+                  ],
+                ),
+                SizedBox(height: padding,),
+                Text(widget.event.socialLink.toString(), style: TextStyle(color: globalBlack, fontWeight: FontWeight.w300, fontSize: 14,),),
+                SizedBox(height: padding,),
                 Row(
                   children: [
                     Text('Address', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
@@ -601,6 +616,7 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                                 "refundable": widget.event.refundable,
                                 // if(!event.isFreeEvent && !event.isNotMyEvent)
                                 // "tableService": widget.event.tableService,
+
                                 if(!event.isFreeEvent && !event.isNotMyEvent)
                                 "salesStartDate": f.format(widget.event.pickedSalesStartDate!),
                                 if(!event.isFreeEvent && !event.isNotMyEvent)
@@ -609,7 +625,7 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                                 "salesEndDate": f.format(widget.event.pickedSalesEndDate!),
                                 if(!event.isFreeEvent && !event.isNotMyEvent)
                                 "salesEndTime": DateFormat("HH:mm:ss").format(salesEndTime),
-                                if(!event.isFreeEvent && !event.isNotMyEvent)
+                                if(!event.isNotMyEvent)
                                 "dressCodeId": widget.event.dressCodeData!.dressCodeId,
                                 "fullAddress": widget.event.eventAddress!.fullAddress,
                                 "city": widget.event.eventAddress!.city,
@@ -618,6 +634,8 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                                 "locationLong": widget.event.locationLong,
                                  "locationLat": widget.event.locationLat,
                                 "hyperlink" :widget.event.hyperlink,
+                                "socialLink" :widget.event.socialLink,
+
                                 "eventTicketType": event.isFreeEvent ? "MyFreeEvent" : event.isNotMyEvent ? "NotMyEvent" : "Paid",
                                 // if( (!event.isFreeEvent && !event.isNotMyEvent) && widget.event.isTableAvailableFor4People )
                                 //  "tblFourPeopleCost": widget.event.tblFourPeopleCost,

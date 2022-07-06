@@ -441,7 +441,7 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                 ),
                 if(widget.event.eventTicketType=='Paid')
                 SizedBox(height: padding * 2),
-                if(widget.event.eventTicketType =='Paid')
+                if(!event.isNotMyEvent)
                 Row(
                   children: [
                     Text('Dress Code', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
@@ -454,7 +454,7 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                   ],
                 ),
                 SizedBox(height: padding),
-                if(widget.event.eventTicketType=='Paid' )
+                if(!event.isNotMyEvent )
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -472,8 +472,21 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                         Color(0xff000000): null),
                   ],
                 ),
+                SizedBox(height: padding),
                 if(widget.event.eventTicketType=='Paid')
                 SizedBox(height: padding * 2),
+                Row(
+                  children: [
+                    Text('Hyper Link', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
+                    SizedBox(width: padding,),
+                    GestureDetector(
+                        onTap: ()=>Navigator.of(context).pop(widget.event),
+                        child: SvgPicture.asset('assets/icons/editPencil1.svg', width: 16,)),
+                  ],
+                ),
+                 SizedBox(height: padding,),
+                Text(widget.event.socialLink.toString(), style: TextStyle(color: globalBlack, fontWeight: FontWeight.w300, fontSize: 14,),),
+                SizedBox(height: padding,),
                 Row(
                   children: [
                     Text('Address', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
@@ -590,7 +603,7 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                             "salesEndDate": f.format(widget.event.pickedSalesEndDate!),
                             if(widget.event.eventTicketType=="Paid")
                             "salesEndTime": DateFormat("HH:mm:ss").format(salesEndTime!),
-                            if(widget.event.eventTicketType=="Paid")
+                            if(!event.isNotMyEvent)
                             "dressCodeId": widget.event.dressCode!.dressCodeId,
                             "fullAddress": widget.event.eventAddress!.fullAddress,
                             "city": widget.event.eventAddress!.city,
@@ -600,6 +613,7 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                             "locationLat": widget.event.locationLat,
                             "eventTicketType": widget.event.eventTicketType,
                              "hyperlink" : widget.event.hyperlink,
+                            "socialLink" :widget.event.socialLink,
                             // if(widget.event.isTableAvailableFor4People)
                             //  "tblFourPeopleCost": widget.event.tblFourPeopleCost,
                             // if(widget.event.isTableAvailableFor6People)

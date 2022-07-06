@@ -32,8 +32,8 @@ class _EditCreateThirdPageState extends State<EditCreateThirdPage> {
 late  EventDetail event;
     final key = GlobalKey<FormState>();
     String? _hour, _minute, _time;
-    TextEditingController selectedAddress=TextEditingController();
-    PlacesService  _placesService=PlacesService();
+TextEditingController socialLink = TextEditingController();
+PlacesService  _placesService=PlacesService();
     List<PlacesAutoCompleteResult>  _autoCompleteResult=[];
      String secondaryText="";
      late TextEditingController mainText;
@@ -226,6 +226,8 @@ late  EventDetail event;
     zip=TextEditingController(text: event.eventAddress!.zip);
     state=TextEditingController(text: event.eventAddress!.state);
     mainText=TextEditingController(text: event.eventAddress!.fullAddress);
+    socialLink=TextEditingController (text: event.socialLink);
+
   }
 
   @override
@@ -331,202 +333,215 @@ late  EventDetail event;
                         ],
                       ),
                       SizedBox(width: padding),
-                      SizedBox(height: padding),
-                      Text('Dress Code', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold)),
-                        SizedBox(height: padding),
-                        dropDownContainer(
-                          child: DropdownButton<DressCodeData>(
-                              underline: Container(),
-                              isExpanded: true,
-                              iconEnabledColor: Colors.black,
-                              focusColor: Colors.black,
-                              hint: Text("Select Category"),
-                              icon: Icon(Icons.arrow_drop_down_rounded),
-                              items: listOfDressCode.map((value) {
-                                return new DropdownMenuItem<DressCodeData>(
-                                  value: value,
-                                  child: Text(value.dressCode.toString()),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) => setState((){
-                                bool  isAvailable= widget.event.eventTags!.any((element) => element.tagName=="Non alcoholic");
-                                if(isAvailable) {
-                                  print(newValue!.dressCode);
-                                  if (newValue.dressCode == "Casual wear")
-                                    return showErrorToast("You can't select this dress code because You have selected Non alcoholic Tag");
-                                }
-                                else{
-                                  widget.event.dressCodeData = newValue;
-                                }
-                                widget.event.dressCodeData = newValue;
 
-
-                              }),
-                              value: event.dressCode),
-                        ),
 
                      ]),
-                    if(widget.event.eventTicketType == "MyFreeEvent" || widget.event.eventTicketType=="NotMyEvent")
+                    if(!event.isNotMyEvent)
                     Opacity(
                       opacity:0.6,
                       child: Container(
                         color:Colors.grey.shade50,
-                        height:MediaQuery.of(context).size.height/2.5,
+                        height:190,
                         width : MediaQuery.of(context).size.width,
                             ),
-                    )
+                    ),
+
                     ]
                   ) ,
                       SizedBox(height: padding),
-                      Stack(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          text(title: "Address*",color:globalBlack,fontSize:18,fontWeight: FontWeight.bold ),
-                          Padding(
-                            padding: const EdgeInsets.only(top:30.0),
-                            child: ConneventsTextField(
-                              controller: mainText,
-                              onSaved: (value) => event.eventAddress!.fullAddress = value!,
-                              onChanged: (value) async {
-                                setState(() {
-                                  print(value);
-                                });
-                                final autoCompleteSuggestions = await _placesService.getAutoComplete(value);
-                                _autoCompleteResult = autoCompleteSuggestions;
-                              },
+                          Text('Dress Code', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold)),
+                          SizedBox(height: padding),
+                          dropDownContainer(
+                            child: DropdownButton<DressCodeData>(
+                                underline: Container(),
+                                isExpanded: true,
+                                iconEnabledColor: Colors.black,
+                                focusColor: Colors.black,
+                                hint: Text("Select Category"),
+                                icon: Icon(Icons.arrow_drop_down_rounded),
+                                items: listOfDressCode.map((value) {
+                                  return new DropdownMenuItem<DressCodeData>(
+                                    value: value,
+                                    child: Text(value.dressCode.toString()),
+                                  );
+                                }).toList(),
+                                onChanged: (newValue) => setState((){
+                                  bool  isAvailable= widget.event.eventTags!.any((element) => element.tagName=="Non alcoholic");
+                                  if(isAvailable) {
+                                    print(newValue!.dressCode);
+                                    if (newValue.dressCode == "Casual wear")
+                                      return showErrorToast("You can't select this dress code because You have selected Non alcoholic Tag");
+                                  }
+                                  else{
+                                    widget.event.dressCodeData = newValue;
+                                  }
+                                  widget.event.dressCodeData = newValue;
 
-                            ),
-                          ),
 
-                          Padding(
-                            padding: const EdgeInsets.only(top: 120.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                  text(title: "City*",color:globalBlack,fontSize:14,fontWeight: FontWeight.w600 ),
-                                      SizedBox(height: padding / 2),
-                                      Container(
-                                        height: 44,
-                                        padding: EdgeInsets.symmetric(horizontal: padding),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: globalLGray,
-                                              blurRadius: 3,
-                                            )
-                                          ],
-                                        ),
-                                        child: TextFormField(
-                                          controller: city,
-                                          onSaved: (value) => event.eventAddress!.city = value!,
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: padding),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      text(title: "State*",color:globalBlack,fontSize:14,fontWeight: FontWeight.w600 ),
-                                      SizedBox(height: padding / 2),
-                                      Container(
-                                        height: 44,
-                                        padding: EdgeInsets.symmetric(horizontal: padding),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: globalLGray,
-                                              blurRadius: 3,
-                                            )
-                                          ],
-                                        ),
-                                        child: TextFormField(
-                                          controller: state,
-                                          onSaved: (value) => event.eventAddress!.state = value!,
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(width: padding),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      text(title: "Zip*",color:globalBlack,fontSize:14,fontWeight: FontWeight.bold ),
-                                      SizedBox(height: padding / 2),
-                                      Container(
-                                        height: 44,
-                                        padding: EdgeInsets.symmetric(horizontal: padding),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: globalLGray,
-                                              blurRadius: 3,
-                                            )
-                                          ],
-                                        ),
-                                        child: TextFormField(
-                                          controller: zip,
-                                          onSaved: (value) => event.eventAddress!.zip = value!,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                                }),
+                                value: widget.event.dressCodeData),),
+                          SizedBox(height: padding),
+                          Text('Hyper Link', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
+                          SizedBox(height: 10),
+                          ConneventsTextField(
+                            controller: socialLink,
+                            onSaved: (value) => widget.event.socialLink = value!,
                           ),
-                          if (_autoCompleteResult.isNotEmpty)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 90.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.black)),
-                                height: 140,
-                                child: ListView.builder(
-                                  itemCount: _autoCompleteResult.length,
-                                  itemBuilder: (context, index) {
-                                    return ListTile(
-                                      visualDensity: VisualDensity(
-                                          horizontal: 0, vertical: -4),
-                                      title: Text(_autoCompleteResult[index].mainText ?? ""),
-                                      subtitle: Text(_autoCompleteResult[index].description ?? ""),
-                                      onTap: () async {
-                                        var id = _autoCompleteResult[index].placeId;
-                                        final placeDetails = await _placesService.getPlaceDetails(id!);
-                                        setState(() {
-                                          zip.text = placeDetails.zip!;
-                                          state.text = placeDetails.state!;
-                                          city.text = placeDetails.city!;
-                                          latlng = LatLng(lat, lng);
-                                          event.locationLat = placeDetails.lat!;
-                                          event.locationLong = placeDetails.lng!;
-                                          mainText.text = "${_autoCompleteResult[index].mainText!} " + _autoCompleteResult[index].secondaryText!;
-                                          _autoCompleteResult.clear();
-                                          addMarker(event.locationLat!.toDouble(),event.locationLong!.toDouble());
-                                        });
-                                      },
-                                    );
+                          SizedBox(height: padding),
+                          Stack(
+                            children: [
+                              text(title: "Address*",color:globalBlack,fontSize:18,fontWeight: FontWeight.bold ),
+                              Padding(
+                                padding: const EdgeInsets.only(top:30.0),
+                                child: ConneventsTextField(
+                                  controller: mainText,
+                                  onSaved: (value) => event.eventAddress!.fullAddress = value!,
+                                  onChanged: (value) async {
+                                    setState(() {
+                                      print(value);
+                                    });
+                                    final autoCompleteSuggestions = await _placesService.getAutoComplete(value);
+                                    _autoCompleteResult = autoCompleteSuggestions;
                                   },
+
                                 ),
                               ),
-                            ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(top: 120.0),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                      text(title: "City*",color:globalBlack,fontSize:14,fontWeight: FontWeight.w600 ),
+                                          SizedBox(height: padding / 2),
+                                          Container(
+                                            height: 44,
+                                            padding: EdgeInsets.symmetric(horizontal: padding),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: globalLGray,
+                                                  blurRadius: 3,
+                                                )
+                                              ],
+                                            ),
+                                            child: TextFormField(
+                                              controller: city,
+                                              onSaved: (value) => event.eventAddress!.city = value!,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: padding),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          text(title: "State*",color:globalBlack,fontSize:14,fontWeight: FontWeight.w600 ),
+                                          SizedBox(height: padding / 2),
+                                          Container(
+                                            height: 44,
+                                            padding: EdgeInsets.symmetric(horizontal: padding),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: globalLGray,
+                                                  blurRadius: 3,
+                                                )
+                                              ],
+                                            ),
+                                            child: TextFormField(
+                                              controller: state,
+                                              onSaved: (value) => event.eventAddress!.state = value!,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(width: padding),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          text(title: "Zip*",color:globalBlack,fontSize:14,fontWeight: FontWeight.bold ),
+                                          SizedBox(height: padding / 2),
+                                          Container(
+                                            height: 44,
+                                            padding: EdgeInsets.symmetric(horizontal: padding),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: globalLGray,
+                                                  blurRadius: 3,
+                                                )
+                                              ],
+                                            ),
+                                            child: TextFormField(
+                                              controller: zip,
+                                              onSaved: (value) => event.eventAddress!.zip = value!,
+                                              keyboardType: TextInputType.number,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (_autoCompleteResult.isNotEmpty)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 90.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border: Border.all(color: Colors.black)),
+                                    height: 140,
+                                    child: ListView.builder(
+                                      itemCount: _autoCompleteResult.length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          visualDensity: VisualDensity(
+                                              horizontal: 0, vertical: -4),
+                                          title: Text(_autoCompleteResult[index].mainText ?? ""),
+                                          subtitle: Text(_autoCompleteResult[index].description ?? ""),
+                                          onTap: () async {
+                                            var id = _autoCompleteResult[index].placeId;
+                                            final placeDetails = await _placesService.getPlaceDetails(id!);
+                                            setState(() {
+                                              zip.text = placeDetails.zip!;
+                                              state.text = placeDetails.state!;
+                                              city.text = placeDetails.city!;
+                                              latlng = LatLng(lat, lng);
+                                              event.locationLat = placeDetails.lat!;
+                                              event.locationLong = placeDetails.lng!;
+                                              mainText.text = "${_autoCompleteResult[index].mainText!} " + _autoCompleteResult[index].secondaryText!;
+                                              _autoCompleteResult.clear();
+                                              addMarker(event.locationLat!.toDouble(),event.locationLong!.toDouble());
+                                            });
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ],
                       ),
                       SizedBox(height: padding,),

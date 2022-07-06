@@ -392,6 +392,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                              value: widget.event.isFreeEvent,
                              checkColor: globalGreen,
                              onChanged: (val) => setState(() {
+                               print("testing data${val}");
                                widget.event.isFreeEvent = val!;
                                widget.event.isNotMyEvent=false;
                              }),

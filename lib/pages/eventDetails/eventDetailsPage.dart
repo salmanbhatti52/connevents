@@ -30,7 +30,7 @@ class EventDetailsPage extends StatefulWidget {
   int? dynamicEventPostId;
   bool fromDynamicLink;
   final String link;
-   EventDetail? event;
+  EventDetail? event;
   bool fromPeeks;
   final bool? isBasic;
    List<ImageData>?  images;
@@ -287,35 +287,50 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
+
                                         Text('Description' , style: gilroyExtraBold),
                                         SizedBox(height: padding / 7),
-                                        Stack(
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            GestureDetector(
-                                                onLongPress: () async{
-                                            await    Clipboard.setData(new ClipboardData(text: widget.event!.description.toString()));
-                                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                                     content: Text('Copied')));
-                                                },
-                                                child: Text(widget.event!.description!,
-                                                       overflow: isReadMore ? TextOverflow.visible: TextOverflow.ellipsis,
-                                                       maxLines: isReadMore ? null : 3,
-                                                       style: gilroyRegular, softWrap: true)
+                                            Stack(
+                                              children: [
+                                                GestureDetector(
+                                                    onLongPress: () async{
+                                                await    Clipboard.setData(new ClipboardData(text: widget.event!.description.toString()));
+                                                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                         content: Text('Copied')));
+                                                    },
+                                                    child: Text(widget.event!.description!,
+                                                           overflow: isReadMore ? TextOverflow.visible: TextOverflow.ellipsis,
+                                                           maxLines: isReadMore ? null : 3,
+                                                           style: gilroyRegular, softWrap: true)
+                                                ),
+                                                if(widget.event!.description!=null &&   widget.event!.description!.length > 150)
+                                                Positioned(
+                                                  right:0,
+                                                  bottom:0,
+                                                  child: InkWell(
+                                                      onTap: (){
+                                                        setState(() {
+                                                        isReadMore = !isReadMore;
+                                                            });
+                                                      },
+                                                      child: Container(
+                                                          color:globallightbg,
+                                                          child: Text(!isReadMore ?  "..See more"  : "See less",style:TextStyle(color:globalGreen,fontWeight: FontWeight.bold)))),
+                                                )
+                                              ],
                                             ),
-                                            if(widget.event!.description!=null &&   widget.event!.description!.length > 150)
-                                            Positioned(
-                                              right:0,
-                                              bottom:0,
-                                              child: InkWell(
+                                            if(widget.event!.socialLink.isNotEmpty)
+                                              SizedBox(height: padding / 7),
+                                            if(widget.event!.socialLink.isNotEmpty)
+                                              GestureDetector(
                                                   onTap: (){
-                                                    setState(() {
-                                                    isReadMore = !isReadMore;
-                                                        });
+                                                    launch(widget.event!.socialLink);
                                                   },
-                                                  child: Container(
-                                                      color:globallightbg,
-                                                      child: Text(!isReadMore ?  "..See more"  : "See less",style:TextStyle(color:globalGreen,fontWeight: FontWeight.bold)))),
-                                            )
+                                                  child: Text(widget.event!.socialLink.toString(),
+                                                    style: TextStyle(color: Colors.blue.shade700, fontWeight: FontWeight.w300, fontSize: 14,),)),
                                           ],
                                         ),
                                          SizedBox(height: padding / 2),
