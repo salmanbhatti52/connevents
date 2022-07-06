@@ -205,6 +205,7 @@ class EventDetail extends BaseModelHive {
   bool isEditableEvent;
   @JsonKey(name: 'is_admin')
   bool isAdmin;
+  String ? socialLink;
 
   EventDetail({
     this.mixTags,
@@ -309,7 +310,8 @@ class EventDetail extends BaseModelHive {
     this.third_video_thumbnail= "",
     this.createdAt,
     this.organizerProfilePicture,
-    this.organizerUserName
+    this.organizerUserName,
+    this.socialLink,
   }) {
    // this.pickedEventStartDate= pickedEventStartDate ?? DateTime.now();
    // this.pickedEventEndDate= pickedEventEndDate ?? DateTime.now();

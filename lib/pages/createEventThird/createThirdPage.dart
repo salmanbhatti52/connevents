@@ -35,6 +35,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
   final key = GlobalKey<FormState>();
   String? _hour, _minute, _time;
   TextEditingController selectedAddress=TextEditingController();
+  TextEditingController socialLink = TextEditingController();
   PlacesService  _placesService=PlacesService();
   List<PlacesAutoCompleteResult>  _autoCompleteResult=[];
   String secondaryText="";
@@ -406,6 +407,13 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                             }),
                             value: widget.event.dressCodeData),
                       ),
+                         SizedBox(height: padding),
+                         Text('Social Link', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
+                         SizedBox(height: 10),
+                         ConneventsTextField(
+                           controller: socialLink,
+                           onSaved: (value) => widget.event.socialLink = value!,
+                         ),
                        ],
                      ),
                     if(widget.event.isNotMyEvent || widget.event.isFreeEvent)

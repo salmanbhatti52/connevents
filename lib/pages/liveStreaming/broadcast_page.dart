@@ -49,6 +49,7 @@ class _BroadcastPageState extends State<BroadcastPage> {
   AgoraRtmChannel? _channel;
   RtcEngine? _engine;
   bool isSlidingPanel =false;
+  bool isFirst = true;
   List<LiveStreamingChat> messageList=[];
   List<LiveStreamingChat> slidingPaneList=[];
   RtcChannel?    rtcChannel;
@@ -465,11 +466,17 @@ class _BroadcastPageState extends State<BroadcastPage> {
 
   @override
   Widget build(BuildContext context) {
-    _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 200),
-        curve: Curves.easeInOut
-    );
+       // if(isFirst){
+       //   isFirst = false;
+       // }else{
+       //
+       //   _scrollController.animateTo(
+       //       _scrollController.position.maxScrollExtent,
+       //       duration: Duration(milliseconds: 200),
+       //       curve: Curves.easeInOut
+       //   );
+       // }
+
       SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,

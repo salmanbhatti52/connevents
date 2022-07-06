@@ -181,7 +181,7 @@ class _BusinessCreateSecondPageState extends State<BusinessCreateSecondPage> {
                 ConneventsTextField(
                     controller: hyperLink,
                     // hintText: "https://",
-                    keyBoardType: TextInputType.text,
+                    // keyBoardType: TextInputType.text,
                     // value: "https${business.hyperlink}",
                     onSaved: (value) => setState(() => hyperLink.text=value!)
                   // validator: (val) => val!.isEmpty ? "Please Enter Hyperlink" : null,
