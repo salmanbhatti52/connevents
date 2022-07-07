@@ -458,7 +458,7 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(widget.event.dressCode!.dressCode.toString(), style: TextStyle(color: globalBlack, fontSize: 14, fontWeight: FontWeight.w600,),),
+                    Text(widget.event.dressCodeData!.dressCode!, style: TextStyle(color: globalBlack, fontSize: 14, fontWeight: FontWeight.w600,),),
                     Icon(Icons.circle,
                         color:widget.event.dressCodeData!.dressCode=='Business'
                             ? Color(0xff000080):
@@ -604,7 +604,7 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                             if(widget.event.eventTicketType=="Paid")
                             "salesEndTime": DateFormat("HH:mm:ss").format(salesEndTime!),
                             if(!event.isNotMyEvent)
-                            "dressCodeId": widget.event.dressCode!.dressCodeId,
+                            "dressCodeId": widget.event.dressCodeData!.dressCodeId,
                             "fullAddress": widget.event.eventAddress!.fullAddress,
                             "city": widget.event.eventAddress!.city,
                             "state": widget.event.eventAddress!.state,

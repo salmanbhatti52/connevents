@@ -382,7 +382,9 @@ PlacesService  _placesService=PlacesService();
 
 
                                 }),
-                                value: widget.event.dressCodeData),),
+                                value: widget.event.dressCodeData
+                            ),
+                          ),
                           SizedBox(height: padding),
                           Text('Hyper Link', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
                           SizedBox(height: 10),
@@ -612,8 +614,9 @@ PlacesService  _placesService=PlacesService();
                       if(event.eventAddress!.city.isEmpty) return showErrorToast("You have to enter City");
                       if(event.eventAddress!.state.isEmpty) return showErrorToast("You have to enter state");
                       if(event.eventAddress!.zip.isEmpty) return showErrorToast("You have to enter zip Code");
+                      if(widget.event.isFreeEvent&&widget.event.dressCodeData==null) return showErrorToast("You have to select Dress Code");
 
-                          CustomNavigator.navigateTo(context, EditConfirmCreatePage(
+                                  CustomNavigator.navigateTo(context, EditConfirmCreatePage(
                             event: event,
                             selectedEventStartTime: widget.selectedEventStartTime,
                             selectedEventEndTime: widget.selectedEventEndTime,

@@ -18,38 +18,42 @@ class EventCommentTextField extends StatelessWidget {
     return Column(
       children: [
         Container(
+          height: 90,
         padding: EdgeInsets.only(top:padding,bottom: padding),
         decoration: BoxDecoration(color: Colors.white),
-        child: Row(
-          children: [
-            IconButton(
-                   icon:Icon(Icons.emoji_emotions, color: globalGreen),
-                   onPressed: onTapEmoji),
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: TextFormField(
-                  textCapitalization: TextCapitalization.sentences,
-                  autofocus: autoFocus,
-                  controller: controller,
-                  focusNode: focusNode,
-                  onChanged: onChanged,
-                  onTap: onTap,
-                  style: TextStyle(color: globalBlack, fontSize: 12, height: 2),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: globallightbg,
-                    hintText:isReply ?'Type your Reply here....' :  'Type your comment here....',
-                    hintStyle: TextStyle(color: globalBlack.withOpacity(0.7), fontSize: 12, height: 2,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+          child: Row(
+            children: [
+              IconButton(
+                     icon:Icon(Icons.emoji_emotions, color: globalGreen),
+                     onPressed: onTapEmoji),
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: TextFormField(
+                    textCapitalization: TextCapitalization.sentences,
+                    autofocus: autoFocus,
+                    controller: controller,
+                    focusNode: focusNode,
+                    onChanged: onChanged,
+                    onTap: onTap,
+                    style: TextStyle(color: globalBlack, fontSize: 12, height: 2),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      filled: true,
+                      fillColor: globallightbg,
+                      hintText:isReply ?'Type your Reply here....' :  'Type your comment here....',
+                      hintStyle: TextStyle(color: globalBlack.withOpacity(0.7), fontSize: 12, height: 2,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            IconButton(icon:Icon(Icons.send, color: globalGreen), onPressed: onTapIcon
-            ),
-          ],
+              IconButton(icon:Icon(Icons.send, color: globalGreen), onPressed: onTapIcon
+              ),
+            ],
+          ),
         ),
       ),
 

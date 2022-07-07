@@ -3,6 +3,7 @@ import 'package:connevents/models/event-type-model.dart';
 import 'package:connevents/models/specific-user-category-model.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
+import 'package:connevents/widgets/connevent-appbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../variables/globalVariables.dart';
 import 'package:flutter/material.dart';
@@ -74,16 +75,33 @@ class _InterestCategoriesPageState extends State<InterestCategoriesPage> {
         ),
         child: Column(
           children: [
+             Padding(
+               padding: const EdgeInsets.only(left: 15.0,top: 15),
+               child: Row(
+                children: [
+                  TextButton(
+                    onPressed: () =>  Navigator.pop(context) ,
+                    child: Row(
+                      children: [
+                        Icon(Icons.chevron_left,),
+                        Text('Back'),
+                      ],
+                    ),
+                  ),
+                ],
+            ),
+             ),
             Expanded(
                 child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: padding * 2, vertical: padding * 3),
+                    padding: EdgeInsets.symmetric(horizontal: padding * 2, ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(height: 10,),
                         Text('Your Target Categories', style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),),
                         SizedBox(height: padding,),
                         Text('Choose your favorite categories so we can show you related events.', style: TextStyle(color: globalGolden, fontSize: 16,),),
@@ -144,52 +162,53 @@ class _InterestCategoriesPageState extends State<InterestCategoriesPage> {
                             ],
                           );
                         })
-                  )
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(bottom: padding * 2,left: padding*2,right: padding*2),
+                    child: SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: TextButton(
+                          onPressed: () async {
+
+                            openLoadingDialog(context, "saving");
+                            print(AppData().userdetail!.users_id);
+                            try{
+                              final response = await DioService.post('user_categories', {
+                                "userId": AppData().userdetail!.users_id,
+                                "categoryIds": listOfIds
+                              });
+                              print(response);
+                              var userData = response['data']['user_categories'];
+                              List<UserCategoriesModel> userDetail = userData.map<UserCategoriesModel>((e) => UserCategoriesModel.fromJson(e)).toList();
+                              AppData().userCategory=userDetail;
+                              showSuccessToast("Your Categories are saved");
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+
+                            } catch(e){
+                              showSuccessToast("All categories are deselected by user");
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            }
+
+
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: globalGreen,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: Text('Save'.toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold,),)),
+                    ),
+                  ),
                 ],
               ),
             )
             ),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(bottom: padding * 2,left: padding*2,right: padding*2),
-              child: SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: TextButton(
-                    onPressed: () async {
 
-                      openLoadingDialog(context, "saving");
-                      print(AppData().userdetail!.users_id);
-                           try{
-                          final response = await DioService.post('user_categories', {
-                            "userId": AppData().userdetail!.users_id,
-                            "categoryIds": listOfIds
-                          });
-                          print(response);
-                          var userData = response['data']['user_categories'];
-                          List<UserCategoriesModel> userDetail = userData.map<UserCategoriesModel>((e) => UserCategoriesModel.fromJson(e)).toList();
-                         AppData().userCategory=userDetail;
-                         showSuccessToast("Your Categories are saved");
-                           Navigator.of(context).pop();
-                           Navigator.of(context).pop();
-
-                           } catch(e){
-                             showSuccessToast("All categories are deselected by user");
-                             Navigator.of(context).pop();
-                             Navigator.of(context).pop();
-                             }
-
-
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: globalGreen,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text('Save'.toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold,),)),
-              ),
-            ),
           ],
         ),
       ),

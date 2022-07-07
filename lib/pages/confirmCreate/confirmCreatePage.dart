@@ -448,7 +448,7 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                 ),
                 SizedBox(height: padding),
 
-                if( !event.isNotMyEvent)
+                if(!event.isNotMyEvent)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

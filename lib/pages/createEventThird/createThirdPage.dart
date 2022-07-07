@@ -648,8 +648,10 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                       if(widget.event.eventAddress!.city.isEmpty) return showErrorToast("You have to enter City");
                       if(widget.event.eventAddress!.state.isEmpty) return showErrorToast("You have to enter state");
                       if(widget.event.eventAddress!.zip.isEmpty) return showErrorToast("You have to enter zip Code");
+                      if(widget.event.isFreeEvent&&widget.event.dressCodeData==null) return showErrorToast("You have to select Dress Code");
 
-                          CustomNavigator.navigateTo(context, ConfirmCreatePage(
+
+                                  CustomNavigator.navigateTo(context, ConfirmCreatePage(
                             event: event,
                             selectedEventStartTime: widget.selectedEventStartTime,
                             selectedEventEndTime: widget.selectedEventEndTime,

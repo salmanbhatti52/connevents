@@ -769,93 +769,96 @@ class _HomePageState extends State<HomePage> {
                       ),
                      ]),
                     SizedBox(height: 10,),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        isVisibleTags ? Expanded(
-                          child: Visibility(
-                            visible: isVisibleTags,
-                            child: Wrap(
-                              children: [
-                                for (var i = 0; i < listOfTags.length; i++)
-                                  Wrap(
-                                    children: [
-                                      filterContainer(
-                                        Checkbox(
-                                          checkColor: Colors.transparent,
-                                          fillColor: MaterialStateProperty.resolveWith((states) => globalGreen),
-                                          value: listOfTags[i].isSelected,
-                                          onChanged: (value) {
-                                            filterEvents(listOfTags[i],value);
-                                          },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          isVisibleTags ? Expanded(
+                            child: Visibility(
+                              visible: isVisibleTags,
+                              child: Wrap(
+                                children: [
+                                  for (var i = 0; i < listOfTags.length; i++)
+                                    Wrap(
+                                      children: [
+                                        filterContainer(
+                                          Checkbox(
+                                            checkColor: Colors.transparent,
+                                            fillColor: MaterialStateProperty.resolveWith((states) => globalGreen),
+                                            value: listOfTags[i].isSelected,
+                                            onChanged: (value) {
+                                              filterEvents(listOfTags[i],value);
+                                            },
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(width: padding / 2),
-                                      Text(listOfTags[i].tagName.toString(), style: TextStyle(height: 2, color: globalBlack, fontSize: 12,)),
-                                      SizedBox(width: padding),
-                                    ],
-                                  ),
-                              ],
+                                        SizedBox(width: padding / 2),
+                                        Text(listOfTags[i].tagName.toString(), style: TextStyle(height: 2, color: globalBlack, fontSize: 12,)),
+                                        SizedBox(width: padding),
+                                      ],
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ):
-                        Expanded(
-                          child: Container(
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: globalLightButtonbg,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: (selectedSegment == 'Events') ? BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(color: globalGreen),
-                                        borderRadius: BorderRadius.circular(30))
-                                        : BoxDecoration(),
-                                    child: TextButton(
-                                      onPressed: () => isSelectedEvents(),
-                                      child: Text('Events',style: TextStyle(color: Colors.black, fontSize: 12,
-                                      ),
+                          ):
+                          Expanded(
+                            child: Container(
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: globalLightButtonbg,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: (selectedSegment == 'Events') ? BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(color: globalGreen),
+                                          borderRadius: BorderRadius.circular(30))
+                                          : BoxDecoration(),
+                                      child: TextButton(
+                                        onPressed: () => isSelectedEvents(),
+                                        child: Text('Events',style: TextStyle(color: Colors.black, fontSize: 12,
+                                        ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: (selectedSegment == 'nearby') ?
-                                    BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(color: globalGreen),
-                                        borderRadius: BorderRadius.circular(30))
-                                        : BoxDecoration(),
-                                    child: TextButton(
-                                        onPressed: () => isSelectedBusiness(),
-                                        child: Text("What's Nearby", style: TextStyle(color: Colors.black, fontSize: 12,
-                                        ),
-                                        )),
+                                  Expanded(
+                                    child: Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: (selectedSegment == 'nearby') ?
+                                      BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(color: globalGreen),
+                                          borderRadius: BorderRadius.circular(30))
+                                          : BoxDecoration(),
+                                      child: TextButton(
+                                          onPressed: () => isSelectedBusiness(),
+                                          child: Text("What's Nearby", style: TextStyle(color: Colors.black, fontSize: 12,
+                                          ),
+                                          )),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                        ),
 
-                        SizedBox(width: padding),
-                        if(selectedSegment == 'Events')
-                          GestureDetector(
-                            onTap: () {
-                              if(isVisibleTags) setState(() => isVisibleTags=false);
-                              else setState(()=> isVisibleTags=true);
-                            },
-                            child: SvgPicture.asset('assets/filter.svg', width: 22,
+                          SizedBox(width: padding),
+                          if(selectedSegment == 'Events')
+                            GestureDetector(
+                              onTap: () {
+                                if(isVisibleTags) setState(() => isVisibleTags=false);
+                                else setState(()=> isVisibleTags=true);
+                              },
+                              child: SvgPicture.asset('assets/filter.svg', width: 22,
+                              ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
 
                     if(isVisibleTags && tagsList.isNotEmpty)
