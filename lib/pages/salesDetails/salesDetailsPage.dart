@@ -211,56 +211,53 @@ class _SalesDetailsPageState extends State<SalesDetailsPage> {
                       ],
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text('Tickets Sold', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: globalBlack)),
-                              SizedBox(height: padding / 2),
-                              CircularPercentIndicator(
-                                radius: 100.0,
-                                lineWidth: 3,
-                                percent: ((ticketSalesInfo.soldTickets)  / (num.tryParse(ticketSalesInfo.totalQuantity.toString())??0)).floorToDouble()  ,
-                                center: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    new Text("${(ticketSalesInfo.soldTickets)  }", style: TextStyle(color: globalGreen, fontSize: 18, fontWeight: FontWeight.bold)),
-                                    new Text(
-                                      "/${ticketSalesInfo.totalQuantity ?? 0}",
-                                      style: TextStyle(
-                                        color: globalBlack.withOpacity(0.5),
-                                        fontSize: 14, fontWeight: FontWeight.bold,
-                                      ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Tickets Sold', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: globalBlack)),
+                            SizedBox(height: padding / 2),
+                            CircularPercentIndicator(
+                              radius: 100.0,
+                              lineWidth: 3,
+                              percent: ((ticketSalesInfo.soldTickets)  / (num.tryParse(ticketSalesInfo.totalQuantity.toString())??0)).floorToDouble()  ,
+                              center: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  new Text("${(ticketSalesInfo.soldTickets)  }", style: TextStyle(color: globalGreen, fontSize: 18, fontWeight: FontWeight.bold)),
+                                  new Text(
+                                    "/${ticketSalesInfo.totalQuantity ?? 0}",
+                                    style: TextStyle(
+                                      color: globalBlack.withOpacity(0.5),
+                                      fontSize: 14, fontWeight: FontWeight.bold,
                                     ),
-                                  ],
-                                ),
-                                progressColor: Colors.green,
-                              )
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text('Total Check in', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: globalBlack,)),
-                              SizedBox(height: padding / 2),
-                              CircularPercentIndicator(
-                                radius: 100.0,
-                                lineWidth: 3,
-                                percent: (ticketSalesInfo.checkins)  / (num.tryParse(ticketSalesInfo.totalCheckins.toString())??0),
-                                center: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    new Text("${ticketSalesInfo.checkins}", style: TextStyle(color: globalGreen, fontSize: 18, fontWeight: FontWeight.bold)),
-                                    new Text("/${ticketSalesInfo.totalCheckins ?? 0}", style: TextStyle(color: globalBlack.withOpacity(0.5), fontSize: 14, fontWeight: FontWeight.bold)),
-                                  ],
-                                ),
-                                progressColor: Colors.green,
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                              progressColor: Colors.green,
+                            )
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('Total Check in', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: globalBlack,)),
+                            SizedBox(height: padding / 2),
+                            CircularPercentIndicator(
+                              radius: 100.0,
+                              lineWidth: 3,
+                              percent: (ticketSalesInfo.checkins)  / (num.tryParse(ticketSalesInfo.totalCheckins.toString())??0),
+                              center: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  new Text("${ticketSalesInfo.checkins}", style: TextStyle(color: globalGreen, fontSize: 18, fontWeight: FontWeight.bold)),
+                                  new Text("/${ticketSalesInfo.totalCheckins ?? 0}", style: TextStyle(color: globalBlack.withOpacity(0.5), fontSize: 14, fontWeight: FontWeight.bold)),
+                                ],
+                              ),
+                              progressColor: Colors.green,
+                            ),
+                          ],
                         ),
                       ],
                     ),

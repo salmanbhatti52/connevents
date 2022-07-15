@@ -81,28 +81,31 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: ConneventAppBar(),
-      body:  Column(
-        children: [
-          Text("General Posts",style:TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: globalGreen)),
-          Expanded(
-            child: ListView.builder(
-                   itemCount: notificationSettingList.length,
-                   itemBuilder: (context,index){
-                     NotificationSettingModel notification= notificationSettingList[index];
-                     return Column(
-                          children:[
-                            switchButton(onChanged:(val){
-                              if( notification.status=="On")
-                                updateNotification("Off",notification.userNotificationSettingId!);
-                              else
-                                updateNotification("On",notification.userNotificationSettingId!);
+      body:  Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            Text("General Posts",style:TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: globalGreen)),
+            Expanded(
+              child: ListView.builder(
+                     itemCount: notificationSettingList.length,
+                     itemBuilder: (context,index){
+                       NotificationSettingModel notification= notificationSettingList[index];
+                       return Column(
+                            children:[
+                              switchButton(onChanged:(val){
+                                if( notification.status=="On")
+                                  updateNotification("Off",notification.userNotificationSettingId!);
+                                else
+                                  updateNotification("On",notification.userNotificationSettingId!);
 
-                          }, title: notification.notificationType!, isSwitched: notification.status=="On"),
-                        ]
-                        );
-                     }),
-          ),
-        ],
+                            }, title: notification.notificationType!, isSwitched: notification.status=="On"),
+                          ]
+                          );
+                       }),
+            ),
+          ],
+        ),
       )
     );
   }

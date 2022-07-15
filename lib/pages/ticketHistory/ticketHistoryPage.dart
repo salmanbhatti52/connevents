@@ -127,6 +127,8 @@ class _TicketLibraryPageState extends State<TicketLibraryPage> {
                                       Text(purchasedTicketsForRefund[index].purchaseTime!),
                                     ],
                                   ),
+                                  if(purchasedTicketsForRefund[index].ticket !=null)
+                                    Text('${purchasedTicketsForRefund[index].ticket!} (${purchasedTicketsForRefund[index].quantity}) ', style: TextStyle(color:purchasedTicketsForRefund[index].ticket=="VIP" || purchasedTicketsForRefund[index].ticket=='Skipping Line' ?Colors.black: globalBlack, fontSize: 14, fontWeight: FontWeight.w700,)),
                                   Icon(Icons.chevron_right, color: globalLGray),
                                 ],
                               ),

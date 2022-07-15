@@ -181,18 +181,6 @@ class _CheckInTicketPageState extends State<CheckInTicketPage> {
                                                  if(widget.eventGuest!.ticket !=null)
                                                  Text('${widget.eventGuest!.ticket!} (${widget.eventGuest!.quantity}) ', style: TextStyle(color:widget.eventGuest!.ticket=="VIP" || widget.eventGuest!.ticket=='Skipping Line' ?Colors.white: globalBlack, fontSize: 14, fontWeight: FontWeight.w700,)),
 
-                                                  // Expanded(
-                                                  //   child: Container(
-                                                  //     padding: EdgeInsets.all(padding / 2),
-                                                  //     child: GoogleMap(
-                                                  //     mapType: MapType.normal,
-                                                  //     initialCameraPosition: CameraPosition(
-                                                  //     target: LatLng(widget.eventGuest!.locationLat!,widget.eventGuest!.locationLong!),
-                                                  //     zoom: 5.0,
-                                                  //   ),
-                                                  //   markers: markers.toSet()
-                                                  //   ),),
-                                                  // ),
                                                 ],
                                               ),
                                             ),

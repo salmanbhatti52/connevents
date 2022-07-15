@@ -35,7 +35,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
   final key = GlobalKey<FormState>();
   String? _hour, _minute, _time;
   TextEditingController selectedAddress=TextEditingController();
-  TextEditingController socialLink = TextEditingController();
+
   PlacesService  _placesService=PlacesService();
   List<PlacesAutoCompleteResult>  _autoCompleteResult=[];
   String secondaryText="";
@@ -302,6 +302,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Container(
               padding: EdgeInsets.all(padding * 2),
             child: Form(
@@ -370,7 +371,6 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                                 child: dateContainer( size, widget.event.salesEndTime, Icons.watch_later_outlined)),
                          ],
                        ),
-
                         ],
                       ),
                        ],
@@ -419,13 +419,7 @@ class _CreateThirdPageState extends State<CreateThirdPage> {
                       }),
                       value: widget.event.dressCodeData),),
                       SizedBox(height: padding),
-                      Text('Hyper Link', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
-                      SizedBox(height: 10),
-                      ConneventsTextField(
-                        controller: socialLink,
-                        onSaved: (value) => widget.event.socialLink = value!,
-                      ),
-                      SizedBox(height: padding),
+
                       Stack(
                         children: [
                           text(title: "Address*",color:globalBlack,fontSize:18,fontWeight: FontWeight.bold ),

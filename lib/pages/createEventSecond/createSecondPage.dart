@@ -43,6 +43,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
 
   final key = GlobalKey<FormState>();
   TextEditingController hyperLink=TextEditingController(text: "https://");
+  TextEditingController socialLink = TextEditingController(text: "https://");
 
   Future _selectEagleBirdClosingDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -345,6 +346,17 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                         maxLines: 4,
                       ),
                       SizedBox(height: 6),
+                      if(!widget.event.isNotMyEvent)
+                        Text('Website', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
+                      if(!widget.event.isNotMyEvent)
+                        SizedBox(height: 10),
+                      if(!widget.event.isNotMyEvent)
+                        ConneventsTextField(
+                          controller: socialLink,
+                          onSaved: (value) => widget.event.socialLink = value!,
+                        ),
+                      if(!widget.event.isNotMyEvent)
+                        SizedBox(height: padding),
                       Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                        children: [
@@ -365,7 +377,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                       if(widget.event.isNotMyEvent)
                       SizedBox(height: 6),
                       if(widget.event.isNotMyEvent)
-                      Text("Hyperlink*", style: TextConstants.headingStyle),
+                      Text("Hyper Link*", style: TextConstants.headingStyle),
                       if(widget.event.isNotMyEvent)
                       SizedBox(height: 6),
                       if(widget.event.isNotMyEvent)
