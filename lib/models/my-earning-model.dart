@@ -9,6 +9,8 @@ class MyEarning{
   int? earning;
   @JsonKey(name: 'pending_withdraw')
   int? pendingWithdraw;
+  @JsonKey(name: 'paypal_email')
+  String? paypalEmail;
 
 
   MyEarning({this.earning,this.pendingFlag=false,this.pendingWithdraw});

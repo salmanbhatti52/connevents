@@ -3,11 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 
 class EarningButton extends StatefulWidget {
+  bool isSelected;
   String title;
   String subTitle;
   String image;
   final void Function()?  onPressed;
-   EarningButton({Key? key,this.subTitle="",this.onPressed,this.title="",this.image=""}) : super(key: key);
+   EarningButton({Key? key,this.subTitle="",this.onPressed,this.title="",this.image="",this.isSelected=false}) : super(key: key);
 
   @override
   _EarningButtonState createState() => _EarningButtonState();
@@ -24,7 +25,7 @@ class _EarningButtonState extends State<EarningButton> {
                 child: TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
-                    side: BorderSide(color: Colors.green),
+                    side: BorderSide(color: widget.isSelected?Colors.green:Colors.grey),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),

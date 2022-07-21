@@ -2,6 +2,7 @@ import 'package:connevents/mixins/data.dart';
 import 'package:connevents/models/my-earning-model.dart';
 import 'package:connevents/models/user-concash-model.dart';
 import 'package:connevents/pages/wallet/Add-Bank-Account-Page.dart';
+import 'package:connevents/pages/wallet/Add-Paypal-Account-Page.dart';
 import 'package:connevents/paypal-Services/paypal-payment.dart';
 import 'package:connevents/services/dio-service.dart';
 import 'package:connevents/utils/loading-dialog.dart';
@@ -80,6 +81,7 @@ class _WalletPageState extends State<WalletPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
@@ -121,7 +123,8 @@ class _WalletPageState extends State<WalletPage> {
                           Container(
                             padding: EdgeInsets.all(padding / 2),
                             margin: EdgeInsets.symmetric(vertical: padding / 2),
-                            height:myEarnings.pendingFlag ? 90 : 71,
+                            //height:myEarnings.pendingFlag ? 90 : 71,
+                            height: 71,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(
@@ -152,20 +155,23 @@ class _WalletPageState extends State<WalletPage> {
                                         SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
                                   ],
                                 ),
-                                if(myEarnings.pendingFlag)
-                                Text("Pending Withdraw: \$${myEarnings.pendingWithdraw}",style: TextStyle(fontWeight: FontWeight.bold,color: globalGreen))
+                                //if(myEarnings.pendingFlag)
+                                //Text("Pending Withdraw: \$${myEarnings.pendingWithdraw}",style: TextStyle(fontWeight: FontWeight.bold,color: globalGreen))
                               ],
                             ),
                           ),
                           SizedBox(height: padding),
                           EarningButton(image: 'paypal.svg',title: 'ADD PAYPAL',onPressed: ()async{
-                            CustomNavigator.navigateTo(context, PayPalPaymentPage(onFinish: (number)async{
-                              print("order id"+ number);
-                            },));
+                            bool isWithDraw=await CustomNavigator.navigateTo(context, AddPaypalAccountPage(amount: myEarnings.earning,email: myEarnings.paypalEmail,))??false;
+                            if(isWithDraw)
+                              getUserConCash();
+                            // CustomNavigator.navigateTo(context, PayPalPaymentPage(onFinish: (number)async{
+                            //   print("order id"+ number);
+                            // },));
                           }),
                           SizedBox(height: padding),
-                          EarningButtonPayoneer(image: 'payoneer.png',title: 'ADD PAYONEER',onPressed: (){}),
-                          SizedBox(height: padding),
+                          // EarningButtonPayoneer(image: 'payoneer.png',title: 'ADD PAYONEER',onPressed: (){}),
+                          // SizedBox(height: padding),
                           EarningButton(title: 'ADD BANK ACCOUNT ',subTitle: '(USA ONLY)',onPressed: () async {
                          bool   isWithDraw = await CustomNavigator.navigateTo(context, AddBankAccountPage(amount: myEarnings.earning));
                           if(isWithDraw)
@@ -178,47 +184,134 @@ class _WalletPageState extends State<WalletPage> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(padding),
-              child: SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () {
-                    // if(myEarning! > 0 && stripeEmail.text.isNotEmpty)
-                    //   {
-                    //        bool validEmail   = isEmail(stripeEmail.text);
-                    //        if(validEmail)  withdrawEarning();
-                    //        else showErrorToast("Please Add Valid Email");
-                    //   }
-                    // else if(stripeEmail.text.isEmpty){
-                    // showErrorToast("Please Input Stripe Email");
-                    // }
-                    // else {
-                    //   showErrorToast("You don't have enough balance for withdraw");
-                    // }
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: globalGreen,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: Text('Withdraw'.toUpperCase(),
-                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
+            // Container(
+            //   padding: EdgeInsets.all(padding),
+            //   child: SizedBox(
+            //     height: 50,
+            //     width: double.infinity,
+            //     child: TextButton(
+            //       onPressed: () {
+            //         int selected=0;
+            //         showDialog(
+            //             context: context,
+            //             builder: (builder){
+            //               return Dialog(
+            //                 shape: RoundedRectangleBorder(
+            //                   borderRadius: BorderRadius.circular(20),
+            //                 ),
+            //                 // elevation: 3,
+            //                 backgroundColor: Colors.transparent,
+            //                 child: Container(
+            //                   height: 300,
+            //                   width: 300,
+            //                   alignment: Alignment.center,
+            //                   decoration: BoxDecoration(
+            //                     color: Colors.white,
+            //                     borderRadius: BorderRadius.circular(20),
+            //                   ),
+            //                   child:   Padding(
+            //                     padding: const EdgeInsets.only(top:12.0,left:12.0,right: 12.0),
+            //                     child: Column(
+            //                       mainAxisAlignment: MainAxisAlignment.start,
+            //                       crossAxisAlignment: CrossAxisAlignment.center,
+            //                       children: [
+            //                         Text("Choose Payment Withdraw Method", style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16)),
+            //                         SizedBox(height: padding),
+            //                         EarningButton(image: 'paypal.svg',title: 'ADD PAYPAL',onPressed: (){setState(() {
+            //                           selected=1;
+            //                         });}),
+            //                         SizedBox(height: padding),
+            //                         EarningButtonPayoneer(image: 'payoneer.png',title: 'ADD PAYONEER',onPressed: (){setState(() {
+            //                           selected=2;
+            //                         });}),
+            //                         SizedBox(height: padding),
+            //                         EarningButton(title: 'ADD BANK ACCOUNT ',subTitle: '(USA ONLY)',onPressed: (){setState(() {
+            //                           selected=3;
+            //                         });}),
+            //                         SizedBox(height: 10),
+            //                         yesButtons("OK", globalGreen,()async{
+            //                           Navigator.of(context).pop();
+            //                           if(selected==1){
+            //                             //paypal method
+            //
+            //                           }
+            //                           else if(selected==2){
+            //                             //payoneer
+            //                           }
+            //                         }),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 ),
+            //               );
+            //             },
+            //         );
+            //
+            //         // if(myEarning! > 0 && stripeEmail.text.isNotEmpty)
+            //         //   {
+            //         //        bool validEmail   = isEmail(stripeEmail.text);
+            //         //        if(validEmail)  withdrawEarning();
+            //         //        else showErrorToast("Please Add Valid Email");
+            //         //   }
+            //         // else if(stripeEmail.text.isEmpty){
+            //         // showErrorToast("Please Input Stripe Email");
+            //         // }
+            //         // else {
+            //         //   showErrorToast("You don't have enough balance for withdraw");
+            //         // }
+            //       },
+            //       style: TextButton.styleFrom(
+            //         backgroundColor: globalGreen,
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(30),
+            //         ),
+            //       ),
+            //       child: Text('Withdraw'.toUpperCase(),
+            //         style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
     );
   }
 
+  Widget yesButtons(text, color,void Function()? onPressed) {
+    return RaisedButton(
+      textColor: Colors.white,
+      color: color,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
+        ),
+      ),
+      onPressed:onPressed,
+      shape: new RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(30.0),
+      ),
+    );
+  }
 
-
-
-
+  Widget cancelButtons(text, color,void Function()? onPressed) {
+    return RaisedButton(
+      textColor: Colors.white,
+      color: color,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10.0, 5.0, 10.0, 5.0),
+        child: Text(
+          text,
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800),
+        ),
+      ),
+      onPressed: onPressed,
+      shape: new RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(30.0),
+      ),
+    );
+  }
 
 }
