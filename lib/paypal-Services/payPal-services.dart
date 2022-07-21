@@ -106,6 +106,7 @@ class PayPalServices{
 
      Map<String,dynamic> json = body;
      json['usersId'] = AppData().userdetail!.users_id;
+     json['withdrawType'] = "Paypal";
      var responses = await DioService.post('store_paypal_transaction_details', json);
     print(responses);
      showSuccessToast("Amount Successfully WithDraw");

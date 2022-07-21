@@ -17,8 +17,6 @@ import 'package:flutter/material.dart';
  }
 
  class _AllowUploadItemAlertState extends State<AllowUploadItemAlert> {
-
-
    Widget Buttons({text, color, void Function()? onTap}) {
      print(AppData().userdetail!.subscription_package_id);
      return RaisedButton(
@@ -37,8 +35,6 @@ import 'package:flutter/material.dart';
        ),
      );
    }
-
-
    @override
    Widget build(BuildContext context) {
      print(widget.fileType);
@@ -52,8 +48,6 @@ import 'package:flutter/material.dart';
        child: contentBox(context, size),
      );
    }
-
-
    contentBox(context, size) {
      return Container(
        height: 200,
@@ -132,5 +126,4 @@ if(widget.thumbNail!=null)  'thumbnail' :await MultipartFile.fromFile(widget.thu
        ),
      );
    }
-
  }

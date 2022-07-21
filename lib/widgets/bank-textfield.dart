@@ -21,6 +21,7 @@ class BankTextField extends StatelessWidget {
       padding: EdgeInsets.only(top:padding,bottom: padding),
       decoration: BoxDecoration(color: Colors.white),
       child: TextFormField(
+        controller: controller,
         onSaved: onSaved,
         keyboardType: keyBoardType,
         style: TextStyle(color: globalBlack , height: 1.7 , fontSize: 14 , fontWeight: FontWeight.normal,),
