@@ -32,7 +32,7 @@ class _EditCreateThirdPageState extends State<EditCreateThirdPage> {
 late  EventDetail event;
     final key = GlobalKey<FormState>();
     String? _hour, _minute, _time;
-TextEditingController socialLink = TextEditingController();
+
 PlacesService  _placesService=PlacesService();
     List<PlacesAutoCompleteResult>  _autoCompleteResult=[];
      String secondaryText="";
@@ -226,7 +226,7 @@ PlacesService  _placesService=PlacesService();
     zip=TextEditingController(text: event.eventAddress!.zip);
     state=TextEditingController(text: event.eventAddress!.state);
     mainText=TextEditingController(text: event.eventAddress!.fullAddress);
-    socialLink=TextEditingController (text: event.socialLink);
+
 
   }
 
@@ -386,13 +386,7 @@ PlacesService  _placesService=PlacesService();
                             ),
                           ),
                           SizedBox(height: padding),
-                          Text('Hyper Link', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
-                          SizedBox(height: 10),
-                          ConneventsTextField(
-                            controller: socialLink,
-                            onSaved: (value) => widget.event.socialLink = value!,
-                          ),
-                          SizedBox(height: padding),
+
                           Stack(
                             children: [
                               text(title: "Address*",color:globalBlack,fontSize:18,fontWeight: FontWeight.bold ),
@@ -615,7 +609,7 @@ PlacesService  _placesService=PlacesService();
                       if(event.eventAddress!.state.isEmpty) return showErrorToast("You have to enter state");
                       if(event.eventAddress!.zip.isEmpty) return showErrorToast("You have to enter zip Code");
                       if(widget.event.isFreeEvent&&widget.event.dressCodeData==null) return showErrorToast("You have to select Dress Code");
-
+                      if(widget.event.dressCodeData==null) return showErrorToast("You have to select Dress Code");
                                   CustomNavigator.navigateTo(context, EditConfirmCreatePage(
                             event: event,
                             selectedEventStartTime: widget.selectedEventStartTime,

@@ -434,7 +434,7 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                 ),
                 if(!event.isFreeEvent && !event.isNotMyEvent)
                 SizedBox(height: padding * 2),
-                if(!event.isNotMyEvent)
+                // if(!event.isNotMyEvent)
                 Row(
                   children: [
                     Text('Dress Code', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
@@ -448,7 +448,7 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                 ),
                 SizedBox(height: padding),
 
-                if(!event.isNotMyEvent)
+                // if(!event.isNotMyEvent)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -467,11 +467,9 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                   ],
                 ),
                 SizedBox(height: padding),
-                if(!event.isFreeEvent && !event.isNotMyEvent)
-                SizedBox(height: padding * 2),
                 Row(
                   children: [
-                    Text('Hyper Link', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
+                    Text(widget.event.isNotMyEvent?'Hyper Link':'Website', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
                     SizedBox(width: padding,),
                     GestureDetector(
                         onTap: ()=>Navigator.of(context).pop(widget.event),
@@ -479,7 +477,7 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                   ],
                 ),
                 SizedBox(height: padding,),
-                Text(widget.event.socialLink.toString(), style: TextStyle(color: globalBlack, fontWeight: FontWeight.w300, fontSize: 14,),),
+                Text(widget.event.isNotMyEvent?widget.event.hyperlink.toString():widget.event.socialLink.toString(), style: TextStyle(color: globalBlack, fontWeight: FontWeight.w300, fontSize: 14,),),
                 SizedBox(height: padding,),
                 Row(
                   children: [
@@ -626,7 +624,7 @@ if(widget.event.thirdThumbNail !=null  )      thumbNail(widget.event.thirdThumbN
                                 if(!event.isFreeEvent && !event.isNotMyEvent)
                                 "salesEndTime": DateFormat("HH:mm:ss").format(salesEndTime),
                                 if(!event.isNotMyEvent)
-                                "dressCodeId": widget.event.dressCodeData!.dressCodeId,
+                                  "dressCodeId": widget.event.dressCodeData!.dressCodeId,
                                 "fullAddress": widget.event.eventAddress!.fullAddress,
                                 "city": widget.event.eventAddress!.city,
                                 "state": widget.event.eventAddress!.state,

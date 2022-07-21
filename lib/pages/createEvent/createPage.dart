@@ -43,7 +43,6 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
   final key = GlobalKey<FormState>();
 
   String selectedSegment = 'Events';
-  List<Asset> images = [];
   Dio dio = Dio();
   CroppedFile? imageFile;
 
@@ -53,10 +52,12 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
   List<String> mixTags = [];
   Future<EventTypeList>? futureEventTypeModel;
   Future<EventTagsModel>? futureEventTagsModel;
-  int totalImages = 3;
 
+  int totalImages = 3;
+  List<Asset> images = [];
   List<String> imagePath = [];
   List<Asset> listOfImages = [];
+
   TextEditingController tagText=TextEditingController();
 
 
@@ -98,9 +99,6 @@ class _CreatePageState extends State<CreatePage>  with TickerProviderStateMixin{
         }
 
   }
-
-
-
 
 
   Future loadAssets() async {

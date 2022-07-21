@@ -43,7 +43,7 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
 
   final key = GlobalKey<FormState>();
   TextEditingController hyperLink=TextEditingController(text: "https://");
-  TextEditingController socialLink = TextEditingController(text: "https://");
+  TextEditingController socialLink = TextEditingController();
 
   Future _selectEagleBirdClosingDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -258,7 +258,12 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
       widget.event.list = widget.event.list ?? [];
 
   }
+  String stringReplacement(
+      String mainString, String subString
+      ){
 
+    return mainString.replaceAll(subString, "");
+  }
   @override
     Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -352,6 +357,10 @@ class _CreateSecondPageState extends State<CreateSecondPage> {
                         SizedBox(height: 10),
                       if(!widget.event.isNotMyEvent)
                         ConneventsTextField(
+                          onChanged: (e){
+                            if(socialLink.text.contains('https://'))
+                              socialLink.text = stringReplacement(socialLink.text,"https://");
+                          },
                           controller: socialLink,
                           onSaved: (value) => widget.event.socialLink = value!,
                         ),

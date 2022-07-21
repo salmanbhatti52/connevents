@@ -151,7 +151,6 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
       }
 
 
-
   }
 
 
@@ -323,14 +322,28 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                                               ],
                                             ),
                                             if(widget.event!.socialLink.isNotEmpty)
-                                              SizedBox(height: padding / 7),
+                                               SizedBox(height: padding / 3),
                                             if(widget.event!.socialLink.isNotEmpty)
-                                              GestureDetector(
-                                                  onTap: (){
-                                                    launch(widget.event!.socialLink);
-                                                  },
-                                                  child: Text(widget.event!.socialLink.toString(),
-                                                    style: TextStyle(color: Colors.blue.shade700, fontWeight: FontWeight.w300, fontSize: 14,),)),
+                                              Container(
+                                                height: widget.event!.socialLink.split("\n").length*20,
+                                                child: ListView.builder(
+                                                  padding: EdgeInsets.zero,
+                                                  itemCount: widget.event!.socialLink.split("\n").length,
+                                                    itemBuilder: (itemBuilder,index){
+                                                    String link = widget.event!.socialLink.split("\n")[index];
+                                                      return  GestureDetector(
+                                                          onTap: (){
+                                                            print(widget.event!.socialLink.split("\n"));
+                                                             launch("https://"+link);
+                                                          },
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.only(bottom: 5),
+                                                            child: Text(link.toString(),
+                                                              style: TextStyle(color: Colors.blue.shade700, fontWeight: FontWeight.w300, fontSize: 14,),),
+                                                          ),);
+                                                    }
+                                                ),
+                                              ),
                                           ],
                                         ),
                                          SizedBox(height: padding / 2),

@@ -474,10 +474,10 @@ if(widget.event.thirdThumbNail !=null  && widget.event.thirdThumbNail!.isNotEmpt
                 ),
                 SizedBox(height: padding),
                 if(widget.event.eventTicketType=='Paid')
-                SizedBox(height: padding * 2),
+                  SizedBox(height: padding),
                 Row(
                   children: [
-                    Text('Hyper Link', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
+                    Text('Website', style: TextStyle(color: globalBlack, fontWeight: FontWeight.bold, fontSize: 18,),),
                     SizedBox(width: padding,),
                     GestureDetector(
                         onTap: ()=>Navigator.of(context).pop(widget.event),

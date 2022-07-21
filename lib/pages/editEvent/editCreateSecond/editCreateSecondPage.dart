@@ -1,5 +1,6 @@
 import 'package:connevents/models/create-event-model.dart';
 import 'package:connevents/models/event-dummy-ticket.dart';
+import 'package:connevents/pages/createEvent/createPage.dart';
 import 'package:connevents/pages/editEvent/editcreate/editCreatePage.dart';
 import 'package:connevents/pages/editEvent/editcreateThird/editCreateThirdPage.dart';
 import 'package:connevents/utils/date-time.dart';
@@ -37,6 +38,8 @@ class _EditCreateSecondPageState extends State<EditCreateSecondPage> {
   TimeOfDay? editSelectedStartTime;
   TimeOfDay? editSelectedEndTime;
   final key = GlobalKey<FormState>();
+  TextEditingController socialLink = TextEditingController(text: eventDetail.socialLink);
+  // socialLink=TextEditingController (text: event.socialLink);
 
   Future _selectEagleBirdClosingDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -201,6 +204,13 @@ class _EditCreateSecondPageState extends State<EditCreateSecondPage> {
     }
 
 
+
+  }
+  String stringReplacement(
+      String mainString, String subString
+      ){
+
+    return mainString.replaceAll(subString, "");
   }
 
   @override
@@ -351,9 +361,21 @@ class _EditCreateSecondPageState extends State<EditCreateSecondPage> {
                         maxLines: 4,
                       ),
                       SizedBox(height: 6),
+                      Text('Website', style: TextStyle(color: globalBlack, fontSize: 18, fontWeight: FontWeight.bold,),),
+                      SizedBox(height: 10),
+                      ConneventsTextField(
+                        onChanged: (e){
+                          if(socialLink.text.contains('https://'))
+                          socialLink.text = stringReplacement(socialLink.text,"https://");
+                        },
+                        controller: socialLink,
+                        onSaved: (value) => widget.event.socialLink = value!,
+                      ),
+                      SizedBox(height: padding),
                       if(eventDetail.eventTicketType=="NotMyEvent")
                       Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+
                        children: [
                          SizedBox(
                            width: 20,
